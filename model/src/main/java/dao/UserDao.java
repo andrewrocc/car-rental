@@ -2,13 +2,9 @@ package dao;
 
 import models.User;
 
-public interface UserDao {
+import java.util.List;
 
-	void create(User user);
+public interface UserDao extends BaseDao<User> {
 
-	User findById(long id);
-
-	void update(User user);
-
-	void delete(User user);
+	List<User> getAllUsers();
 }

@@ -17,7 +17,7 @@ public class Payment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+//	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "P_DATETIME")
 	private Timestamp dtPayment;
-
 }

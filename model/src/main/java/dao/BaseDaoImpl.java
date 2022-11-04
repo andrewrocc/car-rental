@@ -5,16 +5,14 @@ import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
 import db.connection.properties.MysqlSessionFactory;
 
-import java.util.List;
-
 public class BaseDaoImpl<T> implements BaseDao<T> {
 
 	private Class<T> classType;
 
 	private final SessionFactory sessionFactory;
 
-	public BaseDaoImpl() throws ClassNotFoundException {
-		sessionFactory = MysqlSessionFactory.getInstance();
+	public BaseDaoImpl(Class<T> type) {
+		this(MysqlSessionFactory.getInstance(), type);
 	}
 
 	public BaseDaoImpl(SessionFactory sessionFactory, Class<T> type) {
@@ -43,13 +41,13 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 		return obj;
 	}
 
-	// TODO: Is this method necessary?
-	@Override
-	public List<T> getAllElements(String query) {
-		try (Session session = sessionFactory.openSession()) {
-			return (List<T>) session.createQuery(query, String.class).list();
-		}
-	}
+//  TODO: Is this method necessary?
+//	@Override
+//	public List<T> getAllElements(String query) {
+//		try (Session session = sessionFactory.openSession()) {
+//			return (List<T>) session.createQuery(query, String.class).list();
+//		}
+//	}
 
 	@Override
 	public void update(T obj) {

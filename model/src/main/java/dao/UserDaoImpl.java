@@ -1,59 +1,53 @@
 package dao;
 
+import db.connection.properties.MysqlSessionFactory;
 import models.User;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.SessionFactory;
-import db.connection.properties.MysqlSessionFactory;
+
+import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
 	private final SessionFactory sessionFactory;
 
-	public UserDaoImpl() throws ClassNotFoundException {
-		sessionFactory = MysqlSessionFactory.getInstance();
-	}
+	private BaseDaoImpl<User> userDao;
+
+//	public UserDaoImpl() {
+//		this(MysqlSessionFactory.getInstance());
+//		userDao = new BaseDaoImpl<>(User.class);
+//	}
 
 	public UserDaoImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+		userDao = new BaseDaoImpl<>(sessionFactory, User.class);
 	}
 
 	@Override
-	public void create(User user) {
-		Transaction transaction = null;
-		try (Session session = sessionFactory.openSession()) {
-			transaction = session.beginTransaction();
-			session.saveOrUpdate(user);
-			transaction.commit();
-		} catch (Exception ex) {
-			if (transaction != null) transaction.rollback();
-			throw ex;
-		}
+	public void create(User obj) {
+		userDao.create(obj);
 	}
 
 	@Override
 	public User findById(long id) {
-		Session session = sessionFactory.openSession();
-		User user = session.get(User.class, id);
-		session.close();
-		return user;
+		return userDao.findById(id);
 	}
 
 	@Override
-	public void update(User user) {
-		create(user);
+	public void update(User obj) {
+		create(obj);
 	}
 
 	@Override
-	public void delete(User user) {
-		Transaction transaction = null;
+	public void delete(User obj) {
+		userDao.delete(obj);
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		String query = "SELECT * FROM t_users;";
 		try (Session session = sessionFactory.openSession()) {
-			transaction = session.beginTransaction();
-			session.delete(user);
-			transaction.commit();
-		} catch (Exception ex) {
-			if (transaction != null) transaction.rollback();
-			throw ex;
+			return session.createQuery(query, User.class).list();
 		}
 	}
 }

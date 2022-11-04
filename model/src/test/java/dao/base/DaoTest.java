@@ -1,7 +1,9 @@
 package dao.base;
 
+import models.Payment;
 import models.User;
 import lombok.SneakyThrows;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.hibernate.boot.Metadata;
 import org.hibernate.SessionFactory;
@@ -16,11 +18,15 @@ public class DaoTest {
 
 	// JDBC data source
 	public static MysqlJdbcDataSource testMysqlJdbcDataSource;
+
 	// DBUnit connection
 	public static IDatabaseConnection iDatabaseConnection;
+
 	//Hibernate session factory
 	public static SessionFactory testSessionFactory;
 
+
+	// TODO: do not forget add addAnnotatedClass from models
 	@BeforeClass
 	@SneakyThrows
 	public static void init() {
@@ -31,8 +37,18 @@ public class DaoTest {
 				.configure("hibernate_test.cfg.xml").build();
 		Metadata metadata = new MetadataSources(standardRegistry)
 				.addAnnotatedClass(User.class)
+				.addAnnotatedClass(Payment.class)
 				.getMetadataBuilder()
 				.build();
 		testSessionFactory = metadata.getSessionFactoryBuilder().build();
+	}
+
+	@AfterClass
+	@SneakyThrows
+	public static void destroy() {
+		iDatabaseConnection.close();
+		if (testSessionFactory != null && testSessionFactory.isOpen()) {
+			testSessionFactory.close();
+		}
 	}
 }
