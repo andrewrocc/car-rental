@@ -1,5 +1,6 @@
 package dao.base;
 
+import models.CarModel;
 import models.CarType;
 import models.Payment;
 import models.User;
@@ -40,6 +41,7 @@ public class DaoTest {
 				.addAnnotatedClass(User.class)
 				.addAnnotatedClass(Payment.class)
 				.addAnnotatedClass(CarType.class)
+				.addAnnotatedClass(CarModel.class)
 				.getMetadataBuilder()
 				.build();
 		testSessionFactory = metadata.getSessionFactoryBuilder().build();
