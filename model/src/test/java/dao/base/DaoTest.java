@@ -1,5 +1,6 @@
 package dao.base;
 
+import models.CarType;
 import models.Payment;
 import models.User;
 import lombok.SneakyThrows;
@@ -38,6 +39,7 @@ public class DaoTest {
 		Metadata metadata = new MetadataSources(standardRegistry)
 				.addAnnotatedClass(User.class)
 				.addAnnotatedClass(Payment.class)
+				.addAnnotatedClass(CarType.class)
 				.getMetadataBuilder()
 				.build();
 		testSessionFactory = metadata.getSessionFactoryBuilder().build();

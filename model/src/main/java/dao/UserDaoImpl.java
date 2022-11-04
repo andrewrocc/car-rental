@@ -13,10 +13,10 @@ public class UserDaoImpl implements UserDao {
 
 	private BaseDaoImpl<User> userDao;
 
-//	public UserDaoImpl() {
-//		this(MysqlSessionFactory.getInstance());
-//		userDao = new BaseDaoImpl<>(User.class);
-//	}
+	public UserDaoImpl() {
+		this(MysqlSessionFactory.getInstance());
+		userDao = new BaseDaoImpl<>(User.class);
+	}
 
 	public UserDaoImpl(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;

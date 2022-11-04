@@ -6,8 +6,6 @@ import db.connection.properties.MysqlSessionFactory;
 
 public class PaymentDaoImpl implements PaymentDao {
 
-	private final SessionFactory sessionFactory;
-
 	private final BaseDaoImpl<Payment> paymentDao;
 
 	public PaymentDaoImpl() {
@@ -15,7 +13,6 @@ public class PaymentDaoImpl implements PaymentDao {
 	}
 
 	public PaymentDaoImpl(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
 		paymentDao = new BaseDaoImpl<>(sessionFactory, Payment.class);
 	}
 

@@ -91,7 +91,7 @@ public class PaymentDaoImplTest extends DaoTest {
 
 		//then
 		ResultSet resultSet = testMysqlJdbcDataSource.getConnection().createStatement()
-				.executeQuery("select count(*) from t_payments;");
+				.executeQuery("SELECT count(*) FROM t_payments;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(7, actualSize);
