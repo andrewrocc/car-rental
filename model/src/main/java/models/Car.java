@@ -36,4 +36,8 @@ public class Car {
 
 	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
 	private CarBrand carBrand;
+
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	private Order order;
 }

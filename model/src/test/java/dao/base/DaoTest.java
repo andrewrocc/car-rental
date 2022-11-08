@@ -41,6 +41,7 @@ public class DaoTest {
 				.addAnnotatedClass(CarModel.class)
 				.addAnnotatedClass(CarBrand.class)
 				.addAnnotatedClass(Car.class)
+				.addAnnotatedClass(Order.class)
 				.getMetadataBuilder()
 				.build();
 		testSessionFactory = metadata.getSessionFactoryBuilder().build();

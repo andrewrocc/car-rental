@@ -6,33 +6,33 @@ import org.hibernate.SessionFactory;
 
 public class CarModelDaoImpl implements CarModelDao {
 
-	private final BaseDaoImpl<CarModel> carModel;
+	private final BaseDaoImpl<CarModel> carModelDao;
 
 	public CarModelDaoImpl() {
 		this(MysqlSessionFactory.getInstance());
 	}
 
 	public CarModelDaoImpl(SessionFactory sessionFactory) {
-		carModel = new BaseDaoImpl<>(sessionFactory, CarModel.class);
+		carModelDao = new BaseDaoImpl<>(sessionFactory, CarModel.class);
 	}
 
 	@Override
 	public void create(CarModel obj) {
-		carModel.create(obj);
+		carModelDao.create(obj);
 	}
 
 	@Override
 	public CarModel findById(long id) {
-		return carModel.findById(id);
+		return carModelDao.findById(id);
 	}
 
 	@Override
 	public void update(CarModel obj) {
-		carModel.update(obj);
+		carModelDao.update(obj);
 	}
 
 	@Override
 	public void delete(CarModel obj) {
-		carModel.delete(obj);
+		carModelDao.delete(obj);
 	}
 }

@@ -20,4 +20,8 @@ public class Payment {
 //	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "P_DATETIME")
 	private Timestamp dtPayment;
+
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	private Order order;
 }

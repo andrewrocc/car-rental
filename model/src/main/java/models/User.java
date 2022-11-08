@@ -24,4 +24,8 @@ public class User {
 
 	@Column(name = "U_PAYMENT_CARD")
 	private String paymentCard;
+
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	private Order order;
 }

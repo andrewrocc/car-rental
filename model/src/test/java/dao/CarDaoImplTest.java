@@ -65,9 +65,9 @@ public class CarDaoImplTest extends DaoTest {
 		car.setCarBrand(carBrand);
 		car.setCarModel(carModel);
 
-		carBrand.setCar(car);
-		carModel.setCar(car);
-		carType.setCar(car);
+//		carBrand.setCar(car);
+//		carModel.setCar(car);
+//		carType.setCar(car);
 		// when
 		targetObject.create(car);
 

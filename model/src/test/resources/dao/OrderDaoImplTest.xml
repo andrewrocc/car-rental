@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <t_cars C_ID="101" C_NUMBER="234e" C_BRAND_ID="2" C_MODEL_ID="2" C_TYPE_ID="4"/>
+    <t_users U_ID="101" U_USERNAME="Vasya" U_USEREMAIL="Pupkin" U_PAYMENT_CARD="3456780198456738"/>
+    <t_payments P_ID="101" P_DATETIME="2023-01-01 01:10:00"/>
+    <t_orders O_ID="101" O_PRICE="234.4" O_DATETIME="2023-01-01 00:56:10" O_USER_ID="101" O_CAR_ID="101" O_PAYMENT_ID="101"/>
+</dataset>

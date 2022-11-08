@@ -6,33 +6,33 @@ import db.connection.properties.MysqlSessionFactory;
 
 public class CarBrandDaoImpl implements CarBrandDao {
 
-	private final BaseDaoImpl<CarBrand> carBrand;
+	private final BaseDaoImpl<CarBrand> carBrandDao;
 
 	public CarBrandDaoImpl() {
 		this(MysqlSessionFactory.getInstance());
 	}
 
 	public CarBrandDaoImpl(SessionFactory sessionFactory) {
-		carBrand = new BaseDaoImpl<>(sessionFactory, CarBrand.class);
+		carBrandDao = new BaseDaoImpl<>(sessionFactory, CarBrand.class);
 	}
 
 	@Override
 	public void create(CarBrand obj) {
-		carBrand.create(obj);
+		carBrandDao.create(obj);
 	}
 
 	@Override
 	public CarBrand findById(long id) {
-		return carBrand.findById(id);
+		return carBrandDao.findById(id);
 	}
 
 	@Override
 	public void update(CarBrand obj) {
-		carBrand.update(obj);
+		carBrandDao.update(obj);
 	}
 
 	@Override
 	public void delete(CarBrand obj) {
-		carBrand.delete(obj);
+		carBrandDao.delete(obj);
 	}
 }
