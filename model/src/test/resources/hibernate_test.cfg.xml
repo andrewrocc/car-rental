@@ -14,8 +14,13 @@
         <!--  Echo all executed SQL to stdout  -->
         <property name="show_sql">true</property>
         <!--  Drop and re-create the database schema on startup  -->
-        <!--         <property name="hbm2ddl.auto">create</property> -->
+        <!--  <property name="hbm2ddl.auto">create</property>-->
         <!--         For mapping with annotations -->
-                 <mapping class="models.User"/>
+        <mapping class="models.Car"/>
+        <mapping class="models.CarBrand"/>
+        <mapping class="models.CarModel"/>
+        <mapping class="models.CarType"/>
+        <mapping class="models.Payment"/>
+        <mapping class="models.User"/>
     </session-factory>
 </hibernate-configuration>
