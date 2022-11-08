@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <t_cars_type CT_ID="101" CT_NAME="hypercar" />
+    <t_cars_model CM_ID="101" CM_NAME="Chiron" />
+    <t_cars_brand CB_ID="101" CB_NAME="Bugatti" />
+    <t_cars C_ID="101" C_NUMBER="234e" C_BRAND_ID="101" C_MODEL_ID="101" C_TYPE_ID="101"/>
+</dataset>

@@ -18,4 +18,8 @@ public class CarBrand {
 
 	@Column(name = "CB_NAME")
 	private String brandName;
+
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	private Car car;
 }
