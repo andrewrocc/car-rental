@@ -52,10 +52,62 @@ INSERT INTO t_cars VALUES
 (7, '6748', 7, 7, 4);
 
 INSERT INTO t_orders VALUES
-(1, 324.7, '2022-01-01 10:10', 1, 1, 1),
-(2, 56.8, '2022-10-01 12:12', 2, 2, 2),
-(3, 234.6, '2020-03-12 11:15', 3, 3, 3),
-(4, 45.4, '2020-01-01 12:10', 4, 4, 4),
-(5, 78.8, '2019-12-01 09:30', 5, 3, 5),
-(6, 796.6, '2022-04-23 14:34', 6, 7, 6),
-(7, 47.9, '2022-12-19 00:30', 7, 7, 7);
+(1, 324.7, '2022-01-01 10:10', 1),
+(2, 56.8, '2022-10-01 12:12', 2),
+(3, 234.6, '2020-03-12 11:15', 3),
+(4, 45.4, '2020-01-01 12:10', 4),
+(5, 78.8, '2019-12-01 09:30', 5),
+(6, 796.6, '2022-04-23 14:34', 6),
+(7, 47.9, '2022-12-19 00:30', 7);
+
+INSERT INTO t_roles VALUES 
+(1, "admin", "Administrators have full, unrestricted access rights to the service or domain."),
+(2, "user", "Users do not have rights to change the parameters of the service and can use most of the functions."),
+(3, "guest", "By default, guests can only view cars on the service, but they can not order them.");
+
+INSERT INTO t_permissions VALUES
+(1, "create_car", 1),
+(2, "view_cars", 1),
+(3, "update_car", 1),
+(4, "delete_car", 1),
+(5, "create_order", 1),
+(6, "create_payment", 1),
+(7, "view_payments", 1),
+(8, "view_orders", 1),
+(9, "create_user", 1),
+(10, "update_user", 1),
+(11, "delete_user", 1),
+(12, "view_users", 1),
+(13, "view_cars", 2),
+(14, "create_order", 2),
+(15, "create_payment", 2),
+(16, "view_cars", 3);
+
+INSERT INTO t_m2m_orders_payments VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 3),
+(5, 4),
+(6, 5),
+(7, 6),
+(7, 7);
+
+INSERT INTO t_m2m_users_orders VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 3),
+(5, 4),
+(6, 5),
+(7, 6),
+(7, 7);
+
+INSERT INTO t_m2m_users_roles VALUES
+(1, 2),
+(2, 2),
+(3, 2),
+(4, 2),
+(5, 2),
+(6, 2),
+(7, 1);
