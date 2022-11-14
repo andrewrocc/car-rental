@@ -21,4 +21,8 @@ public class Permission {
 
 	@Column(name = "PRMS_R_ID")
 	private long roleId;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "PRMS_R_ID", insertable = false, updatable = false)
+	private Role role;
 }

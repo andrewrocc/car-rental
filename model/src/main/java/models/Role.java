@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,4 +22,7 @@ public class Role {
 
 	@Column(name = "R_DESCRIPTION")
 	private String description;
+
+	@OneToMany(mappedBy = "role")
+	private Set<Permission> permission;
 }
