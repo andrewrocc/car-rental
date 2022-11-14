@@ -1,9 +1,8 @@
 package dao;
 
-import dao.base.DaoTest;
+import dao.base.BaseDaoTest;
 import lombok.SneakyThrows;
 import models.CarBrand;
-import models.CarModel;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
@@ -16,7 +15,7 @@ import java.sql.ResultSet;
 
 import static org.junit.Assert.*;
 
-public class CarBrandDaoImplTest extends DaoTest {
+public class CarBrandDaoImplTest extends BaseDaoTest {
 
 	CarBrandDaoImpl targetObject;
 

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,7 +20,6 @@ public class CarModel {
 	@Column(name = "CM_NAME")
 	private String modelName;
 
-	@OneToOne
-	@PrimaryKeyJoinColumn
-	private Car car;
+	@OneToMany(mappedBy = "carModel", fetch = FetchType.EAGER)
+	private Set<Car> car;
 }

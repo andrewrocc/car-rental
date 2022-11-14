@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,9 +20,8 @@ public class Payment {
 
 //	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "P_DATETIME")
-	private Timestamp dtPayment;
+	private Timestamp dateTimePayment;
 
-	@OneToOne
-	@PrimaryKeyJoinColumn
-	private Order order;
+	@OneToMany(mappedBy = "payment")
+	private Set<M2M_OrderPayment> orderPayment;
 }

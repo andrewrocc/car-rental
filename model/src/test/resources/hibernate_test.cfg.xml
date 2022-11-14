@@ -22,5 +22,7 @@
         <mapping class="models.CarType"/>
         <mapping class="models.Payment"/>
         <mapping class="models.User"/>
+        <mapping class="models.M2M_UserOrder"/>
+        <mapping class="models.M2M_OrderPayment"/>
     </session-factory>
 </hibernate-configuration>

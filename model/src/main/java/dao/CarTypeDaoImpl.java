@@ -1,5 +1,6 @@
 package dao;
 
+import dao.base.BaseDaoImpl;
 import models.CarType;
 import org.hibernate.SessionFactory;
 import db.connection.properties.MysqlSessionFactory;

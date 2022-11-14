@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,21 +25,13 @@ public class Order {
 	@Column(name = "O_DATETIME")
 	private Timestamp dateTime;
 
-	@Column(name = "O_USER_ID")
-	private long userId;
-
 	@Column(name = "O_CAR_ID")
 	private long carId;
 
-	@Column(name = "O_PAYMENT_ID")
-	private long paymentId;
-
-	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-	private User user;
-
-	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-	private Payment payment;
-
-	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "O_ID", insertable = false, updatable = false)
 	private Car car;
+
+	@OneToMany(mappedBy = "order")
+	private Set<M2M_OrderPayment> orderPayment;
 }

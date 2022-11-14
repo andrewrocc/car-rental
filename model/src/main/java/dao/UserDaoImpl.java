@@ -1,5 +1,6 @@
 package dao;
 
+import dao.base.BaseDaoImpl;
 import db.connection.properties.MysqlSessionFactory;
 import models.User;
 import org.hibernate.Session;

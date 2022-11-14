@@ -7,7 +7,7 @@ import org.junit.After;
 import models.CarBrand;
 import models.CarModel;
 import org.junit.Before;
-import dao.base.DaoTest;
+import dao.base.BaseDaoTest;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
@@ -18,7 +18,7 @@ import java.sql.ResultSet;
 
 import static org.junit.Assert.assertEquals;
 
-public class CarDaoImplTest extends DaoTest {
+public class CarDaoImplTest extends BaseDaoTest {
 
 	CarDaoImpl targetObject;
 

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,4 +29,7 @@ public class User {
 	@OneToOne
 	@PrimaryKeyJoinColumn
 	private Order order;
+
+//	@OneToMany(mappedBy = "user")
+//	private Set<M2M_UserOrder> userOrder;
 }

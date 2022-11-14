@@ -1,4 +1,4 @@
-package dao;
+package dao.base;
 
 public interface BaseDao<T> {
 

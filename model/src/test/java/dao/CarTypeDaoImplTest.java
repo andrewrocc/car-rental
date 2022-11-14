@@ -1,9 +1,8 @@
 package dao;
 
-import dao.base.DaoTest;
+import dao.base.BaseDaoTest;
 import lombok.SneakyThrows;
 import models.CarType;
-import models.Payment;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
@@ -13,12 +12,10 @@ import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
-public class CarTypeDaoImplTest extends DaoTest {
+public class CarTypeDaoImplTest extends BaseDaoTest {
 
 	CarTypeDaoImpl targetObject;
 

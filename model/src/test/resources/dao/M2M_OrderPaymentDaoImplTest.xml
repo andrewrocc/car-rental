@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+    <t_orders O_ID="101" O_PRICE="500.0" O_DATETIME="2022-10-10 10:10:10" O_CAR_ID="3" />
+    <t_payments P_ID="101" P_DATETIME="2022-10-10 10:10:10" />
+</dataset>

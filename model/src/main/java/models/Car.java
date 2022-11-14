@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,16 +29,18 @@ public class Car {
 	@Column(name = "C_TYPE_ID")
 	private long carTypeId;
 
-	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "C_ID", insertable = false, updatable = false)
 	private CarType carType;
 
-	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "C_ID", insertable = false, updatable = false)
 	private CarModel carModel;
 
-	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "C_ID", insertable = false, updatable = false)
 	private CarBrand carBrand;
 
-	@OneToOne
-	@PrimaryKeyJoinColumn
-	private Order order;
+	@OneToMany(mappedBy = "car")
+	private Set<Order> order;
 }

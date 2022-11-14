@@ -3,7 +3,7 @@ package dao;
 import models.User;
 import org.junit.Test;
 import org.junit.After;
-import dao.base.DaoTest;
+import dao.base.BaseDaoTest;
 import org.junit.Before;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 
 import static org.junit.Assert.assertEquals;
 
-public class UserDaoImplTest extends DaoTest {
+public class UserDaoImplTest extends BaseDaoTest {
 
 	UserDaoImpl targetObject;
 

@@ -1,6 +1,6 @@
 package dao;
 
-import dao.base.DaoTest;
+import dao.base.BaseDaoTest;
 import lombok.SneakyThrows;
 import models.*;
 import org.dbunit.dataset.IDataSet;
@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 
 import static org.junit.Assert.*;
 
-public class OrderDaoImplTest extends DaoTest {
+public class OrderDaoImplTest extends BaseDaoTest {
 
 	OrderDaoImpl targetObject;
 
@@ -55,19 +55,10 @@ public class OrderDaoImplTest extends DaoTest {
 		user.setEmail("EugeneOnegin@mail.com");
 		user.setPaymentCard("1111222233334444");
 
-		Payment payment = new Payment();
-		payment.setId(6);
-		payment.setDtPayment(Timestamp.valueOf("2022-04-23 14:34:00"));
-
 		Order order = new Order();
 		order.setPrice(BigDecimal.valueOf(43.4));
 		order.setDateTime(Timestamp.valueOf("2022-04-23 15:01:00"));
-		order.setUserId(user.getId());
 		order.setCarId(car.getId());
-		order.setPaymentId(payment.getId());
-
-		order.setUser(user);
-		order.setPayment(payment);
 		order.setCar(car);
 
 		// when

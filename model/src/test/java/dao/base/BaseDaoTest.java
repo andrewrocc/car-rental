@@ -13,7 +13,7 @@ import db.connection.properties.MysqlJdbcDataSource;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-public class DaoTest {
+public class BaseDaoTest {
 
 	// JDBC data source
 	public static MysqlJdbcDataSource testMysqlJdbcDataSource;
@@ -42,6 +42,8 @@ public class DaoTest {
 				.addAnnotatedClass(CarBrand.class)
 				.addAnnotatedClass(Car.class)
 				.addAnnotatedClass(Order.class)
+				.addAnnotatedClass(M2M_UserOrder.class)
+				.addAnnotatedClass(M2M_OrderPayment.class)
 				.getMetadataBuilder()
 				.build();
 		testSessionFactory = metadata.getSessionFactoryBuilder().build();

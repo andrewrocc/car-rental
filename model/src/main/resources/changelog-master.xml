@@ -8,7 +8,6 @@
     <changeSet id="1" author="andrewrocc">
         <sql>
             SET FOREIGN_KEY_CHECKS=0;
-
             /* Drop Tables */
             DROP TABLE IF EXISTS T_USERS CASCADE;
 
@@ -24,75 +23,130 @@
 
             DROP TABLE IF EXISTS T_CARS_BRAND CASCADE;
 
+            DROP TABLE IF EXISTS T_ROLES CASCADE;
+
+            DROP TABLE IF EXISTS T_M2M_USERS_ROLES CASCADE;
+
+            DROP TABLE IF EXISTS T_PERMISSIONS CASCADE;
+
+            DROP TABLE IF EXISTS T_M2M_USERS_ORDERS CASCADE;
+
+            DROP TABLE IF EXISTS T_M2M_ORDERS_PAYMENTS CASCADE;
+
             /* Create Tables */
-            CREATE TABLE IF NOT EXISTS T_USERS (
+            CREATE TABLE T_USERS (
             U_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             U_USERNAME VARCHAR(100) NOT NULL,
             U_USEREMAIL VARCHAR(100) NOT NULL,
             U_PAYMENT_CARD VARCHAR(16) NOT NULL,
-            CONSTRAINT T_USERS_PK PRIMARY KEY (U_ID ASC)
+            CONSTRAINT PK_USERS PRIMARY KEY (U_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_ORDERS (
+            CREATE TABLE T_ORDERS (
             O_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             O_PRICE FLOAT NOT NULL,
             O_DATETIME DATETIME NOT NULL,
-            O_USER_ID BIGINT UNSIGNED NOT NULL,
             O_CAR_ID BIGINT UNSIGNED NOT NULL,
-            O_PAYMENT_ID BIGINT UNSIGNED NOT NULL,
-            CONSTRAINT T_ORDERS_PK PRIMARY KEY (O_ID ASC)
+            CONSTRAINT PK_ORDERS PRIMARY KEY (O_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_CARS (
+            CREATE TABLE T_CARS (
             C_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             C_NUMBER VARCHAR(30) NOT NULL,
             C_BRAND_ID BIGINT UNSIGNED NOT NULL,
             C_MODEL_ID BIGINT UNSIGNED NOT NULL,
             C_TYPE_ID BIGINT UNSIGNED NOT NULL,
-            CONSTRAINT T_CARS_PK PRIMARY KEY (C_ID ASC)
+            CONSTRAINT PK_CARS PRIMARY KEY (C_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_CARS_TYPE (
+            CREATE TABLE T_CARS_TYPE (
             CT_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             CT_NAME VARCHAR(50) NOT NULL,
-            CONSTRAINT T_CARS_TYPE_PK PRIMARY KEY (CT_ID ASC)
+            CONSTRAINT PK_CARS_TYPE PRIMARY KEY (CT_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_CARS_MODEL (
+            CREATE TABLE T_CARS_MODEL (
             CM_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             CM_NAME VARCHAR(100) NOT NULL,
-            CONSTRAINT T_CARS_MODEL PRIMARY KEY (CM_ID ASC)
+            CONSTRAINT PK_CARS_MODEL PRIMARY KEY (CM_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_CARS_BRAND (
+            CREATE TABLE T_CARS_BRAND (
             CB_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             CB_NAME VARCHAR(100) NOT NULL,
-            CONSTRAINT T_CARS_BRAND PRIMARY KEY (CB_ID ASC)
+            CONSTRAINT PK_CARS_BRAND PRIMARY KEY (CB_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_PAYMENTS (
+            CREATE TABLE T_PAYMENTS (
             P_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             P_DATETIME DATETIME NOT NULL,
-            CONSTRAINT T_PAYMENTS_PK PRIMARY KEY (P_ID ASC)
+            CONSTRAINT PK_PAYMENTS PRIMARY KEY (P_ID ASC)
             );
 
-            ALTER TABLE T_ORDERS ADD CONSTRAINT T_ORDERS_FK_USERS FOREIGN KEY (O_USER_ID)
-            REFERENCES T_USERS (U_ID) ON DELETE CASCADE ON UPDATE CASCADE;
+            CREATE TABLE T_ROLES (
+            R_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            R_NAME VARCHAR(100) NOT NULL,
+            R_DESCRIPTION VARCHAR(255) NOT NULL,
+            CONSTRAINT PK_ROLES PRIMARY KEY (R_ID ASC)
+            );
 
-            ALTER TABLE T_ORDERS ADD CONSTRAINT T_ORDERS_FK_CARS FOREIGN KEY (O_CAR_ID)
+            CREATE TABLE T_M2M_USERS_ROLES (
+            U_ID BIGINT UNSIGNED NOT NULL,
+            R_ID BIGINT UNSIGNED NOT NULL,
+            CONSTRAINT PK_M2M_USERS_ROLES PRIMARY KEY (U_ID ASC, R_ID ASC)
+            );
+
+            CREATE TABLE T_PERMISSIONS (
+            PRMS_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            PRMS_NAME VARCHAR(100) NOT NULL,
+            PRMS_R_ID BIGINT UNSIGNED NOT NULL,
+            CONSTRAINT PK_PERMISSIONS PRIMARY KEY (PRMS_ID ASC)
+            );
+
+            CREATE TABLE T_M2M_USERS_ORDERS (
+            U_ID BIGINT UNSIGNED NOT NULL,
+            O_ID BIGINT UNSIGNED NOT NULL,
+            CONSTRAINT PK_M2M_USERS_ORDERS PRIMARY KEY (U_ID ASC, O_ID ASC)
+            );
+
+            CREATE TABLE T_M2M_ORDERS_PAYMENTS (
+            O_ID BIGINT UNSIGNED NOT NULL,
+            P_ID BIGINT UNSIGNED NOT NULL,
+            CONSTRAINT PK_M2M_ORDERS_PAYMENTS PRIMARY KEY (O_ID ASC, P_ID ASC)
+            );
+
+            ALTER TABLE T_ORDERS ADD CONSTRAINT FK_ORDERS_CARS FOREIGN KEY (O_CAR_ID)
             REFERENCES T_CARS (C_ID) ON DELETE CASCADE ON UPDATE CASCADE;
 
-            ALTER TABLE T_ORDERS ADD CONSTRAINT T_ORDERS_FK_PAYMENTS FOREIGN KEY (O_PAYMENT_ID)
-            REFERENCES T_PAYMENTS (P_ID) ON DELETE CASCADE ON UPDATE CASCADE;
-
-            ALTER TABLE T_CARS ADD CONSTRAINT T_CARS_FK_CARTYPE FOREIGN KEY (C_TYPE_ID)
+            ALTER TABLE T_CARS ADD CONSTRAINT FK_CARS_CARTYPE FOREIGN KEY (C_TYPE_ID)
             REFERENCES T_CARS_TYPE (CT_ID) ON DELETE CASCADE ON UPDATE CASCADE;
 
-            ALTER TABLE T_CARS ADD CONSTRAINT T_CARS_FK_CARBRAND FOREIGN KEY (C_BRAND_ID)
+            ALTER TABLE T_CARS ADD CONSTRAINT FK_CARS_CARBRAND FOREIGN KEY (C_BRAND_ID)
             REFERENCES T_CARS_BRAND (CB_ID) ON DELETE CASCADE ON UPDATE CASCADE;
 
-            ALTER TABLE T_CARS ADD CONSTRAINT T_CARS_FK_CARMODEL FOREIGN KEY (C_MODEL_ID)
+            ALTER TABLE T_CARS ADD CONSTRAINT FK_CARS_CARMODEL FOREIGN KEY (C_MODEL_ID)
             REFERENCES T_CARS_MODEL (CM_ID) ON DELETE CASCADE ON UPDATE CASCADE;
+
+            ALTER TABLE T_M2M_USERS_ROLES ADD CONSTRAINT FK_USERS_ROLES_ROLES FOREIGN KEY (R_ID)
+            REFERENCES T_ROLES (R_ID) ON DELETE CASCADE ON UPDATE CASCADE;
+
+            ALTER TABLE T_M2M_USERS_ROLES ADD CONSTRAINT FK_USERS_ROLES_USERS FOREIGN KEY (U_ID)
+            REFERENCES T_USERS (U_ID) ON DELETE CASCADE ON UPDATE CASCADE;
+
+            ALTER TABLE T_PERMISSIONS ADD CONSTRAINT FK_PERMISSIONS_ROLES FOREIGN KEY (PRMS_R_ID)
+            REFERENCES T_ROLES (R_ID) ON DELETE CASCADE ON UPDATE CASCADE;
+
+            ALTER TABLE T_M2M_USERS_ORDERS ADD CONSTRAINT FK_M2M_USERS_ORDERS_ORDERS FOREIGN KEY (O_ID)
+            REFERENCES T_ORDERS (O_ID) ON DELETE CASCADE ON UPDATE CASCADE;
+
+            ALTER TABLE T_M2M_USERS_ORDERS ADD CONSTRAINT FK_M2M_USERS_ORDERS_USERS FOREIGN KEY (U_ID)
+            REFERENCES T_USERS (U_ID) ON DELETE CASCADE ON UPDATE CASCADE;
+
+            ALTER TABLE T_M2M_ORDERS_PAYMENTS ADD CONSTRAINT FK_M2M_ORDERS_PAYMENTS_PAYMENTS FOREIGN KEY (P_ID)
+            REFERENCES T_PAYMENTS (P_ID) ON DELETE CASCADE ON UPDATE CASCADE;
+
+            ALTER TABLE T_M2M_ORDERS_PAYMENTS ADD CONSTRAINT FK_M2M_ORDERS_PAYMENTS_ORDERS FOREIGN KEY (O_ID)
+            REFERENCES T_ORDERS (O_ID) ON DELETE CASCADE ON UPDATE CASCADE;
 
             SET FOREIGN_KEY_CHECKS=1;
         </sql>
@@ -154,13 +208,65 @@
             (7, '6748', 7, 7, 4);
 
             INSERT INTO t_orders VALUES
-            (1, 324.7, '2022-01-01 10:10', 1, 1, 1),
-            (2, 56.8, '2022-10-01 12:12', 2, 2, 2),
-            (3, 234.6, '2020-03-12 11:15', 3, 3, 3),
-            (4, 45.4, '2020-01-01 12:10', 4, 4, 4),
-            (5, 78.8, '2019-12-01 09:30', 5, 3, 5),
-            (6, 796.6, '2022-04-23 14:34', 6, 7, 6),
-            (7, 47.9, '2022-12-19 00:30', 7, 7, 7);
+            (1, 324.7, '2022-01-01 10:10', 1),
+            (2, 56.8, '2022-10-01 12:12', 2),
+            (3, 234.6, '2020-03-12 11:15', 3),
+            (4, 45.4, '2020-01-01 12:10', 4),
+            (5, 78.8, '2019-12-01 09:30', 5),
+            (6, 796.6, '2022-04-23 14:34', 6),
+            (7, 47.9, '2022-12-19 00:30', 7);
+
+            INSERT INTO t_roles VALUES
+            (1, "admin", "Administrators have full, unrestricted access rights to the service or domain."),
+            (2, "user", "Users do not have rights to change the parameters of the service and can use most of the functions."),
+            (3, "guest", "By default, guests can only view cars on the service, but they can not order them.");
+
+            INSERT INTO t_permissions VALUES
+            (1, "create_car", 1),
+            (2, "view_cars", 1),
+            (3, "update_car", 1),
+            (4, "delete_car", 1),
+            (5, "create_order", 1),
+            (6, "create_payment", 1),
+            (7, "view_payments", 1),
+            (8, "view_orders", 1),
+            (9, "create_user", 1),
+            (10, "update_user", 1),
+            (11, "delete_user", 1),
+            (12, "view_users", 1),
+            (13, "view_cars", 2),
+            (14, "create_order", 2),
+            (15, "create_payment", 2),
+            (16, "view_cars", 3);
+
+            INSERT INTO t_m2m_orders_payments VALUES
+            (1, 1),
+            (2, 2),
+            (3, 3),
+            (4, 3),
+            (5, 4),
+            (6, 5),
+            (7, 6),
+            (7, 7);
+
+            INSERT INTO t_m2m_users_orders VALUES
+            (1, 1),
+            (2, 2),
+            (3, 3),
+            (4, 3),
+            (5, 4),
+            (6, 5),
+            (7, 6),
+            (7, 7);
+
+            INSERT INTO t_m2m_users_roles VALUES
+            (1, 2),
+            (2, 2),
+            (3, 2),
+            (4, 2),
+            (5, 2),
+            (6, 2),
+            (7, 1);
         </sql>
     </changeSet>
 

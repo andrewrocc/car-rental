@@ -4,8 +4,7 @@ import models.Payment;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
-import dao.base.DaoTest;
+import dao.base.BaseDaoTest;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
@@ -18,7 +17,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
-public class PaymentDaoImplTest extends DaoTest {
+public class PaymentDaoImplTest extends BaseDaoTest {
 
 	PaymentDaoImpl targetObject;
 
@@ -44,7 +43,7 @@ public class PaymentDaoImplTest extends DaoTest {
 
 		Payment payment = new Payment();
 		LocalDateTime localDateTime = LocalDateTime.now();
-		payment.setDtPayment(Timestamp.valueOf(localDateTime));
+		payment.setDateTimePayment(Timestamp.valueOf(localDateTime));
 
 		// when
 		targetObject.create(payment);
@@ -66,7 +65,7 @@ public class PaymentDaoImplTest extends DaoTest {
 		Payment payment = targetObject.findById(1);
 
 		//then
-		assertEquals("2022-01-01 13:10:00.0", payment.getDtPayment().toString());
+		assertEquals("2022-01-01 13:10:00.0", payment.getDateTimePayment().toString());
 	}
 
 	@Test
@@ -84,7 +83,7 @@ public class PaymentDaoImplTest extends DaoTest {
 
 		Payment payment = new Payment();
 		payment.setId(101);
-		payment.setDtPayment(Timestamp.valueOf("2022-01-01 10:10:00"));
+		payment.setDateTimePayment(Timestamp.valueOf("2022-01-01 10:10:00"));
 
 		//when
 		targetObject.delete(payment);

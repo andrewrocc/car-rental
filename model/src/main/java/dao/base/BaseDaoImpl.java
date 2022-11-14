@@ -1,4 +1,4 @@
-package dao;
+package dao.base;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
