@@ -26,10 +26,6 @@ public class User {
 	@Column(name = "U_PAYMENT_CARD")
 	private String paymentCard;
 
-	@OneToOne
-	@PrimaryKeyJoinColumn
-	private Order order;
-
-//	@OneToMany(mappedBy = "user")
-//	private Set<M2M_UserOrder> userOrder;
+	@OneToMany(mappedBy = "user")
+	private Set<M2M_UserOrder> userOrder;
 }

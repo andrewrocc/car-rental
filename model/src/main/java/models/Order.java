@@ -34,4 +34,7 @@ public class Order {
 
 	@OneToMany(mappedBy = "order")
 	private Set<M2M_OrderPayment> orderPayment;
+
+	@OneToMany(mappedBy = "order")
+	private Set<M2M_UserOrder> userOrder;
 }

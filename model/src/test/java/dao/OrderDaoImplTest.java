@@ -2,7 +2,10 @@ package dao;
 
 import dao.base.BaseDaoTest;
 import lombok.SneakyThrows;
-import models.*;
+import models.Car;
+import models.M2M_OrderPayment;
+import models.M2M_UserOrder;
+import models.Order;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
@@ -14,8 +17,10 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class OrderDaoImplTest extends BaseDaoTest {
 
@@ -49,17 +54,22 @@ public class OrderDaoImplTest extends BaseDaoTest {
 		car.setCarModelId(2);
 		car.setCarTypeId(1);
 
-		User user = new User();
-		user.setId(1);
-		user.setName("Eugene Onegin");
-		user.setEmail("EugeneOnegin@mail.com");
-		user.setPaymentCard("1111222233334444");
+		M2M_UserOrder userOrder = new M2M_UserOrder();
+		userOrder.setUserId(1L);
+		userOrder.setOrderId(1L);
+
+		M2M_OrderPayment orderPayment = new M2M_OrderPayment();
+		orderPayment.setOrderId(1L);
+		orderPayment.setPaymentId(1L);
 
 		Order order = new Order();
 		order.setPrice(BigDecimal.valueOf(43.4));
 		order.setDateTime(Timestamp.valueOf("2022-04-23 15:01:00"));
 		order.setCarId(car.getId());
+
 		order.setCar(car);
+		order.setUserOrder(new HashSet<>(List.of(userOrder)));
+		order.setOrderPayment(new HashSet<>(List.of(orderPayment)));
 
 		// when
 		targetObject.create(order);
@@ -99,8 +109,9 @@ public class OrderDaoImplTest extends BaseDaoTest {
 
 		Order order = new Order();
 		order.setId(101);
-		order.setPrice(BigDecimal.valueOf(234.4));
-		order.setDateTime(Timestamp.valueOf("2023-01-01 00:56:10"));
+		order.setPrice(BigDecimal.valueOf(50.0));
+		order.setDateTime(Timestamp.valueOf("2022-12-19 00:30:00"));
+		order.setCarId(4L);
 
 		//when
 		targetObject.delete(order);
