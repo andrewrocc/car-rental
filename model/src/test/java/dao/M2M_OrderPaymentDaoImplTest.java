@@ -39,7 +39,7 @@ public class M2M_OrderPaymentDaoImplTest extends BaseDaoTest {
 		//given
 		Connection connection = testMysqlJdbcDataSource.getConnection();
 		IDataSet dataset = new FlatXmlDataSetBuilder()
-				.build(UserDaoImplTest.class.getResourceAsStream("M2M_OrderPaymentDaoImplTest.xml"));
+				.build(UserDaoImplTest.class.getResourceAsStream("M2M_OrderPaymentDaoImplTestCreate.xml"));
 		DatabaseOperation.INSERT.execute(iDatabaseConnection, dataset);
 		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_m2m_orders_payments;");
 		resultSet.next();
@@ -98,7 +98,7 @@ public class M2M_OrderPaymentDaoImplTest extends BaseDaoTest {
 	public void delete() {
 		//given
 		IDataSet dataset = new FlatXmlDataSetBuilder()
-				.build(UserDaoImplTest.class.getResourceAsStream("M2M_OrderPaymentDaoImplTest.xml"));
+				.build(UserDaoImplTest.class.getResourceAsStream("M2M_OrderPaymentDaoImplTestDelete.xml"));
 		DatabaseOperation.INSERT.execute(iDatabaseConnection, dataset);
 
 		M2M_OrderPayment orderPayment = new M2M_OrderPayment();
