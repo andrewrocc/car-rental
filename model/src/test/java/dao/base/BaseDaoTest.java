@@ -45,6 +45,7 @@ public class BaseDaoTest {
 				.addAnnotatedClass(M2M_UserOrder.class)
 				.addAnnotatedClass(M2M_OrderPayment.class)
 				.addAnnotatedClass(Permission.class)
+				.addAnnotatedClass(Role.class)
 				.getMetadataBuilder()
 				.build();
 		testSessionFactory = metadata.getSessionFactoryBuilder().build();
