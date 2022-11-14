@@ -44,6 +44,7 @@ public class BaseDaoTest {
 				.addAnnotatedClass(Order.class)
 				.addAnnotatedClass(M2M_UserOrder.class)
 				.addAnnotatedClass(M2M_OrderPayment.class)
+				.addAnnotatedClass(M2M_UserRole.class)
 				.addAnnotatedClass(Permission.class)
 				.addAnnotatedClass(Role.class)
 				.getMetadataBuilder()

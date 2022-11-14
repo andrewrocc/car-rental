@@ -28,4 +28,7 @@ public class User {
 
 	@OneToMany(mappedBy = "user")
 	private Set<M2M_UserOrder> userOrder;
+
+	@OneToMany(mappedBy = "user")
+	private Set<M2M_UserRole> userRoles;
 }

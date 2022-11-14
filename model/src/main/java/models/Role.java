@@ -25,4 +25,7 @@ public class Role {
 
 	@OneToMany(mappedBy = "role")
 	private Set<Permission> permission;
+
+	@OneToMany(mappedBy = "role")
+	private Set<M2M_UserRole> userRoles;
 }
