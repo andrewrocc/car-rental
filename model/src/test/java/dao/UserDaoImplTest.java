@@ -1,28 +1,32 @@
 package dao;
 
-import models.User;
-import org.junit.Test;
-import org.junit.After;
 import dao.base.BaseDaoTest;
-import org.junit.Before;
+import infrastructure.dao.UserDao;
+import infrastructure.models.User;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.operation.DatabaseOperation;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class UserDaoImplTest extends BaseDaoTest {
 
-	UserDaoImpl targetObject;
+	@Autowired
+	UserDao targetObject;
 
 	@Before
-	public void setUp() throws Exception {
-		targetObject = new UserDaoImpl(testSessionFactory);
-	}
+	public void setUp() throws Exception {	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -62,7 +66,7 @@ public class UserDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		User user = targetObject.findById(1);
+		User user = targetObject.findById(User.class, 1);
 
 		//then
 		assertEquals("Eugene Onegin", user.getName());

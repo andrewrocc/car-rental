@@ -1,18 +1,17 @@
 package dao.base;
 
-import models.*;
+import infrastructure.config.DataConfig;
 import lombok.SneakyThrows;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.hibernate.boot.Metadata;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
 import org.dbunit.ext.mysql.MySqlConnection;
 import org.dbunit.database.IDatabaseConnection;
-import db.connection.properties.MysqlJdbcDataSource;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import infrastructure.config.MysqlJdbcDataSource;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 
+@TestPropertySource(value = "classpath:/car_rental_test.jdbc.properties")
+@ContextConfiguration(classes = DataConfig.class)
 public class BaseDaoTest {
 
 	// JDBC data source
@@ -21,43 +20,17 @@ public class BaseDaoTest {
 	// DBUnit connection
 	public static IDatabaseConnection iDatabaseConnection;
 
-	//Hibernate session factory
-	public static SessionFactory testSessionFactory;
-
-
-	// TODO: do not forget add addAnnotatedClass from models
 	@BeforeClass
 	@SneakyThrows
 	public static void init() {
 		testMysqlJdbcDataSource = new MysqlJdbcDataSource("car_rental_test.jdbc.properties");
 		iDatabaseConnection = new MySqlConnection(testMysqlJdbcDataSource.getConnection(), "car_rental_test");
-
-		StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
-				.configure("hibernate_test.cfg.xml").build();
-		Metadata metadata = new MetadataSources(standardRegistry)
-				.addAnnotatedClass(User.class)
-				.addAnnotatedClass(Payment.class)
-				.addAnnotatedClass(CarType.class)
-				.addAnnotatedClass(CarModel.class)
-				.addAnnotatedClass(CarBrand.class)
-				.addAnnotatedClass(Car.class)
-				.addAnnotatedClass(Order.class)
-				.addAnnotatedClass(M2M_UserOrder.class)
-				.addAnnotatedClass(M2M_OrderPayment.class)
-				.addAnnotatedClass(M2M_UserRole.class)
-				.addAnnotatedClass(Permission.class)
-				.addAnnotatedClass(Role.class)
-				.getMetadataBuilder()
-				.build();
-		testSessionFactory = metadata.getSessionFactoryBuilder().build();
 	}
 
 	@AfterClass
 	@SneakyThrows
 	public static void destroy() {
 		iDatabaseConnection.close();
-		if (testSessionFactory != null && testSessionFactory.isOpen()) {
-			testSessionFactory.close();
-		}
 	}
 }
+

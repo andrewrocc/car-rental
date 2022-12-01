@@ -1,28 +1,32 @@
 package dao;
 
 import dao.base.BaseDaoTest;
+import infrastructure.dao.CarBrandDao;
+import infrastructure.models.CarBrand;
 import lombok.SneakyThrows;
-import models.CarBrand;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class CarBrandDaoImplTest extends BaseDaoTest {
 
-	CarBrandDaoImpl targetObject;
+	@Autowired
+	CarBrandDao targetObject;
 
 	@Before
-	public void setUp() throws Exception {
-		targetObject = new CarBrandDaoImpl(testSessionFactory);
-	}
+	public void setUp() throws Exception { }
 
 	@After
 	public void tearDown() throws Exception {
@@ -59,7 +63,7 @@ public class CarBrandDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		CarBrand cb = targetObject.findById(1);
+		CarBrand cb = targetObject.findById(CarBrand.class, 1);
 
 		//then
 		assertEquals("BMW", cb.getBrandName());

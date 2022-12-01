@@ -16,13 +16,16 @@
         <!--  Drop and re-create the database schema on startup  -->
         <!--  <property name="hbm2ddl.auto">create</property>-->
         <!--         For mapping with annotations -->
-        <mapping class="models.Car"/>
-        <mapping class="models.CarBrand"/>
-        <mapping class="models.CarModel"/>
-        <mapping class="models.CarType"/>
-        <mapping class="models.Payment"/>
-        <mapping class="models.User"/>
-        <mapping class="models.M2M_UserOrder"/>
-        <mapping class="models.M2M_OrderPayment"/>
+        <mapping class="infrastructure.models.Car"/>
+        <mapping class="infrastructure.models.CarBrand"/>
+        <mapping class="infrastructure.models.CarModel"/>
+        <mapping class="infrastructure.models.CarType"/>
+        <mapping class="infrastructure.models.Payment"/>
+        <mapping class="infrastructure.models.User"/>
+        <mapping class="infrastructure.models.M2M_UserOrder"/>
+        <mapping class="infrastructure.models.M2M_OrderPayment"/>
+        <mapping class="infrastructure.models.M2M_UserRole"/>
+        <mapping class="infrastructure.models.Permission"/>
+        <mapping class="infrastructure.models.Role"/>
     </session-factory>
 </hibernate-configuration>

@@ -1,30 +1,32 @@
 package dao;
 
 import dao.base.BaseDaoTest;
+import infrastructure.dao.PermissionDao;
+import infrastructure.models.Permission;
 import lombok.SneakyThrows;
-import models.Payment;
-import models.Permission;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class PermissionDaoImplTest extends BaseDaoTest {
 
-	PermissionDaoImpl targetObject;
+	@Autowired
+	PermissionDao targetObject;
 
 	@Before
 	public void setUp() throws Exception {
-		targetObject = new PermissionDaoImpl(testSessionFactory);
 	}
 
 	@After
@@ -63,7 +65,7 @@ public class PermissionDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		Permission permission = targetObject.findById(1);
+		Permission permission = targetObject.findById(Permission.class, 1);
 
 		//then
 		assertEquals("create_car", permission.getName());

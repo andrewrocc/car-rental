@@ -1,17 +1,21 @@
 package dao;
 
 import dao.base.BaseDaoTest;
+import infrastructure.dao.OrderDao;
+import infrastructure.models.Car;
+import infrastructure.models.M2M_OrderPayment;
+import infrastructure.models.M2M_UserOrder;
+import infrastructure.models.Order;
 import lombok.SneakyThrows;
-import models.Car;
-import models.M2M_OrderPayment;
-import models.M2M_UserOrder;
-import models.Order;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -22,13 +26,14 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class OrderDaoImplTest extends BaseDaoTest {
 
-	OrderDaoImpl targetObject;
+	@Autowired
+	OrderDao targetObject;
 
 	@Before
 	public void setUp() throws Exception {
-		targetObject = new OrderDaoImpl(testSessionFactory);
 	}
 
 	@After
@@ -51,8 +56,6 @@ public class OrderDaoImplTest extends BaseDaoTest {
 		car.setId(4);
 		car.setNumberCar("1246");
 		car.setCarBrandId(2);
-		car.setCarModelId(2);
-		car.setCarTypeId(1);
 
 		M2M_UserOrder userOrder = new M2M_UserOrder();
 		userOrder.setUserId(1L);
@@ -88,7 +91,7 @@ public class OrderDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		Order order = targetObject.findById(1L);
+		Order order = targetObject.findById(Order.class, 1L);
 
 		//then
 		assertEquals(BigDecimal.valueOf(324.7), order.getPrice());

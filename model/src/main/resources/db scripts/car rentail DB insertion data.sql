@@ -26,30 +26,30 @@ INSERT INTO t_cars_brand VALUES
 (7, 'Ford');
 
 INSERT INTO t_cars_model VALUES
-(1, 'M3 competition'),
-(2, 'AMG G63'),
-(3, 'Land Cruiser 300'),
-(4, 'RS 5'),
-(5, 'CR-V 2020'),
-(6, 'Passat Business 2022'),
-(7, 'GT 2017');
+(1, 1, 'M3 competition'),
+(2, 2, 'AMG G63'),
+(3, 3, 'Land Cruiser 300'),
+(4, 4, 'RS 5'),
+(5, 5, 'CR-V 2020'),
+(6, 6, 'Passat Business 2022'),
+(7, 7, 'GT 2017');
 
-INSERT INTO t_cars_type VALUES
-(1, 'sedan'),
-(2, 'hatchback'),
-(3, 'crossover'),
-(4, 'sport car'),
-(5, 'hypercar'),
-(6, 'business');
+-- INSERT INTO t_cars_type VALUES
+-- (1, 'sedan'),
+-- (2, 'hatchback'),
+-- (3, 'crossover'),
+-- (4, 'sport car'),
+-- (5, 'hypercar'),
+-- (6, 'business');
 
 INSERT INTO t_cars VALUES
-(1, '9874', 1, 1, 1),
-(2, '1234', 2, 2, 1),
-(3, '3410', 3, 3, 3),
-(4, '1246', 4, 4, 1),
-(5, '7806', 5, 5, 3),
-(6, '0689', 6, 6, 6),
-(7, '6748', 7, 7, 4);
+(1, '9874', 1),
+(2, '1234', 2),
+(3, '3410', 3),
+(4, '1246', 4),
+(5, '7806', 5),
+(6, '0689', 6),
+(7, '6748', 7);
 
 INSERT INTO t_orders VALUES
 (1, 324.7, '2022-01-01 10:10', 1),

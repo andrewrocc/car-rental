@@ -1,16 +1,20 @@
 package dao;
 
 import dao.base.BaseDaoTest;
+import infrastructure.dao.M2M_OrderPaymentDao;
+import infrastructure.models.M2M_OrderPayment;
+import infrastructure.models.Order;
+import infrastructure.models.Payment;
 import lombok.SneakyThrows;
-import models.M2M_OrderPayment;
-import models.Order;
-import models.Payment;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -19,14 +23,14 @@ import java.sql.Timestamp;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class M2M_OrderPaymentDaoImplTest extends BaseDaoTest {
 
-	M2M_OrderPaymentDaoImpl targetObject;
+	@Autowired
+	M2M_OrderPaymentDao targetObject;
 
 	@Before
-	public void setUp() throws Exception {
-		targetObject = new M2M_OrderPaymentDaoImpl(testSessionFactory);
-	}
+	public void setUp() throws Exception {	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -82,7 +86,7 @@ public class M2M_OrderPaymentDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		M2M_OrderPayment orderPayment = targetObject.findById(1);
+		M2M_OrderPayment orderPayment = targetObject.findById(M2M_OrderPayment.class, 1);
 
 		//then
 		assertEquals(1L, orderPayment.getOrderId());

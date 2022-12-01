@@ -1,31 +1,33 @@
 package dao;
 
-import models.Car;
-import org.junit.Test;
-import models.CarType;
-import org.junit.After;
-import models.CarBrand;
-import models.CarModel;
-import org.junit.Before;
 import dao.base.BaseDaoTest;
+import infrastructure.dao.CarDao;
+import infrastructure.models.Car;
+import infrastructure.models.CarBrand;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.operation.DatabaseOperation;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class CarDaoImplTest extends BaseDaoTest {
 
-	CarDaoImpl targetObject;
+	@Autowired
+	CarDao targetObject;
 
 	@Before
-	public void setUp() throws Exception {
-		targetObject = new CarDaoImpl(testSessionFactory);
-	}
+	public void setUp() { }
 
 	@After
 	public void tearDown() throws Exception {
@@ -43,14 +45,6 @@ public class CarDaoImplTest extends BaseDaoTest {
 		int initialSize = resultSet.getInt(1);
 		assertEquals(7, initialSize);
 
-		CarType carType = new CarType();
-		carType.setId(4);
-		carType.setTypeName("sport car");
-
-		CarModel carModel = new CarModel();
-		carModel.setId(2);
-		carModel.setModelName("AMG G63");
-
 		CarBrand carBrand = new CarBrand();
 		carBrand.setId(2);
 		carBrand.setBrandName("Mercedes-Benz");
@@ -58,16 +52,9 @@ public class CarDaoImplTest extends BaseDaoTest {
 		Car car = new Car();
 		car.setNumberCar("234e");
 		car.setCarBrandId(carBrand.getId());
-		car.setCarModelId(carModel.getId());
-		car.setCarTypeId(carType.getId());
 
-		car.setCarType(carType);
-		car.setCarBrand(carBrand);
-		car.setCarModel(carModel);
+		car.setCarBrand(carBrand);;
 
-//		carBrand.setCar(car);
-//		carModel.setCar(car);
-//		carType.setCar(car);
 		// when
 		targetObject.create(car);
 
@@ -85,7 +72,7 @@ public class CarDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		Car car = targetObject.findById(1L);
+		Car car = targetObject.findById(Car.class, 1L);
 
 		//then
 		assertEquals("9874", car.getNumberCar());

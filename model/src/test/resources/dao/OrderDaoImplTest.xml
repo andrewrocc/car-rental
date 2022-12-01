@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
-    <t_cars C_ID="101" C_NUMBER="234e" C_BRAND_ID="2" C_MODEL_ID="2" C_TYPE_ID="4"/>
+    <t_cars C_ID="101" C_NUMBER="234e" C_BRAND_ID="2"/>
     <t_payments P_ID="101" P_DATETIME="2022-12-19 00:30:00"/>
     <t_orders O_ID="101" O_PRICE="50.0" O_DATETIME="2022-12-19 00:30:00" O_CAR_ID="4"/>
     <t_m2m_users_orders U_ID="6" O_ID="101" />

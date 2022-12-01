@@ -1,28 +1,34 @@
 package dao;
 
 import dao.base.BaseDaoTest;
+import infrastructure.dao.M2M_UserRoleDao;
+import infrastructure.models.M2M_UserRole;
+import infrastructure.models.Role;
+import infrastructure.models.User;
 import lombok.SneakyThrows;
-import models.*;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class M2M_UserRoleDaoImplTest extends BaseDaoTest {
 
-	M2M_UserRoleDaoImpl targetObject;
+	@Autowired
+	M2M_UserRoleDao targetObject;
 
 	@Before
-	public void setUp() throws Exception {
-		targetObject = new M2M_UserRoleDaoImpl(testSessionFactory);
-	}
+	public void setUp() throws Exception {	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -73,7 +79,7 @@ public class M2M_UserRoleDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		M2M_UserRole userRole = targetObject.findById(1);
+		M2M_UserRole userRole = targetObject.findById(M2M_UserRole.class, 1);
 
 		//then
 		assertEquals(2L, userRole.getRoleId());

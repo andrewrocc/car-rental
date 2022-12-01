@@ -1,29 +1,34 @@
 package dao;
 
-import models.Payment;
-import org.junit.Test;
-import org.junit.After;
-import org.junit.Before;
 import dao.base.BaseDaoTest;
+import infrastructure.dao.PaymentDao;
+import infrastructure.models.Payment;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.operation.DatabaseOperation;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
-import java.sql.Connection;
 import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class PaymentDaoImplTest extends BaseDaoTest {
 
-	PaymentDaoImpl targetObject;
+	@Autowired
+	PaymentDao targetObject;
 
 	@Before
 	public void setUp() throws Exception {
-		targetObject = new PaymentDaoImpl(testSessionFactory);
 	}
 
 	@After
@@ -62,7 +67,7 @@ public class PaymentDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		Payment payment = targetObject.findById(1);
+		Payment payment = targetObject.findById(Payment.class, 1);
 
 		//then
 		assertEquals("2022-01-01 13:10:00.0", payment.getDateTimePayment().toString());

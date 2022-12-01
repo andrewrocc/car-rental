@@ -1,28 +1,32 @@
 package dao;
 
 import dao.base.BaseDaoTest;
+import infrastructure.dao.CarModelDao;
+import infrastructure.models.CarModel;
 import lombok.SneakyThrows;
-import models.CarModel;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class CarModelDaoImplTest extends BaseDaoTest {
 
-	CarModelDaoImpl targetObject;
+	@Autowired
+	CarModelDao targetObject;
 
 	@Before
-	public void setUp() throws Exception {
-		targetObject = new CarModelDaoImpl(testSessionFactory);
-	}
+	public void setUp() throws Exception { }
 
 	@After
 	public void tearDown() throws Exception {
@@ -40,6 +44,7 @@ public class CarModelDaoImplTest extends BaseDaoTest {
 		assertEquals(7, initialSize);
 
 		CarModel cm = new CarModel();
+		cm.setCarBrandId(1L);
 		cm.setModelName("M7");
 
 		// when
@@ -59,7 +64,7 @@ public class CarModelDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		CarModel cm = targetObject.findById(1);
+		CarModel cm = targetObject.findById(CarModel.class, 1);
 
 		//then
 		assertEquals("M3 competition", cm.getModelName());

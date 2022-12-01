@@ -1,29 +1,32 @@
 package dao;
 
 import dao.base.BaseDaoTest;
+import infrastructure.dao.RoleDao;
+import infrastructure.models.Role;
 import lombok.SneakyThrows;
-import models.Permission;
-import models.Role;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+@RunWith(SpringJUnit4ClassRunner.class)
 public class RoleDaoImplTest extends BaseDaoTest {
 
-	RoleDaoImpl targetObject;
+	@Autowired
+	RoleDao targetObject;
 
 	@Before
-	public void setUp() throws Exception {
-		targetObject = new RoleDaoImpl(testSessionFactory);
-	}
+	public void setUp() throws Exception {	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -61,7 +64,7 @@ public class RoleDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		Role role = targetObject.findById(1);
+		Role role = targetObject.findById(Role.class, 1L);
 
 		//then
 		assertEquals("admin", role.getName());
