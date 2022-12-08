@@ -25,22 +25,6 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class DataConfig {
 
-	public static final String JDBC_PROPERTIES_FILE_NAME = "car_rental.jdbc.properties";
-
-	public static final String HIBERNATE_PROPERTIES_FILE_NAME = "hibernate.properties";
-
-	private static Properties jdbcProperties;
-
-	@SneakyThrows
-	public static Properties getJdbcProperties(String propertiesFileName) {
-		if (jdbcProperties == null) {
-			jdbcProperties = new Properties();
-			jdbcProperties.load(MysqlJdbcDataSource.class.getClassLoader()
-					.getResourceAsStream(propertiesFileName));
-		}
-		return jdbcProperties;
-	}
-
 	@Bean
 	public Properties hibernateProperties(@Value("${hibernate.show_sql}") String showSql,
 	                                      @Value("true") String debug,
@@ -63,6 +47,9 @@ public class DataConfig {
 	                             @Value("true") boolean removeAbandonedOnBorrow,
 	                             @Value("20") int initialSize,
 	                             @Value("30") int maxTotal) {
+		if (!userName.equals("root")) {
+			userName = "root";
+		}
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setUrl(url);
 		dataSource.setDriverClassName(driverClassName);

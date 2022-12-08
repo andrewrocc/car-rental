@@ -2,6 +2,7 @@ package infrastructure.models;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -9,6 +10,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "T_CARS")
 public class Car {
 

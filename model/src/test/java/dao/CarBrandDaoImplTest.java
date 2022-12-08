@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -36,7 +37,6 @@ public class CarBrandDaoImplTest extends BaseDaoTest {
 	@Test
 	@SneakyThrows
 	public void create() {
-		//given
 		Connection connection = testMysqlJdbcDataSource.getConnection();
 		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_cars_brand;");
 		resultSet.next();
@@ -97,5 +97,22 @@ public class CarBrandDaoImplTest extends BaseDaoTest {
 		assertEquals(7, actualSize);
 		DatabaseOperation.DELETE.execute(iDatabaseConnection, dataset);
 		resultSet.close();
+	}
+
+	@Test
+	@SneakyThrows
+	public void getAllCarBrands() {
+		Connection connection = testMysqlJdbcDataSource.getConnection();
+		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_cars_brand;");
+		resultSet.next();
+		int initialSize = resultSet.getInt(1);
+		assertEquals(7, initialSize);
+
+		// when
+		List<CarBrand> brandList = targetObject.getAllCarBrands();
+
+		//then
+		assertEquals(7, brandList.size());
+		connection.close();
 	}
 }

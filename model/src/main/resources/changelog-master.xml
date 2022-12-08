@@ -17,7 +17,7 @@
 
             DROP TABLE IF EXISTS T_CARS CASCADE;
 
-            DROP TABLE IF EXISTS T_CARS_TYPE CASCADE;
+            -- DROP TABLE IF EXISTS T_CARS_TYPE CASCADE;
 
             DROP TABLE IF EXISTS T_CARS_MODEL CASCADE;
 
@@ -34,7 +34,7 @@
             DROP TABLE IF EXISTS T_M2M_ORDERS_PAYMENTS CASCADE;
 
             /* Create Tables */
-            CREATE TABLE IF NOT EXISTS T_USERS (
+            CREATE TABLE T_USERS (
             U_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             U_USERNAME VARCHAR(100) NOT NULL,
             U_USEREMAIL VARCHAR(100) NOT NULL,
@@ -42,7 +42,7 @@
             CONSTRAINT PK_USERS PRIMARY KEY (U_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_ORDERS (
+            CREATE TABLE T_ORDERS (
             O_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             O_PRICE FLOAT NOT NULL,
             O_DATETIME DATETIME NOT NULL,
@@ -50,66 +50,66 @@
             CONSTRAINT PK_ORDERS PRIMARY KEY (O_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_CARS (
+            CREATE TABLE T_CARS (
             C_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             C_NUMBER VARCHAR(30) NOT NULL,
             C_BRAND_ID BIGINT UNSIGNED NOT NULL,
-            C_MODEL_ID BIGINT UNSIGNED NOT NULL,
-            C_TYPE_ID BIGINT UNSIGNED NOT NULL,
             CONSTRAINT PK_CARS PRIMARY KEY (C_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_CARS_TYPE (
-            CT_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-            CT_NAME VARCHAR(50) NOT NULL,
-            CONSTRAINT PK_CARS_TYPE PRIMARY KEY (CT_ID ASC)
-            );
-
-            CREATE TABLE IF NOT EXISTS T_CARS_MODEL (
-            CM_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-            CM_NAME VARCHAR(100) NOT NULL,
-            CONSTRAINT PK_CARS_MODEL PRIMARY KEY (CM_ID ASC)
-            );
-
-            CREATE TABLE IF NOT EXISTS T_CARS_BRAND (
+            CREATE TABLE T_CARS_BRAND (
             CB_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             CB_NAME VARCHAR(100) NOT NULL,
             CONSTRAINT PK_CARS_BRAND PRIMARY KEY (CB_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_PAYMENTS (
+            CREATE TABLE T_CARS_MODEL (
+            CM_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            CM_CBID BIGINT UNSIGNED NOT NULL,
+            CM_NAME VARCHAR(100) NOT NULL,
+            CONSTRAINT PK_CARS_MODEL PRIMARY KEY (CM_ID ASC)
+            );
+
+            -- CREATE TABLE T_CARS_TYPE (
+            -- 	CT_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+            --     CT_CMID BIGINT NOT NULL,
+            --     CT_NAME VARCHAR(50) NOT NULL,
+            --     CONSTRAINT PK_CARS_TYPE PRIMARY KEY (CT_ID ASC)
+            -- );
+
+            CREATE TABLE T_PAYMENTS (
             P_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             P_DATETIME DATETIME NOT NULL,
             CONSTRAINT PK_PAYMENTS PRIMARY KEY (P_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_ROLES (
+            CREATE TABLE T_ROLES (
             R_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             R_NAME VARCHAR(100) NOT NULL,
             R_DESCRIPTION VARCHAR(255) NOT NULL,
             CONSTRAINT PK_ROLES PRIMARY KEY (R_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_M2M_USERS_ROLES (
+            CREATE TABLE T_M2M_USERS_ROLES (
             U_ID BIGINT UNSIGNED NOT NULL,
             R_ID BIGINT UNSIGNED NOT NULL,
             CONSTRAINT PK_M2M_USERS_ROLES PRIMARY KEY (U_ID ASC, R_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_PERMISSIONS (
+            CREATE TABLE T_PERMISSIONS (
             PRMS_ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             PRMS_NAME VARCHAR(100) NOT NULL,
             PRMS_R_ID BIGINT UNSIGNED NOT NULL,
             CONSTRAINT PK_PERMISSIONS PRIMARY KEY (PRMS_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_M2M_USERS_ORDERS (
+            CREATE TABLE T_M2M_USERS_ORDERS (
             U_ID BIGINT UNSIGNED NOT NULL,
             O_ID BIGINT UNSIGNED NOT NULL,
             CONSTRAINT PK_M2M_USERS_ORDERS PRIMARY KEY (U_ID ASC, O_ID ASC)
             );
 
-            CREATE TABLE IF NOT EXISTS T_M2M_ORDERS_PAYMENTS (
+            CREATE TABLE T_M2M_ORDERS_PAYMENTS (
             O_ID BIGINT UNSIGNED NOT NULL,
             P_ID BIGINT UNSIGNED NOT NULL,
             CONSTRAINT PK_M2M_ORDERS_PAYMENTS PRIMARY KEY (O_ID ASC, P_ID ASC)
@@ -118,14 +118,11 @@
             ALTER TABLE T_ORDERS ADD CONSTRAINT FK_ORDERS_CARS FOREIGN KEY (O_CAR_ID)
             REFERENCES T_CARS (C_ID) ON DELETE CASCADE ON UPDATE CASCADE;
 
-            ALTER TABLE T_CARS ADD CONSTRAINT FK_CARS_CARTYPE FOREIGN KEY (C_TYPE_ID)
-            REFERENCES T_CARS_TYPE (CT_ID) ON DELETE CASCADE ON UPDATE CASCADE;
-
             ALTER TABLE T_CARS ADD CONSTRAINT FK_CARS_CARBRAND FOREIGN KEY (C_BRAND_ID)
             REFERENCES T_CARS_BRAND (CB_ID) ON DELETE CASCADE ON UPDATE CASCADE;
 
-            ALTER TABLE T_CARS ADD CONSTRAINT FK_CARS_CARMODEL FOREIGN KEY (C_MODEL_ID)
-            REFERENCES T_CARS_MODEL (CM_ID) ON DELETE CASCADE ON UPDATE CASCADE;
+            ALTER TABLE T_CARS_MODEL ADD CONSTRAINT FK_CARMODEL_CARBRAND FOREIGN KEY (CM_CBID)
+            REFERENCES T_CARS_BRAND (CB_ID) ON DELETE CASCADE ON UPDATE CASCADE;
 
             ALTER TABLE T_M2M_USERS_ROLES ADD CONSTRAINT FK_USERS_ROLES_ROLES FOREIGN KEY (R_ID)
             REFERENCES T_ROLES (R_ID) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -182,30 +179,30 @@
             (7, 'Ford');
 
             INSERT INTO t_cars_model VALUES
-            (1, 'M3 competition'),
-            (2, 'AMG G63'),
-            (3, 'Land Cruiser 300'),
-            (4, 'RS 5'),
-            (5, 'CR-V 2020'),
-            (6, 'Passat Business 2022'),
-            (7, 'GT 2017');
+            (1, 1, 'M3 competition'),
+            (2, 2, 'AMG G63'),
+            (3, 3, 'Land Cruiser 300'),
+            (4, 4, 'RS 5'),
+            (5, 5, 'CR-V 2020'),
+            (6, 6, 'Passat Business 2022'),
+            (7, 7, 'GT 2017');
 
-            INSERT INTO t_cars_type VALUES
-            (1, 'sedan'),
-            (2, 'hatchback'),
-            (3, 'crossover'),
-            (4, 'sport car'),
-            (5, 'hypercar'),
-            (6, 'business');
+            -- INSERT INTO t_cars_type VALUES
+            -- (1, 'sedan'),
+            -- (2, 'hatchback'),
+            -- (3, 'crossover'),
+            -- (4, 'sport car'),
+            -- (5, 'hypercar'),
+            -- (6, 'business');
 
             INSERT INTO t_cars VALUES
-            (1, '9874', 1, 1, 1),
-            (2, '1234', 2, 2, 1),
-            (3, '3410', 3, 3, 3),
-            (4, '1246', 4, 4, 1),
-            (5, '7806', 5, 5, 3),
-            (6, '0689', 6, 6, 6),
-            (7, '6748', 7, 7, 4);
+            (1, '9874', 1),
+            (2, '1234', 2),
+            (3, '3410', 3),
+            (4, '1246', 4),
+            (5, '7806', 5),
+            (6, '0689', 6),
+            (7, '6748', 7);
 
             INSERT INTO t_orders VALUES
             (1, 324.7, '2022-01-01 10:10', 1),

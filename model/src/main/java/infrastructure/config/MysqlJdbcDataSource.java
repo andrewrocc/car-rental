@@ -6,11 +6,23 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
-import static infrastructure.config.DataConfig.*;
-
 public class MysqlJdbcDataSource {
 
 	private final String propertyFileName;
+
+	public static final String JDBC_PROPERTIES_FILE_NAME = "car_rental.jdbc.properties";
+
+	private static Properties jdbcProperties;
+
+	@SneakyThrows
+	public static Properties getJdbcProperties(String propertiesFileName) {
+		if (jdbcProperties == null) {
+			jdbcProperties = new Properties();
+			jdbcProperties.load(MysqlJdbcDataSource.class.getClassLoader()
+					.getResourceAsStream(propertiesFileName));
+		}
+		return jdbcProperties;
+	}
 
 	@SneakyThrows
 	public MysqlJdbcDataSource() {
