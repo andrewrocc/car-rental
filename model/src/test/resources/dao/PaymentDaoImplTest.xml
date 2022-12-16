@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
-    <t_payments P_ID="101" P_DATETIME="2022-01-01 10:10:00" />
+    <PAYMENT ID="101" DATETIME="2022-01-01 10:10:00" />
 </dataset>

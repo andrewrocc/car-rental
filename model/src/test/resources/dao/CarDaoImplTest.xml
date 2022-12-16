@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
-    <t_cars_brand CB_ID="101" CB_NAME="Mazda" />
-    <t_cars C_ID="101" C_NUMBER="234e" C_BRAND_ID="101"/>
+    <CAR_BRAND ID="101" NAME="Mazda" />
+    <CAR ID="101" NUMBER="234e" BRAND_ID="101"/>
 </dataset>

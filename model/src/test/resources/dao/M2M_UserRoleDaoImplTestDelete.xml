@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<dataset>
-    <t_users U_ID="101" U_USERNAME="test" U_USEREMAIL="test@mail.com" U_PAYMENT_CARD="0000000000000000" />
-    <t_roles R_ID="101" R_NAME="test" R_DESCRIPTION="test" />
-    <t_m2m_users_roles U_ID="101" R_ID="101"/>
-</dataset>

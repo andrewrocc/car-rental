@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
-    <t_cars_model CM_ID="101" CM_CBID="1" CM_NAME="M7" />
+    <CAR_MODEL ID="101" BRAND_ID="1" NAME="M7" />
 </dataset>

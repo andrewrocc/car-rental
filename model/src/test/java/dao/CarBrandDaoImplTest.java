@@ -2,7 +2,7 @@ package dao;
 
 import dao.base.BaseDaoTest;
 import infrastructure.dao.CarBrandDao;
-import infrastructure.models.CarBrand;
+import infrastructure.model.CarBrand;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -38,7 +38,7 @@ public class CarBrandDaoImplTest extends BaseDaoTest {
 	@SneakyThrows
 	public void create() {
 		Connection connection = testMysqlJdbcDataSource.getConnection();
-		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_cars_brand;");
+		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM CAR_BRAND;");
 		resultSet.next();
 		int initialSize = resultSet.getInt(1);
 		assertEquals(7, initialSize);
@@ -50,11 +50,11 @@ public class CarBrandDaoImplTest extends BaseDaoTest {
 		targetObject.create(cb);
 
 		//then
-		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_cars_brand;");
+		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM CAR_BRAND;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(8, actualSize);
-		connection.createStatement().executeUpdate(String.format("delete from t_cars_brand where CB_ID=%d;", cb.getId()));
+		connection.createStatement().executeUpdate(String.format("delete from CAR_BRAND where ID=%d;", cb.getId()));
 		connection.close();
 	}
 
@@ -63,7 +63,7 @@ public class CarBrandDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		CarBrand cb = targetObject.findById(CarBrand.class, 1);
+		CarBrand cb = targetObject.findById(1L);
 
 		//then
 		assertEquals("BMW", cb.getBrandName());
@@ -91,7 +91,7 @@ public class CarBrandDaoImplTest extends BaseDaoTest {
 
 		//then
 		ResultSet resultSet = testMysqlJdbcDataSource.getConnection().createStatement()
-				.executeQuery("SELECT count(*) FROM t_cars_brand;");
+				.executeQuery("SELECT count(*) FROM CAR_BRAND;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(7, actualSize);
@@ -103,7 +103,7 @@ public class CarBrandDaoImplTest extends BaseDaoTest {
 	@SneakyThrows
 	public void getAllCarBrands() {
 		Connection connection = testMysqlJdbcDataSource.getConnection();
-		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_cars_brand;");
+		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM CAR_BRAND;");
 		resultSet.next();
 		int initialSize = resultSet.getInt(1);
 		assertEquals(7, initialSize);

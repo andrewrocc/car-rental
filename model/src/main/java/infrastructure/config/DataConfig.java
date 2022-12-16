@@ -1,7 +1,6 @@
 package infrastructure.config;
 
-import infrastructure.models.*;
-import lombok.SneakyThrows;
+import infrastructure.model.*;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,17 +66,14 @@ public class DataConfig {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource);
 		sessionFactory.setAnnotatedClasses(User.class,
-				Payment.class,
-				CarType.class,
+				Permission.class,
 				CarModel.class,
 				CarBrand.class,
-				Car.class,
+				Payment.class,
+				CarType.class,
 				Order.class,
-				M2M_UserOrder.class,
-				M2M_OrderPayment.class,
-				M2M_UserRole.class,
-				Permission.class,
-				Role.class);
+				Role.class,
+				Car.class);
 		sessionFactory.setHibernateProperties(hibernateProperties);
 		return sessionFactory;
 	}

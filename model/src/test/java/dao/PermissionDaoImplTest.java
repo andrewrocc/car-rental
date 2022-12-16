@@ -2,7 +2,7 @@ package dao;
 
 import dao.base.BaseDaoTest;
 import infrastructure.dao.PermissionDao;
-import infrastructure.models.Permission;
+import infrastructure.model.Permission;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -39,7 +39,7 @@ public class PermissionDaoImplTest extends BaseDaoTest {
 	public void create() {
 		//given
 		Connection connection = testMysqlJdbcDataSource.getConnection();
-		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_permissions;");
+		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM PERMISSION;");
 		resultSet.next();
 		int initialSize = resultSet.getInt(1);
 		assertEquals(16, initialSize);
@@ -52,11 +52,11 @@ public class PermissionDaoImplTest extends BaseDaoTest {
 		targetObject.create(permission);
 
 		//then
-		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_permissions;");
+		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM PERMISSION;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(17, actualSize);
-		connection.createStatement().executeUpdate(String.format("delete from t_permissions where PRMS_ID=%d;", permission.getId()));
+		connection.createStatement().executeUpdate(String.format("delete from PERMISSION where ID=%d;", permission.getId()));
 		connection.close();
 	}
 
@@ -65,7 +65,7 @@ public class PermissionDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		Permission permission = targetObject.findById(Permission.class, 1);
+		Permission permission = targetObject.findById(1L);
 
 		//then
 		assertEquals("create_car", permission.getName());
@@ -92,7 +92,7 @@ public class PermissionDaoImplTest extends BaseDaoTest {
 
 		//then
 		ResultSet resultSet = testMysqlJdbcDataSource.getConnection().createStatement()
-				.executeQuery("SELECT count(*) FROM t_permissions;");
+				.executeQuery("SELECT count(*) FROM PERMISSION;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(16, actualSize);

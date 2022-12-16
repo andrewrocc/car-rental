@@ -1,7 +1,7 @@
 package infrastructure.dao;
 
 import infrastructure.dao.base.BaseDao;
-import infrastructure.models.Role;
+import infrastructure.model.Role;
 
 public interface RoleDao extends BaseDao<Role> {
 }

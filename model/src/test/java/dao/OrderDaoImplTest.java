@@ -2,10 +2,8 @@ package dao;
 
 import dao.base.BaseDaoTest;
 import infrastructure.dao.OrderDao;
-import infrastructure.models.Car;
-import infrastructure.models.M2M_OrderPayment;
-import infrastructure.models.M2M_UserOrder;
-import infrastructure.models.Order;
+import infrastructure.model.Car;
+import infrastructure.model.Order;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -47,7 +45,7 @@ public class OrderDaoImplTest extends BaseDaoTest {
 		//given
 		Connection connection = testMysqlJdbcDataSource.getConnection();
 
-		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_orders;");
+		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM BOOKING;");
 		resultSet.next();
 		int initialSize = resultSet.getInt(1);
 		assertEquals(7, initialSize);
@@ -57,32 +55,22 @@ public class OrderDaoImplTest extends BaseDaoTest {
 		car.setNumberCar("1246");
 		car.setCarBrandId(2);
 
-		M2M_UserOrder userOrder = new M2M_UserOrder();
-		userOrder.setUserId(1L);
-		userOrder.setOrderId(1L);
-
-		M2M_OrderPayment orderPayment = new M2M_OrderPayment();
-		orderPayment.setOrderId(1L);
-		orderPayment.setPaymentId(1L);
-
 		Order order = new Order();
 		order.setPrice(BigDecimal.valueOf(43.4));
 		order.setDateTime(Timestamp.valueOf("2022-04-23 15:01:00"));
 		order.setCarId(car.getId());
 
 		order.setCar(car);
-		order.setUserOrder(new HashSet<>(List.of(userOrder)));
-		order.setOrderPayment(new HashSet<>(List.of(orderPayment)));
 
 		// when
 		targetObject.create(order);
 
 		//then
-		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_orders;");
+		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM BOOKING;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(8, actualSize);
-		connection.createStatement().executeUpdate(String.format("delete from t_orders where O_ID=%d;", order.getId()));
+		connection.createStatement().executeUpdate(String.format("delete from BOOKING where ID=%d;", order.getId()));
 		connection.close();
 	}
 
@@ -91,7 +79,7 @@ public class OrderDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		Order order = targetObject.findById(Order.class, 1L);
+		Order order = targetObject.findById(1L);
 
 		//then
 		assertEquals(BigDecimal.valueOf(324.7), order.getPrice());
@@ -121,7 +109,7 @@ public class OrderDaoImplTest extends BaseDaoTest {
 
 		//then
 		ResultSet resultSet = testMysqlJdbcDataSource.getConnection().createStatement()
-				.executeQuery("SELECT count(*) FROM t_orders;");
+				.executeQuery("SELECT count(*) FROM BOOKING;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(7, actualSize);

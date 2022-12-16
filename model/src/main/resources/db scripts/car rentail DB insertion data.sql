@@ -1,13 +1,13 @@
-INSERT INTO t_users VALUES
+INSERT INTO USER VALUES
 (1, 'Eugene Onegin', 'EugeneOnegin@mail.com', '1111222233334444'),
 (2, 'Mark Baum', 'markbaum@info.com', '9999888877776666'),
 (3, 'John Doe', 'anonymous@dark.org', '2281488555487130'),
 (4, 'Egor Nikitin', 'borland1997@tut.by', '2469105876642001'),
-(5, 'Tsvor Andrew', 'prostandrey1997@gmail.com', '7410258741002563'),
+(5, 'Tsvor Andrew', 'prostandrey1998@gmail.com', '7410258741002563'),
 (6, 'Soroka Andrey', 'lolipophiphopkrasivo@mail.ru', '9654120873221457'),
 (7, 'Konstantin Bolotko', 'pro100kosti@mail.com', '0123456789125478');
 
-INSERT INTO t_payments VALUES
+INSERT INTO PAYMENT VALUES
 (1, '2022-01-01 10:10'),
 (2, '2022-10-01 12:10'),
 (3, '2020-03-12 11:11'),
@@ -16,7 +16,7 @@ INSERT INTO t_payments VALUES
 (6, '2022-04-23 14:34'),
 (7, '2022-12-19 00:30');
 
-INSERT INTO t_cars_brand VALUES
+INSERT INTO CAR_BRAND VALUES
 (1, 'BMW'),
 (2, 'Mercedes-Benz'),
 (3, 'Toyta'),
@@ -25,7 +25,7 @@ INSERT INTO t_cars_brand VALUES
 (6, 'Volkswagen'),
 (7, 'Ford');
 
-INSERT INTO t_cars_model VALUES
+INSERT INTO CAR_MODEL VALUES
 (1, 1, 'M3 competition'),
 (2, 2, 'AMG G63'),
 (3, 3, 'Land Cruiser 300'),
@@ -34,7 +34,7 @@ INSERT INTO t_cars_model VALUES
 (6, 6, 'Passat Business 2022'),
 (7, 7, 'GT 2017');
 
--- INSERT INTO t_cars_type VALUES
+-- INSERT INTO CAR_type VALUES
 -- (1, 'sedan'),
 -- (2, 'hatchback'),
 -- (3, 'crossover'),
@@ -42,7 +42,7 @@ INSERT INTO t_cars_model VALUES
 -- (5, 'hypercar'),
 -- (6, 'business');
 
-INSERT INTO t_cars VALUES
+INSERT INTO CAR VALUES
 (1, '9874', 1),
 (2, '1234', 2),
 (3, '3410', 3),
@@ -51,7 +51,7 @@ INSERT INTO t_cars VALUES
 (6, '0689', 6),
 (7, '6748', 7);
 
-INSERT INTO t_orders VALUES
+INSERT INTO BOOKING VALUES
 (1, 324.7, '2022-01-01 10:10', 1),
 (2, 56.8, '2022-10-01 12:12', 2),
 (3, 234.6, '2020-03-12 11:15', 3),
@@ -60,12 +60,12 @@ INSERT INTO t_orders VALUES
 (6, 796.6, '2022-04-23 14:34', 6),
 (7, 47.9, '2022-12-19 00:30', 7);
 
-INSERT INTO t_roles VALUES 
+INSERT INTO ROLE VALUES
 (1, "admin", "Administrators have full, unrestricted access rights to the service or domain."),
 (2, "user", "Users do not have rights to change the parameters of the service and can use most of the functions."),
 (3, "guest", "By default, guests can only view cars on the service, but they can not order them.");
 
-INSERT INTO t_permissions VALUES
+INSERT INTO PERMISSION VALUES
 (1, "create_car", 1),
 (2, "view_cars", 1),
 (3, "update_car", 1),
@@ -83,7 +83,7 @@ INSERT INTO t_permissions VALUES
 (15, "create_payment", 2),
 (16, "view_cars", 3);
 
-INSERT INTO t_m2m_orders_payments VALUES
+INSERT INTO BOOKING_PAYMENT VALUES
 (1, 1),
 (2, 2),
 (3, 3),
@@ -93,7 +93,7 @@ INSERT INTO t_m2m_orders_payments VALUES
 (7, 6),
 (7, 7);
 
-INSERT INTO t_m2m_users_orders VALUES
+INSERT INTO USER_BOOKING VALUES
 (1, 1),
 (2, 2),
 (3, 3),
@@ -103,7 +103,7 @@ INSERT INTO t_m2m_users_orders VALUES
 (7, 6),
 (7, 7);
 
-INSERT INTO t_m2m_users_roles VALUES
+INSERT INTO USER_ROLE VALUES
 (1, 2),
 (2, 2),
 (3, 2),

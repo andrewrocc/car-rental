@@ -2,7 +2,7 @@ package dao;
 
 import dao.base.BaseDaoTest;
 import infrastructure.dao.UserDao;
-import infrastructure.models.User;
+import infrastructure.model.User;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -38,7 +38,7 @@ public class UserDaoImplTest extends BaseDaoTest {
 	public void create() {
 		//given
 		Connection connection = testMysqlJdbcDataSource.getConnection();
-		ResultSet resultSet = connection.createStatement().executeQuery("select count(*) from t_users;");
+		ResultSet resultSet = connection.createStatement().executeQuery("select count(*) from USER;");
 		resultSet.next();
 		int initialSize = resultSet.getInt(1);
 		assertEquals(7, initialSize);
@@ -52,11 +52,11 @@ public class UserDaoImplTest extends BaseDaoTest {
 		targetObject.create(namelessUser);
 
 		//then
-		resultSet = connection.createStatement().executeQuery("select count(*) from t_users;");
+		resultSet = connection.createStatement().executeQuery("select count(*) from USER;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(8, actualSize);
-		connection.createStatement().executeUpdate(String.format("delete from t_users where U_ID=%d;", namelessUser.getId()));
+		connection.createStatement().executeUpdate(String.format("delete from USER where ID=%d;", namelessUser.getId()));
 		connection.close();
 	}
 
@@ -66,7 +66,7 @@ public class UserDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		User user = targetObject.findById(User.class, 1);
+		User user = targetObject.findById(1L);
 
 		//then
 		assertEquals("Eugene Onegin", user.getName());
@@ -96,7 +96,7 @@ public class UserDaoImplTest extends BaseDaoTest {
 
 		//then
 		ResultSet resultSet = testMysqlJdbcDataSource.getConnection().createStatement()
-				.executeQuery("select count(*) from t_users;");
+				.executeQuery("select count(*) from USER;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(7, actualSize);

@@ -1,20 +1,28 @@
 package infrastructure.dao.base;
 
+import lombok.RequiredArgsConstructor;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-@Repository
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.io.Serializable;
+import java.util.List;
+
 @Transactional
-public class BaseDaoImpl<T> implements BaseDao<T> {
+//@RequiredArgsConstructor			// TODO required this shit
+abstract public class BaseDaoImpl<T> implements BaseDao<T> {
 
-	@Autowired
-	private SessionFactory sessionFactory;
+	protected final SessionFactory sessionFactory;
 
-	@Autowired
-	public BaseDaoImpl(SessionFactory sessionFactory) {
+	private final Class classType;
+
+	public BaseDaoImpl(SessionFactory sessionFactory, Class classType) {
 		this.sessionFactory = sessionFactory;
+		this.classType = classType;
 	}
 
 	@Override
@@ -23,17 +31,9 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	@Override
-	public T findById(Class classType, long id) {
+	public T findById(long id) {
 		return (T) sessionFactory.getCurrentSession().get(classType, id);
 	}
-
-//  TODO: Is this method necessary?
-//	@Override
-//	public List<T> getAllElements(String query) {
-//		try (Session session = sessionFactory.openSession()) {
-//			return (List<T>) session.createQuery(query, String.class).list();
-//		}
-//	}
 
 	@Override
 	public void update(T obj) {
@@ -43,5 +43,10 @@ public class BaseDaoImpl<T> implements BaseDao<T> {
 	@Override
 	public void delete(T obj) {
 		sessionFactory.getCurrentSession().delete(obj);
+	}
+
+	@Override
+	public List<T> findAll() {
+		return sessionFactory.getCurrentSession().createQuery("from " + classType.getName()).list();
 	}
 }

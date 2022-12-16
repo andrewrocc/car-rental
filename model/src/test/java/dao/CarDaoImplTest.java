@@ -2,8 +2,8 @@ package dao;
 
 import dao.base.BaseDaoTest;
 import infrastructure.dao.CarDao;
-import infrastructure.models.Car;
-import infrastructure.models.CarBrand;
+import infrastructure.model.Car;
+import infrastructure.model.CarBrand;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -40,7 +40,7 @@ public class CarDaoImplTest extends BaseDaoTest {
 		//given
 		Connection connection = testMysqlJdbcDataSource.getConnection();
 
-		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_cars;");
+		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM CAR;");
 		resultSet.next();
 		int initialSize = resultSet.getInt(1);
 		assertEquals(7, initialSize);
@@ -59,11 +59,11 @@ public class CarDaoImplTest extends BaseDaoTest {
 		targetObject.create(car);
 
 		//then
-		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_cars;");
+		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM CAR;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(8, actualSize);
-		connection.createStatement().executeUpdate(String.format("delete from t_cars where C_ID=%d;", car.getId()));
+		connection.createStatement().executeUpdate(String.format("delete from CAR where ID=%d;", car.getId()));
 		connection.close();
 	}
 
@@ -72,7 +72,7 @@ public class CarDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		Car car = targetObject.findById(Car.class, 1L);
+		Car car = targetObject.findById(1L);
 
 		//then
 		assertEquals("9874", car.getNumberCar());
@@ -100,7 +100,7 @@ public class CarDaoImplTest extends BaseDaoTest {
 
 		//then
 		ResultSet resultSet = testMysqlJdbcDataSource.getConnection().createStatement()
-				.executeQuery("SELECT count(*) FROM t_cars;");
+				.executeQuery("SELECT count(*) FROM CAR;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(7, actualSize);

@@ -1,12 +1,15 @@
 package infrastructure.controller;
 
-import infrastructure.models.Car;
-import infrastructure.models.CarBrand;
+import infrastructure.model.Car;
+import infrastructure.model.CarBrand;
 import infrastructure.service.CarBrandService;
+import infrastructure.service.CarModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -17,12 +20,23 @@ public class AddCarController {
 	@Autowired
 	private CarBrandService carBrandService;
 
+	@Autowired
+	private CarModelService carModelService;
+
 	@GetMapping("/add-car.html")
 	public ModelAndView getAddNewCarPage() {
-		List<String> brands = carBrandService.getListCarBrand();
+		List<CarBrand> brands = carBrandService.getListCarBrand();
 		ModelAndView view = new ModelAndView();
 		view.addObject("listBrands", brands);
 		view.setViewName("add_car");
+		return view;
+	}
+
+	@PutMapping("/add-car/{brand}")
+	public ModelAndView getCarModel(@PathVariable("brand") CarBrand brand) {
+		List<String> models = carModelService.getListCarModelByBrand(brand);
+		ModelAndView view = new ModelAndView();
+		view.addObject("listModels", models);
 		return view;
 	}
 

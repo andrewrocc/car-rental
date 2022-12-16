@@ -2,7 +2,7 @@ package dao;
 
 import dao.base.BaseDaoTest;
 import infrastructure.dao.PaymentDao;
-import infrastructure.models.Payment;
+import infrastructure.model.Payment;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -41,7 +41,7 @@ public class PaymentDaoImplTest extends BaseDaoTest {
 	public void create() {
 		//given
 		Connection connection = testMysqlJdbcDataSource.getConnection();
-		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_payments;");
+		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM PAYMENT;");
 		resultSet.next();
 		int initialSize = resultSet.getInt(1);
 		assertEquals(7, initialSize);
@@ -54,11 +54,11 @@ public class PaymentDaoImplTest extends BaseDaoTest {
 		targetObject.create(payment);
 
 		//then
-		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_payments;");
+		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM PAYMENT;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(8, actualSize);
-		connection.createStatement().executeUpdate(String.format("delete from t_payments where P_ID=%d;", payment.getId()));
+		connection.createStatement().executeUpdate(String.format("delete from PAYMENT where ID=%d;", payment.getId()));
 		connection.close();
 	}
 
@@ -67,7 +67,7 @@ public class PaymentDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		Payment payment = targetObject.findById(Payment.class, 1);
+		Payment payment = targetObject.findById(1);
 
 		//then
 		assertEquals("2022-01-01 13:10:00.0", payment.getDateTimePayment().toString());
@@ -95,7 +95,7 @@ public class PaymentDaoImplTest extends BaseDaoTest {
 
 		//then
 		ResultSet resultSet = testMysqlJdbcDataSource.getConnection().createStatement()
-				.executeQuery("SELECT count(*) FROM t_payments;");
+				.executeQuery("SELECT count(*) FROM PAYMENT;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(7, actualSize);

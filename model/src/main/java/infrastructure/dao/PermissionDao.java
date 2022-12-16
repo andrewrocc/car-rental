@@ -1,7 +1,7 @@
 package infrastructure.dao;
 
 import infrastructure.dao.base.BaseDao;
-import infrastructure.models.Permission;
+import infrastructure.model.Permission;
 
 public interface PermissionDao extends BaseDao<Permission> {
 }

@@ -2,7 +2,7 @@ package dao;
 
 import dao.base.BaseDaoTest;
 import infrastructure.dao.CarModelDao;
-import infrastructure.models.CarModel;
+import infrastructure.model.CarModel;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -38,7 +38,7 @@ public class CarModelDaoImplTest extends BaseDaoTest {
 	public void create() {
 		//given
 		Connection connection = testMysqlJdbcDataSource.getConnection();
-		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_cars_model;");
+		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM CAR_MODEL;");
 		resultSet.next();
 		int initialSize = resultSet.getInt(1);
 		assertEquals(7, initialSize);
@@ -51,11 +51,11 @@ public class CarModelDaoImplTest extends BaseDaoTest {
 		targetObject.create(cm);
 
 		//then
-		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_cars_model;");
+		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM CAR_MODEL;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(8, actualSize);
-		connection.createStatement().executeUpdate(String.format("delete from t_cars_model where CM_ID=%d;", cm.getId()));
+		connection.createStatement().executeUpdate(String.format("delete from CAR_MODEL where ID=%d;", cm.getId()));
 		connection.close();
 	}
 
@@ -64,7 +64,7 @@ public class CarModelDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		CarModel cm = targetObject.findById(CarModel.class, 1);
+		CarModel cm = targetObject.findById(1L);
 
 		//then
 		assertEquals("M3 competition", cm.getModelName());
@@ -92,7 +92,7 @@ public class CarModelDaoImplTest extends BaseDaoTest {
 
 		//then
 		ResultSet resultSet = testMysqlJdbcDataSource.getConnection().createStatement()
-				.executeQuery("SELECT count(*) FROM t_cars_model;");
+				.executeQuery("SELECT count(*) FROM CAR_MODEL;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(7, actualSize);

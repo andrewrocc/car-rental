@@ -2,9 +2,8 @@ package dao;
 
 import dao.base.BaseDaoTest;
 import infrastructure.dao.CarTypeDao;
-import infrastructure.dao.CarTypeDaoImpl;
 import lombok.SneakyThrows;
-import infrastructure.models.CarType;
+import infrastructure.model.CarType;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
@@ -66,7 +65,7 @@ public class CarTypeDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		CarType ct = targetObject.findById(CarType.class, 1);
+		CarType ct = targetObject.findById(1L);
 
 		//then
 //		assertEquals("sedan", ct.getTypeName());

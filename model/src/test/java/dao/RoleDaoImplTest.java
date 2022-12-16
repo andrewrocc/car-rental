@@ -2,7 +2,7 @@ package dao;
 
 import dao.base.BaseDaoTest;
 import infrastructure.dao.RoleDao;
-import infrastructure.models.Role;
+import infrastructure.model.Role;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -38,7 +38,7 @@ public class RoleDaoImplTest extends BaseDaoTest {
 	public void create() {
 		//given
 		Connection connection = testMysqlJdbcDataSource.getConnection();
-		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_roles;");
+		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM ROLE;");
 		resultSet.next();
 		int initialSize = resultSet.getInt(1);
 		assertEquals(3, initialSize);
@@ -51,11 +51,11 @@ public class RoleDaoImplTest extends BaseDaoTest {
 		targetObject.create(role);
 
 		//then
-		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM t_roles;");
+		resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM ROLE;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(4, actualSize);
-		connection.createStatement().executeUpdate(String.format("delete from t_roles where R_ID=%d;", role.getId()));
+		connection.createStatement().executeUpdate(String.format("delete from ROLE where ID=%d;", role.getId()));
 		connection.close();
 	}
 
@@ -64,7 +64,7 @@ public class RoleDaoImplTest extends BaseDaoTest {
 		//given
 
 		//when
-		Role role = targetObject.findById(Role.class, 1L);
+		Role role = targetObject.findById(1L);
 
 		//then
 		assertEquals("admin", role.getName());
@@ -91,7 +91,7 @@ public class RoleDaoImplTest extends BaseDaoTest {
 
 		//then
 		ResultSet resultSet = testMysqlJdbcDataSource.getConnection().createStatement()
-				.executeQuery("SELECT count(*) FROM t_roles;");
+				.executeQuery("SELECT count(*) FROM ROLE;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
 		assertEquals(3, actualSize);

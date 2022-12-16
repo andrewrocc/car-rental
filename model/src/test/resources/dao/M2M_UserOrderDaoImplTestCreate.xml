@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<dataset>
-    <t_users U_ID="101" U_USERNAME="Valera" U_USEREMAIL="valervogne@mail.com" U_PAYMENT_CARD="3675901856749673" />
-    <t_orders O_ID="101" O_PRICE="50.0" O_DATETIME="2022-10-10 10:10:10" O_CAR_ID="3"/>
-</dataset>

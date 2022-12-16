@@ -1,47 +1,25 @@
-package infrastructure.dao;
+package infrastructure.dao.impl;
 
+import infrastructure.dao.CarModelDao;
+import infrastructure.dao.base.BaseDao;
 import infrastructure.dao.base.BaseDaoImpl;
-import infrastructure.models.CarBrand;
-import infrastructure.models.CarModel;
+import infrastructure.model.CarModel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 @Repository
 @Transactional
-public class CarModelDaoImpl implements CarModelDao {
-
-	@Autowired
-	private SessionFactory sessionFactory;
-
-	private final BaseDaoImpl<CarModel> carModelDao;
+public class CarModelDaoImpl extends BaseDaoImpl<CarModel> implements CarModelDao {
 
 	public CarModelDaoImpl(SessionFactory sessionFactory) {
-		carModelDao = new BaseDaoImpl<>(sessionFactory);
-	}
-
-	@Override
-	public void create(CarModel obj) {
-		carModelDao.create(obj);
-	}
-
-	@Override
-	public CarModel findById(Class classType, long id) {
-		return carModelDao.findById(classType, id);
-	}
-
-	@Override
-	public void update(CarModel obj) {
-		carModelDao.update(obj);
-	}
-
-	@Override
-	public void delete(CarModel obj) {
-		carModelDao.delete(obj);
+		super(sessionFactory, CarModel.class);
 	}
 
 	@Override
@@ -50,5 +28,13 @@ public class CarModelDaoImpl implements CarModelDao {
 		try (Session session = sessionFactory.openSession()) {
 			return session.createQuery(queryFormat, CarModel.class).list();
 		}
+	}
+
+	@Override
+	public List<CarModel> getAllCarModels() {
+		CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
+		CriteriaQuery<CarModel> criteria = builder.createQuery(CarModel.class);
+		criteria.from(CarModel.class);
+		return sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
 	}
 }
