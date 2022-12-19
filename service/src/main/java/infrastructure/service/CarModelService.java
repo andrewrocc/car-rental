@@ -31,7 +31,7 @@ public class CarModelService {
     private List<String> getOnlyModelsNameFromCarModelClass(List<CarModel> list, CarBrand brand) {
         modelList = new ArrayList<>(list.size());
         for (CarModel carModel : list) {
-            if (carModel.getCarBrandId() == brand.getId()) {
+            if (carModel.getCarBrand().getId() == brand.getId()) {
                 modelList.add(carModel.getModelName());
             }
         }

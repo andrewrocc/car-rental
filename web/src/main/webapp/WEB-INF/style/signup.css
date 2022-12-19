@@ -1,0 +1,29 @@
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+    font-size: 1rem;
+    line-height: 2.15;
+    padding-left: .75em;
+    padding-right: .75em;
+    }
+    .card-registration .select-arrow {
+    top: 13px;
+}
+
+.masthead {
+    background-image: url(../img/bugatti-divo.jpg);
+    height: 100%;
+    background-size: cover;
+    position: relative;
+    justify-content: stretch;
+}
+
+.gradient-custom {
+    /* fallback for old browsers */
+    background: #6a11cb;
+
+    background: linear-gradient(315deg, hsla(287, 23%, 65%, 1) 0%, hsla(23, 64%, 75%, 1) 100%);
+
+    background: -moz-linear-gradient(315deg, hsla(287, 23%, 65%, 1) 0%, hsla(23, 64%, 75%, 1) 100%);
+
+    background: -webkit-linear-gradient(315deg, hsla(287, 23%, 65%, 1) 0%, hsla(23, 64%, 75%, 1) 100%);
+
+}

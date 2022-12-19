@@ -44,9 +44,11 @@ public class UserDaoImplTest extends BaseDaoTest {
 		assertEquals(7, initialSize);
 
 		User namelessUser = new User();
-		namelessUser.setName("username");
+		namelessUser.setFirstName("username");
+		namelessUser.setLastName("test");
 		namelessUser.setEmail("username@mail.com");
 		namelessUser.setPaymentCard("1234567890987654");
+		namelessUser.setPassword("123");
 
 		// when
 		targetObject.create(namelessUser);
@@ -69,7 +71,8 @@ public class UserDaoImplTest extends BaseDaoTest {
 		User user = targetObject.findById(1L);
 
 		//then
-		assertEquals("Eugene Onegin", user.getName());
+		assertEquals("Eugene", user.getFirstName());
+		assertEquals("Onegin", user.getLastName());
 	}
 
 	@Test
@@ -86,9 +89,11 @@ public class UserDaoImplTest extends BaseDaoTest {
 		DatabaseOperation.INSERT.execute(iDatabaseConnection, dataset);
 
 		User delete_user = new User();
-		delete_user.setName("Steve Jobs");
+		delete_user.setFirstName("Steve");
+		delete_user.setLastName("Jobs");
 		delete_user.setEmail("stevejob@icloud.com");
 		delete_user.setPaymentCard("0987654321678906");
+		delete_user.setPassword("111");
 		delete_user.setId(101);
 
 		//when

@@ -25,11 +25,8 @@ public class Permission implements Serializable {
 	@Column(name = "NAME")
 	private String name;
 
-	@Column(name = "ROLE_ID")
-	private long roleId;
-
 	@ManyToOne
-	@JoinColumn(name = "ROLE_ID", insertable = false, updatable = false)
+	@JoinColumn(name = "ROLE_ID")
 	private Role role;
 
 	@Override
@@ -40,7 +37,6 @@ public class Permission implements Serializable {
 		Permission that = (Permission) o;
 
 		if (id != that.id) return false;
-		if (roleId != that.roleId) return false;
 		if (!Objects.equals(name, that.name)) return false;
 		return Objects.equals(role, that.role);
 	}
@@ -49,7 +45,6 @@ public class Permission implements Serializable {
 	public int hashCode() {
 		int result = (int) (id ^ (id >>> 32));
 		result = 31 * result + (name != null ? name.hashCode() : 0);
-		result = 31 * result + (int) (roleId ^ (roleId >>> 32));
 		result = 31 * result + (role != null ? role.hashCode() : 0);
 		return result;
 	}

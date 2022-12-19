@@ -28,11 +28,8 @@ public class Order implements Serializable {
 	@Column(name = "DATETIME")
 	private Timestamp dateTime;
 
-	@Column(name = "CAR_ID")
-	private long carId;
-
 	@ManyToOne
-	@JoinColumn(name = "CAR_ID", insertable = false, updatable = false)
+	@JoinColumn(name = "CAR_ID")
 	private Car car;
 
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -49,6 +46,7 @@ public class Order implements Serializable {
 	@ToString.Exclude
 	private Set<User> users;
 
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -57,10 +55,11 @@ public class Order implements Serializable {
 		Order order = (Order) o;
 
 		if (id != order.id) return false;
-		if (carId != order.carId) return false;
 		if (!Objects.equals(price, order.price)) return false;
 		if (!Objects.equals(dateTime, order.dateTime)) return false;
-		return Objects.equals(car, order.car);
+		if (!Objects.equals(car, order.car)) return false;
+		if (!Objects.equals(payments, order.payments)) return false;
+		return Objects.equals(users, order.users);
 	}
 
 	@Override
@@ -68,8 +67,9 @@ public class Order implements Serializable {
 		int result = (int) (id ^ (id >>> 32));
 		result = 31 * result + (price != null ? price.hashCode() : 0);
 		result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
-		result = 31 * result + (int) (carId ^ (carId >>> 32));
 		result = 31 * result + (car != null ? car.hashCode() : 0);
+		result = 31 * result + (payments != null ? payments.hashCode() : 0);
+		result = 31 * result + (users != null ? users.hashCode() : 0);
 		return result;
 	}
 }

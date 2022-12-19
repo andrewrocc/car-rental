@@ -1,11 +1,11 @@
 INSERT INTO USER VALUES
-(1, 'Eugene Onegin', 'EugeneOnegin@mail.com', '1111222233334444'),
-(2, 'Mark Baum', 'markbaum@info.com', '9999888877776666'),
-(3, 'John Doe', 'anonymous@dark.org', '2281488555487130'),
-(4, 'Egor Nikitin', 'borland1997@tut.by', '2469105876642001'),
-(5, 'Tsvor Andrew', 'prostandrey1998@gmail.com', '7410258741002563'),
-(6, 'Soroka Andrey', 'lolipophiphopkrasivo@mail.ru', '9654120873221457'),
-(7, 'Konstantin Bolotko', 'pro100kosti@mail.com', '0123456789125478');
+(1, 'Eugene', 'Onegin', 'EugeneOnegin@mail.com', '1111222233334444'),
+(2, 'Mark', 'Baum', 'markbaum@info.com', '9999888877776666'),
+(3, 'John', 'Doe', 'anonymous@dark.org', '2281488555487130'),
+(4, 'Egor', 'Nikitin', 'borland1997@tut.by', '2469105876642001'),
+(5, 'Tsvor', 'Andrew', 'prostandrey1998@gmail.com', '7410258741002563'),
+(6, 'Soroka', 'Andrey', 'lolipophiphopkrasivo@mail.ru', '9654120873221457'),
+(7, 'Konstantin', 'Bolotko', 'pro100kosti@mail.com', '0123456789125478');
 
 INSERT INTO PAYMENT VALUES
 (1, '2022-01-01 10:10'),

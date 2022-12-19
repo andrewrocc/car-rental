@@ -24,14 +24,12 @@
                      </div>
 
                      <div class="col-sm-5 mx-auto py-3">
-                        <form method="put" action="/rentcar/add-car/{brand}">
                            <label for="brand" class="form-label">Choose a car brand:</label>
                            <select class="form-select" id="brand" name="brand">
                               <c:forEach items="${listBrands}" var="brand">
                                  <option value="${brand.id}">${brand.brandName}</option>
                               </c:forEach>
                            </select>
-                        </form>
                      </div>
 
                      <div class="col-sm-5 mx-auto py-3">

@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rent car</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
 
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
@@ -20,7 +22,13 @@
           <a class="nav-link active" aria-current="page" href="/rentcar/index.html">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/rentcar/cars.html">Cars</a>
+          <a class="nav-link" href="/rentcar/car-table.html">Cars</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/rentcar/login.html">Login</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/rentcar/sign-up.html">Sign up</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

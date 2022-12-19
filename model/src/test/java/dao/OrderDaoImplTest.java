@@ -3,6 +3,7 @@ package dao;
 import dao.base.BaseDaoTest;
 import infrastructure.dao.OrderDao;
 import infrastructure.model.Car;
+import infrastructure.model.CarBrand;
 import infrastructure.model.Order;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
@@ -53,12 +54,18 @@ public class OrderDaoImplTest extends BaseDaoTest {
 		Car car = new Car();
 		car.setId(4);
 		car.setNumberCar("1246");
-		car.setCarBrandId(2);
+		if (car.getCarBrand() == null) {
+			car.setCarBrand(new CarBrand());
+		}
+		car.getCarBrand().setId(2L);
 
 		Order order = new Order();
 		order.setPrice(BigDecimal.valueOf(43.4));
 		order.setDateTime(Timestamp.valueOf("2022-04-23 15:01:00"));
-		order.setCarId(car.getId());
+		if (order.getCar() == null) {
+			order.setCar(new Car());
+		}
+		order.getCar().setId(car.getId());
 
 		order.setCar(car);
 
@@ -102,7 +109,10 @@ public class OrderDaoImplTest extends BaseDaoTest {
 		order.setId(101);
 		order.setPrice(BigDecimal.valueOf(50.0));
 		order.setDateTime(Timestamp.valueOf("2022-12-19 00:30:00"));
-		order.setCarId(4L);
+		if (order.getCar() == null) {
+			order.setCar(new Car());
+		}
+		order.getCar().setId(4L);
 
 		//when
 		targetObject.delete(order);

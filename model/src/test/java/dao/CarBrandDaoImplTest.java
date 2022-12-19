@@ -37,6 +37,7 @@ public class CarBrandDaoImplTest extends BaseDaoTest {
 	@Test
 	@SneakyThrows
 	public void create() {
+		//given
 		Connection connection = testMysqlJdbcDataSource.getConnection();
 		ResultSet resultSet = connection.createStatement().executeQuery("SELECT count(*) FROM CAR_BRAND;");
 		resultSet.next();

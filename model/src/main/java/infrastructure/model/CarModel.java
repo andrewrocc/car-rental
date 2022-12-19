@@ -25,12 +25,8 @@ public class CarModel implements Serializable {
 	@Column(name = "NAME")
 	private String modelName;
 
-	// TODO required to delete this
-	@Column(name = "BRAND_ID")
-	private long carBrandId;
-
 	@ManyToOne
-	@JoinColumn(name = "BRAND_ID", insertable = false, updatable = false)
+	@JoinColumn(name = "BRAND_ID")
 	private CarBrand carBrand;
 
 	@Override
@@ -41,7 +37,6 @@ public class CarModel implements Serializable {
 		CarModel carModel = (CarModel) o;
 
 		if (id != carModel.id) return false;
-		if (carBrandId != carModel.carBrandId) return false;
 		if (!Objects.equals(modelName, carModel.modelName)) return false;
 		return Objects.equals(carBrand, carModel.carBrand);
 	}
@@ -50,7 +45,6 @@ public class CarModel implements Serializable {
 	public int hashCode() {
 		int result = (int) (id ^ (id >>> 32));
 		result = 31 * result + (modelName != null ? modelName.hashCode() : 0);
-		result = 31 * result + (int) (carBrandId ^ (carBrandId >>> 32));
 		result = 31 * result + (carBrand != null ? carBrand.hashCode() : 0);
 		return result;
 	}

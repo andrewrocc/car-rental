@@ -51,7 +51,10 @@ public class CarDaoImplTest extends BaseDaoTest {
 
 		Car car = new Car();
 		car.setNumberCar("234e");
-		car.setCarBrandId(carBrand.getId());
+		if (car.getCarBrand() == null) {
+			car.setCarBrand(new CarBrand());
+		}
+		car.getCarBrand().setId(carBrand.getId());
 
 		car.setCarBrand(carBrand);;
 

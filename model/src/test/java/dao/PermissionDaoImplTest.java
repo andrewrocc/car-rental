@@ -3,6 +3,7 @@ package dao;
 import dao.base.BaseDaoTest;
 import infrastructure.dao.PermissionDao;
 import infrastructure.model.Permission;
+import infrastructure.model.Role;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -46,7 +47,10 @@ public class PermissionDaoImplTest extends BaseDaoTest {
 
 		Permission permission = new Permission();
 		permission.setName("test");
-		permission.setRoleId(1);
+		if (permission.getRole() == null) {
+			permission.setRole(new Role());
+		}
+		permission.getRole().setId(1L);
 
 		// when
 		targetObject.create(permission);

@@ -24,11 +24,8 @@ public class Car implements Serializable {
 	@Column(name = "NUMBER")
 	private String numberCar;
 
-	@Column(name = "BRAND_ID")
-	private long carBrandId;
-
 	@ManyToOne
-	@JoinColumn(name = "BRAND_ID", insertable = false, updatable = false)
+	@JoinColumn(name = "BRAND_ID")
 	private CarBrand carBrand;
 
 	@OneToMany(mappedBy = "car")
@@ -43,7 +40,6 @@ public class Car implements Serializable {
 		Car car = (Car) o;
 
 		if (id != car.id) return false;
-		if (carBrandId != car.carBrandId) return false;
 		if (!Objects.equals(numberCar, car.numberCar)) return false;
 		if (!Objects.equals(carBrand, car.carBrand)) return false;
 		return Objects.equals(order, car.order);
@@ -53,7 +49,6 @@ public class Car implements Serializable {
 	public int hashCode() {
 		int result = (int) (id ^ (id >>> 32));
 		result = 31 * result + (numberCar != null ? numberCar.hashCode() : 0);
-		result = 31 * result + (int) (carBrandId ^ (carBrandId >>> 32));
 		result = 31 * result + (carBrand != null ? carBrand.hashCode() : 0);
 		result = 31 * result + (order != null ? order.hashCode() : 0);
 		return result;
