@@ -1,7 +1,7 @@
 package infrastructure.service;
 
-import infrastructure.dao.CarBrandDao;
 import infrastructure.model.CarBrand;
+import infrastructure.repository.CarBrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,26 +12,16 @@ import java.util.List;
 public class CarBrandService {
 
 	@Autowired
-	private CarBrandDao carBrandDao;
+	private CarBrandRepository carBrandRepository;
 
 	private List<CarBrand> carBrands;
 
 	@Transactional
 	public List<CarBrand> getListCarBrand() {
 		if (carBrands == null || carBrands.isEmpty()) {
-			return carBrands = carBrandDao.getAllCarBrands();
-//			return getOnlyBrandNameFromCarBrandClass(brands);
+			return carBrands = carBrandRepository.findAll();
 		} else {
 			return carBrands;
 		}
 	}
-
-//	private List<String> getOnlyBrandNameFromCarBrandClass(List<CarBrand> list) {
-//		carBrands = new ArrayList<>(list.size());
-//		for (CarBrand carBrand : list) {
-//			carBrands.add(carBrand.getBrandName());
-//		}
-//
-//		return carBrands;
-//	}
 }

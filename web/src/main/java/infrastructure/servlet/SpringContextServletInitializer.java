@@ -1,6 +1,7 @@
 package infrastructure.servlet;
 
 import infrastructure.config.DataConfig;
+import infrastructure.config.RepositoryConfig;
 import infrastructure.config.ServiceConfig;
 import infrastructure.config.WebConfig;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -18,7 +19,7 @@ public class SpringContextServletInitializer implements ServletContainerInitiali
 	public void onStartup(Set<Class<?>> set, ServletContext ctx) throws ServletException {
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
 		context.register(WebConfig.class);
-		context.register(DataConfig.class);
+		context.register(RepositoryConfig.class);
 		context.register(ServiceConfig.class);
 
 		DispatcherServlet dispatcherServlet = new DispatcherServlet(context);

@@ -1,9 +1,6 @@
 package infrastructure.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,6 +11,7 @@ import java.util.Objects;
 @Entity
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "CAR_MODEL")
 public class CarModel implements Serializable {
 

@@ -16,8 +16,9 @@
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
                                   alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" /> --%>
                   </div>
+
                   <div class="col-xl-6">
-                     <form action="/rentcar/signup" method="post" modelAttribute="user"></form>
+                     <form action="/rentcar/sign-up.html" method="post" modelAttribute="user">
                      <div class="card-body p-md-5 text-black">
                         <h3 class="mb-5 text-center">Registration form</h3>
                         <div class="row">

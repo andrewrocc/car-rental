@@ -14,6 +14,7 @@ import java.util.Set;
 @Entity
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "BOOKING")
 public class Order implements Serializable {
 

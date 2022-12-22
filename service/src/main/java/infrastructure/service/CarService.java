@@ -1,7 +1,7 @@
 package infrastructure.service;
 
-import infrastructure.dao.CarDao;
 import infrastructure.model.Car;
+import infrastructure.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,11 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CarService {
 
+
 	@Autowired
-	private CarDao carDao;
+	private CarRepository carRepository;
 
 	@Transactional
 	public void addNewCar(Car c) {
-		carDao.create(c);
+		carRepository.saveAndFlush(c);
 	}
 }

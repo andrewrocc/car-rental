@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Deprecated
 @Transactional
 //@RequiredArgsConstructor			// TODO required this shit
 abstract public class BaseDaoImpl<T> implements BaseDao<T> {

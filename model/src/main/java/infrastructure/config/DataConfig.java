@@ -17,11 +17,11 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
+@EnableTransactionManagement
 @ComponentScan(basePackages = "infrastructure")
 @PropertySource(value = {
 		"classpath:/car_rental.jdbc.properties",
 		"classpath:/hibernate.properties"})
-@EnableTransactionManagement
 public class DataConfig {
 
 	@Bean
@@ -37,6 +37,7 @@ public class DataConfig {
 
 		return hibernateProperties;
 	}
+
 
 	@Bean
 	public DataSource dataSource(@Value("${url}") String url,

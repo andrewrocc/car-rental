@@ -32,14 +32,6 @@ public class AddCarController {
 		return view;
 	}
 
-	@PutMapping("/add-car/{brand}")
-	public ModelAndView getCarModel(@PathVariable("brand") CarBrand brand) {
-		List<String> models = carModelService.getListCarModelByBrand(brand);
-		ModelAndView view = new ModelAndView();
-		view.addObject("listModels", models);
-		return view;
-	}
-
 	@PostMapping("/add-car.html")
 	public String addNewCar(Car c) {
 		System.out.println(c);
