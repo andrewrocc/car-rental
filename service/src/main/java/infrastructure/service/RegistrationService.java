@@ -8,14 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegistrationService {
 
-//    @Autowired
-//    private UserDao userDao;
-
     @Autowired
     private UserRepository userRepository;
 
     public void addNewUser(User u) {
         userRepository.saveAndFlush(u);
-//        userDao.create(u);
     }
 }
