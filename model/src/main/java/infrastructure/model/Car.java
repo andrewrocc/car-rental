@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,9 +25,16 @@ public class Car implements Serializable {
 	@Column(name = "NUMBER")
 	private String numberCar;
 
+	@Column(name = "PRICE")
+	private BigDecimal price;
+
 	@ManyToOne
 	@JoinColumn(name = "BRAND_ID")
 	private CarBrand carBrand;
+
+	@ManyToOne
+	@JoinColumn(name = "MODEL_ID")
+	private CarModel carModel;
 
 	@OneToMany(mappedBy = "car")
 	@ToString.Exclude

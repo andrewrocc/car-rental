@@ -37,7 +37,7 @@
             FIRSTNAME VARCHAR(100) NOT NULL,
             LASTNAME VARCHAR(100) NOT NULL,
             EMAIL VARCHAR(100) NOT NULL,
-            PAYMENT_CARD VARCHAR(16),
+            PAYMENT_CARD VARCHAR(16) NOT NULL,
             CONSTRAINT PK_USER PRIMARY KEY (ID ASC)
             );
 
@@ -52,7 +52,9 @@
             CREATE TABLE CAR (
             ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             NUMBER VARCHAR(30) NOT NULL,
+            PRICE DECIMAL(10, 2) NOT NULL,
             BRAND_ID BIGINT UNSIGNED NOT NULL,
+            MODEL_ID BIGINT UNSIGNED NOT NULL,
             CONSTRAINT PK_CAR PRIMARY KEY (ID ASC)
             );
 
@@ -112,6 +114,9 @@
 
             ALTER TABLE CAR ADD CONSTRAINT FK_CAR_CARBRAND FOREIGN KEY (BRAND_ID)
             REFERENCES CAR_BRAND (ID) ON DELETE CASCADE ON UPDATE CASCADE;
+
+            ALTER TABLE CAR ADD CONSTRAINT FK_CAR_CARMODEL FOREIGN KEY (MODEL_ID)
+            REFERENCES CAR_MODEL (ID) ON DELETE CASCADE ON UPDATE CASCADE;
 
             ALTER TABLE CAR_MODEL ADD CONSTRAINT FK_CARMODEL_CARBRAND FOREIGN KEY (BRAND_ID)
             REFERENCES CAR_BRAND (ID) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -179,14 +184,22 @@
             (6, 6, 'Passat Business 2022'),
             (7, 7, 'GT 2017');
 
+            -- INSERT INTO CAR_type VALUES
+            -- (1, 'sedan'),
+            -- (2, 'hatchback'),
+            -- (3, 'crossover'),
+            -- (4, 'sport car'),
+            -- (5, 'hypercar'),
+            -- (6, 'business');
+
             INSERT INTO CAR VALUES
-            (1, '9874', 1),
-            (2, '1234', 2),
-            (3, '3410', 3),
-            (4, '1246', 4),
-            (5, '7806', 5),
-            (6, '0689', 6),
-            (7, '6748', 7);
+            (1, '9874', 250.45, 1, 1),
+            (2, '1234', 140.1, 2, 2),
+            (3, '3410', 505.19, 3, 3),
+            (4, '1246', 785.4, 4, 4),
+            (5, '7806', 111.0, 5, 5),
+            (6, '0689', 65.98, 6, 6),
+            (7, '6748', 506.8, 7, 7);
 
             INSERT INTO BOOKING VALUES
             (1, 324.7, '2022-01-01 10:10', 1),

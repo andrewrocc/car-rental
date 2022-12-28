@@ -30,6 +30,7 @@ public class EditUserController {
     @GetMapping("/edit-user.html")
     public ModelAndView getPageUserListTable(@RequestParam(value = "size", required = false, defaultValue = "5") Byte size,
                                              @RequestParam(value = "page", required = false, defaultValue = "0") Byte page) {
+        System.out.println("EditUserController controller");
         Page<User> pageUser = userService.getUserRepository()
                 .findAll(PageRequest.of(page, size, Sort.by("id").ascending()));          // TODO to service module
 

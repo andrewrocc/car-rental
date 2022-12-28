@@ -4,6 +4,7 @@ import dao.base.BaseDaoTest;
 import infrastructure.dao.CarDao;
 import infrastructure.model.Car;
 import infrastructure.model.CarBrand;
+import infrastructure.model.CarModel;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -15,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 
@@ -49,14 +51,25 @@ public class CarDaoImplTest extends BaseDaoTest {
 		carBrand.setId(2);
 		carBrand.setBrandName("Mercedes-Benz");
 
+		CarModel carModel = new CarModel();
+		carModel.setId(2);
+		carModel.setModelName("AMG G63");
+
 		Car car = new Car();
 		car.setNumberCar("234e");
+		car.setPrice(new BigDecimal("123.2"));
+		if (car.getCarModel() == null) {
+			car.setCarModel(new CarModel());
+		}
+		car.getCarModel().setId(carModel.getId());
+
 		if (car.getCarBrand() == null) {
 			car.setCarBrand(new CarBrand());
 		}
 		car.getCarBrand().setId(carBrand.getId());
 
-		car.setCarBrand(carBrand);;
+		car.setCarBrand(carBrand);
+		car.setCarModel(carModel);
 
 		// when
 		targetObject.create(car);

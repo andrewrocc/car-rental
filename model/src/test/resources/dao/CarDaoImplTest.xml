@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <dataset>
     <CAR_BRAND ID="101" NAME="Mazda" />
-    <CAR ID="101" NUMBER="234e" BRAND_ID="101"/>
+    <CAR_MODEL ID="101" NAME="v5" BRAND_ID="101"/>
+    <CAR ID="101" NUMBER="234e" PRICE="100.0" BRAND_ID="101" MODEL_ID="101"/>
 </dataset>
