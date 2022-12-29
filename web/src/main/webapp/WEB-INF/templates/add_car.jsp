@@ -3,54 +3,63 @@
 <%@ page language="java" contentType="text/html;" %>
 
 <section>
-   <div class="container-fluid py-5">
+    <div class="container-fluid py-5">
 
-      <div class="row">
-         <div class="col-sm-3">
-         </div>
+       <div class="row">
+          <div class="col-sm-3">
+          </div>
 
-         <div class="col-sm-6 mx-auto">
-            <form method="post" action="/rentcar/add-car.html">
-               <div class="container">
-                  <div class="text-center align-items-center">
-                     <div class="align-items-center">
-                        <label for="label-car-number" class="form-label">Car number:</label>
-                        <div class="col-sm-5 mx-auto">
-                           <input type="text" name="input-car-number" class="form-control" id="car-number" aria-describedby="carnumber-Help"
-                              size="20">
+          <div class="col-sm- mx-auto">
+             <form method="post" action="/rentcar/add-car.html">
+                <div class="container">
+                   <div class="text-center align-items-center">
+                      <div class="align-items-center">
+                        <div class="col-sm-5 mx-auto py-3">
+                            <div class="col-sm-8 mx-auto">
+                                <label for="brand" class="form-label">Brand:</label>
+                                <input type="text" name="brand" class="form-control" id="brand"
+                                   size="20">
+                             </div>
                         </div>
 
-                        <div id="carnumber-Help" class="form-text"></div>
-                     </div>
+                      <div class="col-sm-5 mx-auto py-3">
+                        <label for="model" class="form-label">Model:</label>
+                        <div class="col-sm-8 mx-auto">
+                            <input type="text" name="model" class="form-control" id="model"
+                               size="20">
+                         </div>
+                      </div>
 
-                     <div class="col-sm-5 mx-auto py-3">
-                           <label for="brand" class="form-label">Choose a car brand:</label>
-                           <select class="form-select" id="brand" name="brand">
-                              <c:forEach items="${listBrands}" var="brand">
-                                 <option value="${brand.id}">${brand.brandName}</option>
-                              </c:forEach>
-                           </select>
-                     </div>
+                      <div class="col-sm-5 mx-auto py-3">
+                        <label for="number" class="form-label">Number:</label>
+                        <div class="col-sm-8 mx-auto">
+                            <input type="text" name="number" class="form-control" id="number"
+                               size="20">
+                         </div>
+                      </div>
 
-                     <div class="col-sm-5 mx-auto py-3">
-                        <label for="model" class="form-label">Choose a car model:</label>
-                        <select class="form-select" id="model" name="model">
-                           <c:forEach items="${listModels}" var="model">
-                              <option value="${model.id}">${model.modelName}</option>
-                           </c:forEach>
-                        </select>
-                     </div>
+                      <div class="col-sm-5 mx-auto py-3">
+                        <label for="price" class="form-label">Price:</label>
+                        <div class="col-sm-8 mx-auto">
+                            <input type="text" name="price" class="form-control" id="price"
+                               size="20">
+                         </div>
+                      </div>
 
-                     <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-               </div>
-            </form>
+                      <div class="py-3">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                      </div>
 
-         </div>
-            <div class="col-sm-3">
-         </div>
+                   </div>
+                </div>
+             </form>
 
-      </div>
-   </div>
-</section>
+          </div>
+             <div class="col-sm-3">
+          </div>
+
+       </div>
+    </div>
+ </section>
+
 <jsp:include page="_footer.jsp"/>

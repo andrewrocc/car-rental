@@ -17,7 +17,7 @@ public class CarService {
 	private final CarRepository carRepository;
 
 	@Transactional
-	public void addNewCar(Car c) {
+	public void addNewCarToDB(Car c) {
 		carRepository.saveAndFlush(c);
 	}
 
