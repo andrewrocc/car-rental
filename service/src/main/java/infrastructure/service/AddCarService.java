@@ -4,6 +4,7 @@ import infrastructure.dto.CarTable;
 import infrastructure.model.Car;
 import infrastructure.model.CarBrand;
 import infrastructure.model.CarModel;
+import infrastructure.model.CarPhoto;
 import infrastructure.repository.CarBrandRepository;
 import infrastructure.repository.CarModelRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +18,16 @@ public class AddCarService {
 
     private final CarService carService;
 
+    private final CarPhotoService photoService;
+
     private final CarModelRepository modelRepository;
 
     private final CarBrandRepository brandRepository;
 
-    public void addNewCarToApp(CarTable c) {
+    public void addNewCarToApp(CarTable c, byte[] photo) {
         CarModel carModel = modelRepository.findByName(c.getModel());
         CarBrand carBrand = brandRepository.findByName(c.getBrand());
+        Car car = new Car();
 
         if (carBrand == null) {
             carBrand = new CarBrand();
@@ -38,11 +42,17 @@ public class AddCarService {
             carModel = modelRepository.saveAndFlush(carModel);
         }
 
-        Car car = new Car();
         car.setNumberCar(c.getNumber());
         car.setPrice(new BigDecimal(c.getPrice()));
         car.setCarBrand(carBrand);
         car.setCarModel(carModel);
-        carService.addNewCarToDB(car);
+        car = carService.addNewCar(car);
+
+        if (car.getPhoto() == null) {
+            CarPhoto carPhoto = new CarPhoto();
+            carPhoto.setCar(car);
+            carPhoto.setPhoto(photo);
+            photoService.addNewCarPhoto(carPhoto);
+        }
     }
 }

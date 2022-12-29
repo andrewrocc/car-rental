@@ -17,6 +17,7 @@ public class CarInfoService {
     public CarTable getCarInfoById(Long id) {
         Car car = carRepository.getReferenceById(id);
         CarTable carTable = new CarTable();
+        carTable.setId(car.getId());
         carTable.setModel(car.getCarModel().getModelName());
         carTable.setBrand(car.getCarBrand().getBrandName());
         carTable.setNumber(car.getNumberCar());

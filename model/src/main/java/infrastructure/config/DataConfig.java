@@ -69,6 +69,7 @@ public class DataConfig {
 		sessionFactory.setAnnotatedClasses(User.class,
 				Permission.class,
 				CarModel.class,
+				CarPhoto.class,
 				CarBrand.class,
 				Payment.class,
 				CarType.class,

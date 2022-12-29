@@ -14,8 +14,8 @@
           <c:set value="${carInfo}" var="car"/>
             <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
 
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/3.webp" class="card-img-top"
-              alt="Apple Computer" />
+            <img src="/rentcar/image/${car.id}/photo.jpg" class="card-img-top"
+              alt="${car.brand} ${car.model}" />
             <div class="card-body">
               <div class="text-center">
                 <h5 class="card-title">Believing is seeing</h5>

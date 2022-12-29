@@ -10,7 +10,7 @@
           </div>
 
           <div class="col-sm- mx-auto">
-             <form method="post" action="/rentcar/add-car.html">
+             <form method="post" action="/rentcar/add-car.html" enctype="multipart/form-data">
                 <div class="container">
                    <div class="text-center align-items-center">
                       <div class="align-items-center">
@@ -35,7 +35,7 @@
                         <div class="col-sm-8 mx-auto">
                             <input type="text" name="number" class="form-control" id="number"
                                size="20">
-                         </div>
+                        </div>
                       </div>
 
                       <div class="col-sm-5 mx-auto py-3">
@@ -43,7 +43,15 @@
                         <div class="col-sm-8 mx-auto">
                             <input type="text" name="price" class="form-control" id="price"
                                size="20">
-                         </div>
+                        </div>
+                      </div>
+
+                      <div class="col-sm-5 mx-auto py-3">
+                        <label for="photo" class="form-label">Photo:</label>
+                        <div class="col-sm-8 mx-auto">
+                            <input type="file" name="photo" class="form-control" id="photo"
+                                size="20">
+                        </div>
                       </div>
 
                       <div class="py-3">

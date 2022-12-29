@@ -40,6 +40,9 @@ public class Car implements Serializable {
 	@ToString.Exclude
 	private Set<Order> order;
 
+	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
+	private CarPhoto photo;
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
