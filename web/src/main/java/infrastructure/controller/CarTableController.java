@@ -16,7 +16,7 @@ public class CarTableController {
 
     private final CarService carService;
 
-    @GetMapping("car-table.html")
+    @GetMapping("/car-table.html")
     public ModelAndView getCatTablePage() {
         System.out.println("car table controller " + now());
         return new ModelAndView( "car_table", Map.of("carList", carService.getCarTable()));

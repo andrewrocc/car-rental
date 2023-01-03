@@ -36,10 +36,33 @@
                 <span>Price</span><span>$<c:out value="${car.price}"/></span>
               </div>
 
-              <div class="pt-4">
-                <button class="btn btn-warning">Delete</button>
-                <button class="btn btn-primary m-2">Update</button>
-                <button class="btn btn-primary">Order</button>
+              <div class="pt-4 d-flex">
+                <button class="btn btn-warning m-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+                <!-- delete confirm -->
+                <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Delete car page!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            Ooh, you're going to delete this car, are you sure!
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <a class="nav-link" href="/rentcar/delete-car.html?id=${car.id}">
+                                    <button type="button" class="btn btn-warning">Delete</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="nav-link" href="/rentcar/edit-car.html?id=${car.id}">
+                    <button type="button" class="btn btn-primary m-2">Update</button>
+                </a>
+                <button class="btn btn-primary m-2">Order</button>
               </div>
 
             </div>

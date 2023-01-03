@@ -5,12 +5,14 @@ import infrastructure.model.CarModel;
 import infrastructure.repository.CarModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class CarModelService {
 
     @Autowired
@@ -18,7 +20,6 @@ public class CarModelService {
 
     private List<String> modelList;
 
-    @Transactional
     public List<String> getListCarModelByBrand(CarBrand brand) {
         if (modelList == null || modelList.isEmpty()) {
             List<CarModel> models = carModelRepository.findAll();
@@ -28,6 +29,7 @@ public class CarModelService {
         }
     }
 
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     private List<String> getOnlyModelsNameFromCarModelClass(List<CarModel> list, CarBrand brand) {
         modelList = new ArrayList<>(list.size());
         for (CarModel carModel : list) {
@@ -37,5 +39,22 @@ public class CarModelService {
         }
 
         return modelList;
+    }
+
+    public CarModel findByName(String name) {
+        return carModelRepository.findByName(name);
+    }
+
+    public void update(CarModel carModel) {
+        carModelRepository.save(carModel);
+    }
+
+    public void deleteModel(long id) {
+        carModelRepository.deleteById(id);
+    }
+
+    public int getCountModelsByBrand(long id) {
+        List<CarModel> carModels = carModelRepository.findByBrandId(id);
+        return carModels.size();
     }
 }

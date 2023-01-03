@@ -1,6 +1,6 @@
 package infrastructure.controller;
 
-import infrastructure.dto.CarTable;
+import infrastructure.dto.CarInfoDTO;
 import infrastructure.service.AddCarService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -24,7 +24,7 @@ public class AddCarController {
 
 	@SneakyThrows
 	@PostMapping("/add-car.html")
-	public String addNewCar(@RequestParam("photo") MultipartFile file, CarTable c) {
+	public String addNewCar(@RequestParam("carPhoto") MultipartFile file, CarInfoDTO c) {
 		System.out.println(c);
 		carService.addNewCarToApp(c, file.getBytes());
 		return "redirect:/car-table.html";

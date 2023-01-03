@@ -1,6 +1,6 @@
 package infrastructure.service;
 
-import infrastructure.dto.CarTable;
+import infrastructure.dto.CarInfoDTO;
 import infrastructure.model.Car;
 import infrastructure.model.CarBrand;
 import infrastructure.model.CarModel;
@@ -24,7 +24,7 @@ public class AddCarService {
 
     private final CarBrandRepository brandRepository;
 
-    public void addNewCarToApp(CarTable c, byte[] photo) {
+    public void addNewCarToApp(CarInfoDTO c, byte[] photo) {
         CarModel carModel = modelRepository.findByName(c.getModel());
         CarBrand carBrand = brandRepository.findByName(c.getBrand());
         Car car = new Car();

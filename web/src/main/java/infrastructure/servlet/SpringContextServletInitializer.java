@@ -1,6 +1,5 @@
 package infrastructure.servlet;
 
-import infrastructure.config.DataConfig;
 import infrastructure.config.RepositoryConfig;
 import infrastructure.config.ServiceConfig;
 import infrastructure.config.WebConfig;

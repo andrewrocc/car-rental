@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class CarBrandService {
 
 	@Autowired
@@ -16,12 +17,23 @@ public class CarBrandService {
 
 	private List<CarBrand> carBrands;
 
-	@Transactional
 	public List<CarBrand> getListCarBrand() {
 		if (carBrands == null || carBrands.isEmpty()) {
 			return carBrands = carBrandRepository.findAll();
 		} else {
 			return carBrands;
 		}
+	}
+
+	public CarBrand findByName(String name) {
+		return carBrandRepository.findByName(name);
+	}
+
+	public void update(CarBrand carBrand) {
+		carBrandRepository.save(carBrand);
+	}
+
+	public void deleteBrand(long id) {
+		carBrandRepository.deleteById(id);
 	}
 }

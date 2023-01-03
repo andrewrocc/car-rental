@@ -47,9 +47,9 @@
                       </div>
 
                       <div class="col-sm-5 mx-auto py-3">
-                        <label for="photo" class="form-label">Photo:</label>
+                        <label for="carPhoto" class="form-label">Photo:</label>
                         <div class="col-sm-8 mx-auto">
-                            <input type="file" name="photo" class="form-control" id="photo"
+                            <input type="file" name="carPhoto" class="form-control" id="carPhoto"
                                 size="20">
                         </div>
                       </div>

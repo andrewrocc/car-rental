@@ -1,9 +1,7 @@
 package infrastructure.controller;
 
-import infrastructure.dto.CarTable;
 import infrastructure.model.Car;
 import infrastructure.service.CarInfoService;
-import infrastructure.service.CarPhotoService;
 import infrastructure.service.CarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

@@ -1,27 +1,33 @@
 package infrastructure.service;
 
-import infrastructure.dto.CarTable;
+import infrastructure.dto.CarInfoDTO;
 import infrastructure.model.Car;
-import infrastructure.repository.CarRepository;
+import infrastructure.model.CarPhoto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CarInfoService {
 
-    private final CarRepository carRepository;
+    private final CarService carService;
 
-    @Transactional
-    public CarTable getCarInfoById(Long id) {
-        Car car = carRepository.getReferenceById(id);
-        CarTable carTable = new CarTable();
-        carTable.setId(car.getId());
-        carTable.setModel(car.getCarModel().getModelName());
-        carTable.setBrand(car.getCarBrand().getBrandName());
-        carTable.setNumber(car.getNumberCar());
-        carTable.setPrice(car.getPrice().toString());
-        return carTable;
+    private final CarPhotoService photoService;
+
+    public CarInfoDTO getCarInfoById(Long id) {
+        Car car = carService.getReferenceById(id);
+        CarInfoDTO carInfoDTO = new CarInfoDTO();
+        carInfoDTO.setId(car.getId());
+        carInfoDTO.setModel(car.getCarModel().getModelName());
+        carInfoDTO.setBrand(car.getCarBrand().getBrandName());
+        carInfoDTO.setNumber(car.getNumberCar());
+        carInfoDTO.setPrice(car.getPrice().toString());
+        if (car.getPhoto() != null) {
+            CarPhoto carPhoto = photoService.getCarPhotoByCarId(id);
+            carInfoDTO.setPhoto(carPhoto.getPhoto());
+        }
+        return carInfoDTO;
     }
 }

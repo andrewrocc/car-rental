@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CarTable {
+public class CarInfoDTO {
 
     private long id;
 
@@ -18,4 +18,6 @@ public class CarTable {
     private String number;
 
     private String price;
+
+    private byte[] photo;
 }

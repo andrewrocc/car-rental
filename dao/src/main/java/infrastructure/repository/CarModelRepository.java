@@ -14,4 +14,7 @@ public interface CarModelRepository extends JpaRepository<CarModel, Long> {
 
     @Query(value = "SELECT * FROM CAR_MODEL c WHERE c.NAME=:name", nativeQuery = true)
     CarModel findByName(@Param("name") String name);
+
+    @Query(value = "SELECT * FROM CAR_MODEL c WHERE c.BRAND_ID=:id", nativeQuery = true)
+    List<CarModel> findByBrandId(@Param("id") long id);
 }
