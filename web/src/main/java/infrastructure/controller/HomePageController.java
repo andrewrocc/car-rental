@@ -9,7 +9,7 @@ import static java.time.LocalDateTime.now;
 @Controller
 public class HomePageController {
 
-	@GetMapping("/index.html")
+	@GetMapping({"/index.html", "/"})
 	public ModelAndView getHomePage() {
 		System.out.println("home page " + now());
 		return new ModelAndView("index");

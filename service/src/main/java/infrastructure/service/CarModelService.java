@@ -54,7 +54,6 @@ public class CarModelService {
     }
 
     public int getCountModelsByBrand(long id) {
-        List<CarModel> carModels = carModelRepository.findByBrandId(id);
-        return carModels.size();
+        return carModelRepository.findByBrandId(id).size();
     }
 }
