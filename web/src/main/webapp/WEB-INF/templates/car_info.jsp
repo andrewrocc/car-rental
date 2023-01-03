@@ -62,7 +62,9 @@
                 <a class="nav-link" href="/rentcar/edit-car.html?id=${car.id}">
                     <button type="button" class="btn btn-primary m-2">Update</button>
                 </a>
-                <button class="btn btn-primary m-2">Order</button>
+                <a class="nav-link" href="/rentcar/order.html?id=${car.id}">
+                    <button class="btn btn-primary m-2">Order</button>
+                </a>
               </div>
 
             </div>

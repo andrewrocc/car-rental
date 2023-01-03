@@ -11,8 +11,8 @@
          <div class="col">
             <div class="card card-registration my-4"  style="border-radius: 1rem;">
                <div class="row g-0">
-                  <div class="col-xl-6 masthead">
-                    <%-- style="background-image: url(../img/bugatti-divo.jpg);"
+                  <div class="col-xl-6 masthead" style="background-image: url(../img/bugatti-divo.jpg);">
+                    <%--
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
                                   alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" /> --%>
                   </div>
@@ -49,6 +49,11 @@
                         </div>
                         <div class="d-flex justify-content-end pt-3">
                            <button class="btn btn-dark btn-lg ms-2" type="submit">Submit</button>
+                        </div>
+                        <div class="d-flex justify-content-center pt-4 text-muted">
+                            <p class="mb-lg-0">Have already an account?
+                                <a href="/rentcar/login.html" class="fw-bold text-body">Login</a>
+                            </p>
                         </div>
                      </div>
                      </form>

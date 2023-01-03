@@ -39,7 +39,7 @@
             FIRSTNAME VARCHAR(100) NOT NULL,
             LASTNAME VARCHAR(100) NOT NULL,
             EMAIL VARCHAR(100) NOT NULL,
-            PAYMENT_CARD VARCHAR(16) NOT NULL,
+            PAYMENT_CARD VARCHAR(16),
             CONSTRAINT PK_USER PRIMARY KEY (ID ASC)
             );
 
@@ -282,6 +282,8 @@
             ALTER TABLE USER ADD COLUMN PASSWORD VARCHAR(50) NOT NULL;
 
             UPDATE USER SET PASSWORD = '1111' WHERE (ID = '1');
+
+            INSERT INTO USER VALUES (8, 'admin', '-', 'admin@rentcar.com', '', '123');
         </sql>
     </changeSet>
 

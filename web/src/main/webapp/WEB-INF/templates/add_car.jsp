@@ -7,7 +7,7 @@
 
        <div class="row">
           <div class="col-sm-3">
-          </div>
+       </div>
 
           <div class="col-sm- mx-auto">
              <form method="post" action="/rentcar/add-car.html" enctype="multipart/form-data">
@@ -62,8 +62,8 @@
                 </div>
              </form>
 
-          </div>
-             <div class="col-sm-3">
+          <div class="row">
+            <div class="col-sm-3">
           </div>
 
        </div>
