@@ -19,7 +19,7 @@ public class CarPhotoService {
 
     public CarPhoto getCarPhotoByCarId(long id) {
         CarPhoto photo = photoRepository.findCarPhotoByCarId(id);
-        System.out.println(photo.getPhoto().length);
+        System.out.println("photo size: " + photo.getPhoto().length);
         return photo;
     }
 

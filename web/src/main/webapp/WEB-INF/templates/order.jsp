@@ -12,60 +12,69 @@
       <div class="d-flex justify-content-center">
          <div class="col-md-8 col-lg-6 col-xl-6">
             <div class="card text-black">
-               <c:set value="${carInfo}" var="car"/>
-               <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
-               <img src="/rentcar/image/${car.id}/photo.jpg" class="card-img-top"
-                  alt="${car.brand} ${car.model}" />
-               <div class="card-body">
-                  <div class="text-center">
-                     <h5 class="card-title">Believing is seeing</h5>
-                     <p class="text-muted mb-4"></p>
-                  </div>
 
-                  <div>
-                     <div class="d-flex justify-content-between">
-                        <span>Brand</span>
-                        <span>
-                           <c:out value="${car.brand}"/>
-                        </span>
+               <c:set value="${carInfo}" var="car" />
+                  <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
+                  <img src="/rentcar/image/${car.id}/photo.jpg" class="card-img-top"
+                     alt="${car.brand} ${car.model}" />
+                  <form method="post" action="/rentcar/create-order.html?id=${car.id}">
+                  <div class="card-body">
+                     <div class="text-center">
+                        <h5 class="card-title">Believing is seeing</h5>
+                        <p class="text-muted mb-4"></p>
                      </div>
-                     <div class="d-flex justify-content-between">
-                        <span>Model</span>
-                        <span>
-                           <c:out value="${car.model}"/>
-                        </span>
+                     <div>
+                        <div class="d-flex justify-content-between">
+                           <span>Brand</span>
+                           <input name="brand" id="brand" value="${car.brand}" style="display: none;">
+                               <span>
+                                  <c:out value="${car.brand}"/>
+                               </span>
+                           </input>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                           <span>Model</span>
+                           <input name="model" id="model" value="${car.model}" style="display: none;">
+                               <span>
+                                  <c:out value="${car.model}" />
+                               </span>
+                           </input>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                           <span>Number</span>
+                           <input name="number" id="number" value="${car.number}" style="display: none;">
+                               <span>
+                                  <c:out value="${car.number}" />
+                               </span>
+                           </input>
+                        </div>
                      </div>
-                     <div class="d-flex justify-content-between">
-                        <span>Number</span>
-                        <span>
-                           <c:out value="${car.number}"/>
-                        </span>
+                     <div class="d-flex justify-content-between total font-weight-bold mt-4">
+                        <span>Price</span>
+                        <input name="price" id="price" value="${car.price}" style="display: none;">
+                            <span>
+                               $ <c:out value="${car.price}" />
+                            </span>
+                        </input>
+                     </div>
+                     <div class="d-flex justify-content-center mt-4">
+                        <div class="col-sm-5 mx-auto">
+                           <label for="numberOfDays" class="form-label">Number of date:</label>
+                           <input type="number" name="numberOfDays" class="form-control" id="numberOfDays">
+                        </div>
+                     </div>
+                     <div class="d-flex justify-content-center py-3">
+                        <div class="col-sm-5 mx-auto">
+                           <label for="startDay" class="form-label">Start day:</label>
+                           <input type="date" name="startDay" class="form-control" id="startDay">
+                        </div>
+                     </div>
+                     <div class="d-flex justify-content-center mt-3">
+                        <button type="submit" class="btn btn-primary">Order</button>
                      </div>
                   </div>
-                  <div class="d-flex justify-content-between total font-weight-bold mt-4">
-                     <span>Price</span>
-                     <span>$
-                        <c:out value="${car.price}"/>
-                     </span>
-                  </div>
-                  <div class="d-flex justify-content-center mt-4">
-                     <div class="col-sm-5 mx-auto">
-                        <label for="brand" class="form-label">Number of date:</label>
-                        <input type="text" name="brand" class="form-control" id="brand">
-                     </div>
-                  </div>
-                  <div class="d-flex justify-content-center py-3">
-                     <div class="col-sm-5 mx-auto">
-                        <label for="brand" class="form-label">Start day:</label>
-                        <input type="date" name="brand" class="form-control" id="brand">
-                     </div>
-                  </div>
-                  <div class="d-flex justify-content-center mt-3">
-                  <a class="nav-link" href="/rentcar/check-list.html">
-                     <button type="submit" class="btn btn-primary">Order</button>
-                  </a>
-                  </div>
-               </div>
+               </form>
+
             </div>
          </div>
       </div>

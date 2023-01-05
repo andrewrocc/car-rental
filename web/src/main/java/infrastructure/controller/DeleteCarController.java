@@ -24,6 +24,6 @@ public class DeleteCarController {
     public ModelAndView deleteCar(@RequestParam(name = "id") long id) {
         System.out.println("deleteCar call " + now());
         deleteService.delete(id);
-        return new CarTableController(carService).getCatTablePage();
+        return new CarTableController(carService).getCarTablePage();
     }
 }

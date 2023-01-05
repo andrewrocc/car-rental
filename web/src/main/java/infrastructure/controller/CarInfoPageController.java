@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
+import static java.time.LocalDateTime.now;
+
 @Controller
 @RequiredArgsConstructor
 public class CarInfoPageController {
@@ -23,7 +25,7 @@ public class CarInfoPageController {
 
     @GetMapping("/car-info.html")
     public ModelAndView getCarInfoPage(@RequestParam(name = "id") Long id) {
-        System.out.println("CarInfoPageController call");
+        System.out.println("CarInfoPageController call " + now());
         return new ModelAndView("car_info", Map.of("carInfo", carInfoService.getCarInfoById(id)));
     }
 

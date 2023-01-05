@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import static java.time.LocalDateTime.now;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,7 +30,7 @@ public class EditUserController {
     @GetMapping("/edit-user.html")
     public ModelAndView getPageUserListTable(@RequestParam(value = "size", required = false, defaultValue = "5") Byte size,
                                              @RequestParam(value = "page", required = false, defaultValue = "0") Byte page) {
-        System.out.println("EditUserController controller");
+        System.out.println("EditUserController controller + " + now());
         Page<User> pageUser = userService.getUserRepository()
                 .findAll(PageRequest.of(page, size, Sort.by("id").ascending()));          // TODO to service module
 

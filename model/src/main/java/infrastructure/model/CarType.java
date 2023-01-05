@@ -4,6 +4,7 @@ package infrastructure.model;
 //@Setter
 //@Entity
 //@Table(name = "T_CARS_TYPE")
+@Deprecated
 public class CarType {
 //
 //	@Id

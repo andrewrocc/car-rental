@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public class User implements Serializable {
 
 	@ManyToMany(mappedBy = "users")
 	@ToString.Exclude
-	private Set<Order> orders;
+	private Set<Order> orders = new HashSet<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "USER_ROLE",
@@ -70,7 +71,7 @@ public class User implements Serializable {
 		result = 31 * result + (email != null ? email.hashCode() : 0);
 		result = 31 * result + (paymentCard != null ? paymentCard.hashCode() : 0);
 		result = 31 * result + (password != null ? password.hashCode() : 0);
-		result = 31 * result + (orders != null ? orders.hashCode() : 0);
+//		result = 31 * result + (orders != null ? orders.hashCode() : 0);
 		result = 31 * result + (roles != null ? roles.hashCode() : 0);
 		return result;
 	}

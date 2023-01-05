@@ -39,7 +39,7 @@ public class CarService {
 
 	public List<CarInfoDTO> getCarTable() {
 		List<Car> cars = carRepository.findAll();
-		List<CarInfoDTO> carInfoDTOS = new ArrayList<>(cars.size());
+		List<CarInfoDTO> carDTO = new ArrayList<>(cars.size());
 		for (Car car : cars) {
 			CarInfoDTO c = new CarInfoDTO();
 			c.setId(car.getId());
@@ -47,9 +47,9 @@ public class CarService {
 			c.setBrand(car.getCarBrand().getBrandName());
 			c.setNumber(car.getNumberCar());
 			c.setPrice(car.getPrice().toString());
-			carInfoDTOS.add(c);
+			carDTO.add(c);
 		}
-		return carInfoDTOS;
+		return carDTO;
 	}
 
 	public void update(Car c) {

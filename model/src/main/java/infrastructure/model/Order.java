@@ -5,7 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,28 +27,49 @@ public class Order implements Serializable {
 	@Column(name = "PRICE")
 	private BigDecimal price;
 
-	@Column(name = "DATETIME")
-	private Timestamp dateTime;
+	@Column(name = "DATE")
+	private LocalDate date;
 
-	@ManyToOne
-	@JoinColumn(name = "CAR_ID")
-	private Car car;
+	@Column(name = "NUMBER_OF_DAY")
+	private int numberOfDay;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "BOOKING_PAYMENT",
-			joinColumns = @JoinColumn(name = "BOOKING_ID"),
-			inverseJoinColumns = @JoinColumn(name = "PAYMENT_ID"))
+	@ManyToMany(mappedBy = "orders")
 	@ToString.Exclude
-	private Set<Payment> payments;
+	private Set<Car> cars = new HashSet<>();
+
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinTable(name = "BOOKING_PAYMENT",
+//			joinColumns = @JoinColumn(name = "BOOKING_ID"),
+//			inverseJoinColumns = @JoinColumn(name = "PAYMENT_ID"))
+//	@ToString.Exclude
+//	private Set<Payment> payments;
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "USER_BOOKING",
 			joinColumns = @JoinColumn(name = "BOOKING_ID"),
 			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
 	@ToString.Exclude
-	private Set<User> users;
+	private Set<User> users = new HashSet<>();
 
+	public void addCar(Car c) {
+		cars.add(c);
+		c.getOrders().add(this);
+	}
 
+	public void addUser(User u) {
+		users.add(u);
+		u.getOrders().add(this);
+	}
+
+	public Car[] getAllCars() {
+		return cars.toArray(new Car[cars.size()]);
+	}
+
+	public User[] getAllUsers() {
+		return users.toArray(new User[users.size()]);
+	}
+
+	//region eq & hashCode
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -57,9 +79,8 @@ public class Order implements Serializable {
 
 		if (id != order.id) return false;
 		if (!Objects.equals(price, order.price)) return false;
-		if (!Objects.equals(dateTime, order.dateTime)) return false;
-		if (!Objects.equals(car, order.car)) return false;
-		if (!Objects.equals(payments, order.payments)) return false;
+		if (!Objects.equals(date, order.date)) return false;
+		if (!Objects.equals(cars, order.cars)) return false;
 		return Objects.equals(users, order.users);
 	}
 
@@ -67,10 +88,10 @@ public class Order implements Serializable {
 	public int hashCode() {
 		int result = (int) (id ^ (id >>> 32));
 		result = 31 * result + (price != null ? price.hashCode() : 0);
-		result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
-		result = 31 * result + (car != null ? car.hashCode() : 0);
-		result = 31 * result + (payments != null ? payments.hashCode() : 0);
+		result = 31 * result + (date != null ? date.hashCode() : 0);
+//		result = 31 * result + (cars != null ? cars.hashCode() : 0);
 		result = 31 * result + (users != null ? users.hashCode() : 0);
 		return result;
 	}
+	//endregion
 }

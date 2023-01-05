@@ -41,7 +41,7 @@ public class UserDaoImplTest extends BaseDaoTest {
 		ResultSet resultSet = connection.createStatement().executeQuery("select count(*) from USER;");
 		resultSet.next();
 		int initialSize = resultSet.getInt(1);
-		assertEquals(7, initialSize);
+		assertEquals(8, initialSize);
 
 		User namelessUser = new User();
 		namelessUser.setFirstName("username");
@@ -57,7 +57,7 @@ public class UserDaoImplTest extends BaseDaoTest {
 		resultSet = connection.createStatement().executeQuery("select count(*) from USER;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
-		assertEquals(8, actualSize);
+		assertEquals(9, actualSize);
 		connection.createStatement().executeUpdate(String.format("delete from USER where ID=%d;", namelessUser.getId()));
 		connection.close();
 	}
@@ -104,7 +104,7 @@ public class UserDaoImplTest extends BaseDaoTest {
 				.executeQuery("select count(*) from USER;");
 		resultSet.next();
 		int actualSize = resultSet.getInt(1);
-		assertEquals(7, actualSize);
+		assertEquals(8, actualSize);
 		DatabaseOperation.DELETE.execute(iDatabaseConnection, dataset);
 		resultSet.close();
 	}

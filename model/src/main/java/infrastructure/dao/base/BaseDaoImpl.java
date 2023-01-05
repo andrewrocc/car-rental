@@ -7,7 +7,7 @@ import java.util.List;
 
 @Deprecated
 @Transactional
-//@RequiredArgsConstructor			// TODO required this shit
+//@RequiredArgsConstructor
 abstract public class BaseDaoImpl<T> implements BaseDao<T> {
 
 	protected final SessionFactory sessionFactory;

@@ -19,7 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
@@ -61,13 +62,14 @@ public class OrderDaoImplTest extends BaseDaoTest {
 
 		Order order = new Order();
 		order.setPrice(BigDecimal.valueOf(43.4));
-		order.setDateTime(Timestamp.valueOf("2022-04-23 15:01:00"));
-		if (order.getCar() == null) {
-			order.setCar(new Car());
+		order.setDate(LocalDate.of(2022, 4, 23));
+		order.setNumberOfDay(2);
+		if (order.getCars() == null) {
+			order.setCars(new HashSet<>(List.of(new Car())));
 		}
-		order.getCar().setId(car.getId());
+//		order.getCars().setId(car.getId());
 
-		order.setCar(car);
+		order.setCars(new HashSet<>(List.of(car)));
 
 		// when
 		targetObject.create(order);
@@ -108,11 +110,12 @@ public class OrderDaoImplTest extends BaseDaoTest {
 		Order order = new Order();
 		order.setId(101);
 		order.setPrice(BigDecimal.valueOf(50.0));
-		order.setDateTime(Timestamp.valueOf("2022-12-19 00:30:00"));
-		if (order.getCar() == null) {
-			order.setCar(new Car());
+		order.setDate(LocalDate.of(2022, 12, 19));
+		order.setNumberOfDay(3);
+		if (order.getCars() == null) {
+			order.setCars(new HashSet<>(List.of(new Car())));
 		}
-		order.getCar().setId(4L);
+//		order.getCars();
 
 		//when
 		targetObject.delete(order);

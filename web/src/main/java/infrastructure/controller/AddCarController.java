@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import static java.time.LocalDateTime.now;
+
 @Controller
 @RequiredArgsConstructor
 public class AddCarController {
@@ -18,7 +20,7 @@ public class AddCarController {
 
 	@GetMapping("/add-car.html")
 	public String getAddNewCarPage() {
-		System.out.println("AddCarController call.");
+		System.out.println("AddCarController call. " + now());
 		return "add_car";
 	}
 

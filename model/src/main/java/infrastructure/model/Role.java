@@ -53,7 +53,7 @@ public class Role implements Serializable {
 		int result = (int) (id ^ (id >>> 32));
 		result = 31 * result + (name != null ? name.hashCode() : 0);
 		result = 31 * result + (description != null ? description.hashCode() : 0);
-		result = 31 * result + (permission != null ? permission.hashCode() : 0);
+//		result = 31 * result + (permission != null ? permission.hashCode() : 0);
 		return result;
 	}
 }

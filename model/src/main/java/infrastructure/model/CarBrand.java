@@ -32,6 +32,7 @@ public class CarBrand implements Serializable {
 	@ToString.Exclude
 	private Set<CarModel> carModels;
 
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

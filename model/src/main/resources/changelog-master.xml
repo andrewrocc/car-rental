@@ -13,8 +13,6 @@
 
             DROP TABLE IF EXISTS BOOKING CASCADE;
 
-            DROP TABLE IF EXISTS PAYMENT CASCADE;
-
             DROP TABLE IF EXISTS CAR CASCADE;
 
             DROP TABLE IF EXISTS CAR_MODEL CASCADE;
@@ -29,7 +27,7 @@
 
             DROP TABLE IF EXISTS USER_BOOKING CASCADE;
 
-            DROP TABLE IF EXISTS BOOKING_PAYMENT CASCADE;
+            DROP TABLE IF EXISTS BOOKING_CAR CASCADE;
 
             DROP TABLE IF EXISTS CAR_PHOTO CASCADE;
 
@@ -46,8 +44,8 @@
             CREATE TABLE BOOKING (
             ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             PRICE FLOAT NOT NULL,
-            DATETIME DATETIME NOT NULL,
-            CAR_ID BIGINT UNSIGNED NOT NULL,
+            DATE DATE NOT NULL,
+            NUMBER_OF_DAY INT NOT NULL,
             CONSTRAINT PK_BOOKING PRIMARY KEY (ID ASC)
             );
 
@@ -73,11 +71,11 @@
             CONSTRAINT PK_CAR_MODEL PRIMARY KEY (ID ASC)
             );
 
-            CREATE TABLE PAYMENT (
+            /*CREATE TABLE PAYMENT (
             ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
             DATETIME DATETIME NOT NULL,
             CONSTRAINT PK_PAYMENT PRIMARY KEY (ID ASC)
-            );
+            );*/
 
             CREATE TABLE ROLE (
             ID BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -105,10 +103,10 @@
             CONSTRAINT PK_USER_BOOKING PRIMARY KEY (USER_ID ASC, BOOKING_ID ASC)
             );
 
-            CREATE TABLE BOOKING_PAYMENT (
+            CREATE TABLE BOOKING_CAR (
             BOOKING_ID BIGINT UNSIGNED NOT NULL,
-            PAYMENT_ID BIGINT UNSIGNED NOT NULL,
-            CONSTRAINT PK_BOOKING_PAYMENT PRIMARY KEY (BOOKING_ID ASC, PAYMENT_ID ASC)
+            CAR_ID BIGINT UNSIGNED NOT NULL,
+            CONSTRAINT PK_BOOKING_CAR PRIMARY KEY (BOOKING_ID ASC, CAR_ID ASC)
             );
 
             CREATE TABLE CAR_PHOTO (
@@ -116,9 +114,6 @@
             CAR_ID BIGINT UNSIGNED NOT NULL,
             CAR_PHOTO MEDIUMBLOB NOT NULL
             );
-
-            ALTER TABLE BOOKING ADD CONSTRAINT FK_BOOKING_CAR FOREIGN KEY (CAR_ID)
-            REFERENCES CAR (ID) ON DELETE CASCADE ON UPDATE CASCADE;
 
             ALTER TABLE CAR ADD CONSTRAINT FK_CAR_CARBRAND FOREIGN KEY (BRAND_ID)
             REFERENCES CAR_BRAND (ID) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -144,14 +139,14 @@
             ALTER TABLE USER_BOOKING ADD CONSTRAINT FK_M2M_USER_BOOKING_USER FOREIGN KEY (USER_ID)
             REFERENCES USER (ID) ON DELETE CASCADE ON UPDATE CASCADE;
 
-            ALTER TABLE BOOKING_PAYMENT ADD CONSTRAINT FK_M2M_BOOKING_PAYMENT_PAYMENT FOREIGN KEY (PAYMENT_ID)
-            REFERENCES PAYMENT (ID) ON DELETE CASCADE ON UPDATE CASCADE;
-
-            ALTER TABLE BOOKING_PAYMENT ADD CONSTRAINT FK_M2M_BOOKING_PAYMENT_BOOKING FOREIGN KEY (BOOKING_ID)
-            REFERENCES BOOKING (ID) ON DELETE CASCADE ON UPDATE CASCADE;
-
             ALTER TABLE CAR_PHOTO ADD CONSTRAINT FK_CAR_PHOTO FOREIGN KEY (CAR_ID)
             REFERENCES CAR (ID) ON DELETE CASCADE ON UPDATE CASCADE;
+
+            ALTER TABLE BOOKING_CAR ADD CONSTRAINT FK_BOOKING_CAR FOREIGN KEY (CAR_ID)
+            REFERENCES CAR (ID) ON DELETE CASCADE ON UPDATE CASCADE;
+
+            ALTER TABLE BOOKING_CAR ADD CONSTRAINT FK_CAR_BOOKING FOREIGN KEY (BOOKING_ID)
+            REFERENCES BOOKING (ID) ON DELETE CASCADE ON UPDATE CASCADE;
 
             SET FOREIGN_KEY_CHECKS=1;
         </sql>
@@ -168,14 +163,14 @@
             (6, 'Soroka', 'Andrey', 'lolipophiphopkrasivo@mail.ru', '9654120873221457'),
             (7, 'Konstantin', 'Bolotko', 'pro100kosti@mail.com', '0123456789125478');
 
-            INSERT INTO PAYMENT VALUES
+            /*INSERT INTO PAYMENT VALUES
             (1, '2022-01-01 10:10'),
             (2, '2022-10-01 12:10'),
             (3, '2020-03-12 11:11'),
             (4, '2020-01-01 10:10'),
             (5, '2019-12-01 09:01'),
             (6, '2022-04-23 14:34'),
-            (7, '2022-12-19 00:30');
+            (7, '2022-12-19 00:30');*/
 
             INSERT INTO CAR_BRAND VALUES
             (1, 'BMW'),
@@ -195,14 +190,6 @@
             (6, 6, 'Passat Business 2022'),
             (7, 7, 'GT 2017');
 
-            -- INSERT INTO CAR_type VALUES
-            -- (1, 'sedan'),
-            -- (2, 'hatchback'),
-            -- (3, 'crossover'),
-            -- (4, 'sport car'),
-            -- (5, 'hypercar'),
-            -- (6, 'business');
-
             INSERT INTO CAR VALUES
             (1, '9874', 250.45, 1, 1),
             (2, '1234', 140.1, 2, 2),
@@ -213,13 +200,13 @@
             (7, '6748', 506.8, 7, 7);
 
             INSERT INTO BOOKING VALUES
-            (1, 324.7, '2022-01-01 10:10', 1),
-            (2, 56.8, '2022-10-01 12:12', 2),
-            (3, 234.6, '2020-03-12 11:15', 3),
-            (4, 45.4, '2020-01-01 12:10', 4),
-            (5, 78.8, '2019-12-01 09:30', 5),
-            (6, 796.6, '2022-04-23 14:34', 6),
-            (7, 47.9, '2022-12-19 00:30', 7);
+            (1, 324.7, '2022-01-01', 3),
+            (2, 56.8, '2022-10-01', 2),
+            (3, 234.6, '2020-03-12', 1),
+            (4, 45.4, '2020-01-01', 4),
+            (5, 78.8, '2019-12-01', 4),
+            (6, 796.6, '2022-04-23', 4),
+            (7, 47.9, '2022-12-19', 7);
 
             INSERT INTO ROLE VALUES
             (1, "admin", "Administrators have full, unrestricted access rights to the service or domain."),
@@ -244,7 +231,7 @@
             (15, "create_payment", 2),
             (16, "view_cars", 3);
 
-            INSERT INTO BOOKING_PAYMENT VALUES
+            /*INSERT INTO BOOKING_PAYMENT VALUES
             (1, 1),
             (2, 2),
             (3, 3),
@@ -252,7 +239,7 @@
             (5, 4),
             (6, 5),
             (7, 6),
-            (7, 7);
+            (7, 7);*/
 
             INSERT INTO USER_BOOKING VALUES
             (1, 1),
@@ -272,6 +259,15 @@
             (5, 2),
             (6, 2),
             (7, 1);
+
+            INSERT INTO BOOKING_CAR VALUES
+            (1, 1),
+            (2, 2),
+            (3, 3),
+            (4, 4),
+            (5, 5),
+            (6, 6),
+            (7, 7);
         </sql>
     </changeSet>
 

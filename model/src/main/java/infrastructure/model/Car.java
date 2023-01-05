@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,10 +37,14 @@ public class Car implements Serializable {
 	@JoinColumn(name = "MODEL_ID")
 	private CarModel carModel;
 
-	@OneToMany(mappedBy = "car")
 	@ToString.Exclude
-	private Set<Order> order;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "BOOKING_CAR",
+			joinColumns = @JoinColumn(name = "CAR_ID"),
+			inverseJoinColumns = @JoinColumn(name = "BOOKING_ID"))
+	private Set<Order> orders = new HashSet<>();
 
+	@ToString.Exclude
 	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
 	private CarPhoto photo;
 
@@ -52,16 +57,22 @@ public class Car implements Serializable {
 
 		if (id != car.id) return false;
 		if (!Objects.equals(numberCar, car.numberCar)) return false;
+		if (!Objects.equals(price, car.price)) return false;
 		if (!Objects.equals(carBrand, car.carBrand)) return false;
-		return Objects.equals(order, car.order);
+		if (!Objects.equals(carModel, car.carModel)) return false;
+		if (!Objects.equals(orders, car.orders)) return false;
+		return Objects.equals(photo, car.photo);
 	}
 
 	@Override
 	public int hashCode() {
 		int result = (int) (id ^ (id >>> 32));
 		result = 31 * result + (numberCar != null ? numberCar.hashCode() : 0);
-		result = 31 * result + (carBrand != null ? carBrand.hashCode() : 0);
-		result = 31 * result + (order != null ? order.hashCode() : 0);
+		result = 31 * result + (price != null ? price.hashCode() : 0);
+//		result = 31 * result + (carBrand != null ? carBrand.hashCode() : 0);
+//		result = 31 * result + (carModel != null ? carModel.hashCode() : 0);
+		result = 31 * result + (orders != null ? orders.hashCode() : 0);
+//		result = 31 * result + (photo != null ? photo.hashCode() : 0);
 		return result;
 	}
 }

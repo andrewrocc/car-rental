@@ -7,14 +7,14 @@ INSERT INTO USER VALUES
 (6, 'Soroka', 'Andrey', 'lolipophiphopkrasivo@mail.ru', '9654120873221457'),
 (7, 'Konstantin', 'Bolotko', 'pro100kosti@mail.com', '0123456789125478');
 
-INSERT INTO PAYMENT VALUES
+/*INSERT INTO PAYMENT VALUES
 (1, '2022-01-01 10:10'),
 (2, '2022-10-01 12:10'),
 (3, '2020-03-12 11:11'),
 (4, '2020-01-01 10:10'),
 (5, '2019-12-01 09:01'),
 (6, '2022-04-23 14:34'),
-(7, '2022-12-19 00:30');
+(7, '2022-12-19 00:30');*/
 
 INSERT INTO CAR_BRAND VALUES
 (1, 'BMW'),
@@ -52,13 +52,13 @@ INSERT INTO CAR VALUES
 (7, '6748', 506.8, 7, 7);
 
 INSERT INTO BOOKING VALUES
-(1, 324.7, '2022-01-01 10:10', 1),
-(2, 56.8, '2022-10-01 12:12', 2),
-(3, 234.6, '2020-03-12 11:15', 3),
-(4, 45.4, '2020-01-01 12:10', 4),
-(5, 78.8, '2019-12-01 09:30', 5),
-(6, 796.6, '2022-04-23 14:34', 6),
-(7, 47.9, '2022-12-19 00:30', 7);
+(1, 324.7, '2022-01-01', 3),
+(2, 56.8, '2022-10-01', 2),
+(3, 234.6, '2020-03-12', 1),
+(4, 45.4, '2020-01-01', 4),
+(5, 78.8, '2019-12-01', 4),
+(6, 796.6, '2022-04-23', 4),
+(7, 47.9, '2022-12-19', 7);
 
 INSERT INTO ROLE VALUES
 (1, "admin", "Administrators have full, unrestricted access rights to the service or domain."),
@@ -83,7 +83,7 @@ INSERT INTO PERMISSION VALUES
 (15, "create_payment", 2),
 (16, "view_cars", 3);
 
-INSERT INTO BOOKING_PAYMENT VALUES
+/*INSERT INTO BOOKING_PAYMENT VALUES
 (1, 1),
 (2, 2),
 (3, 3),
@@ -91,7 +91,7 @@ INSERT INTO BOOKING_PAYMENT VALUES
 (5, 4),
 (6, 5),
 (7, 6),
-(7, 7);
+(7, 7);*/
 
 INSERT INTO USER_BOOKING VALUES
 (1, 1),
@@ -111,3 +111,12 @@ INSERT INTO USER_ROLE VALUES
 (5, 2),
 (6, 2),
 (7, 1);
+
+INSERT INTO BOOKING_CAR VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7);
