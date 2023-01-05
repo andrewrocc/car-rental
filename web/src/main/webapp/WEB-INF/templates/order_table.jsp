@@ -24,7 +24,7 @@
             <c:forEach items="${orderList}" var="order">
                <tr>
                   <td>
-                     <a class="nav-link">
+                     <a class="nav-link" href="/rentcar/order-info.html?id=${order.id}">
                         <c:out value="${order.id}" />
                      </a>
                   </td>

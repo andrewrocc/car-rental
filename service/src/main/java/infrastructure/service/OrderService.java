@@ -33,4 +33,17 @@ public class OrderService {
         }
         return orderDTOList;
     }
+
+    public OrderDTO getOrderInfoById(long id) {
+        Order order = orderRepository.getReferenceById(id);
+        OrderDTO o = new OrderDTO();
+        o.setId(order.getId());
+        o.setPrice(order.getPrice().toString());
+        o.setDate(order.getDate().toString());
+        o.setNumberOfDay(String.valueOf(order.getNumberOfDay()));
+        o.setLogin(order.getAllUsers()[0].getEmail());
+        o.setBrand(order.getAllCars()[0].getCarBrand().getBrandName());
+        o.setModel(order.getAllCars()[0].getCarModel().getModelName());
+        return o;
+    }
 }
