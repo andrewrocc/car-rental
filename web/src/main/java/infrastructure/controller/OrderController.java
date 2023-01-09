@@ -36,9 +36,9 @@ public class OrderController {
     }
 
     @GetMapping("/order-info.html")
-    public ModelAndView getOrderPageById(@RequestParam("id") long id) {
+    public ModelAndView getOrderPageById(@RequestParam("id") long id, @RequestParam("info") String order) {
         System.out.println("getOrderPageById call: id = " + id + " " + now());
-        return new ModelAndView("order_info", Map.of("orderList", orderService.getOrderInfoById(id)));
+        return new ModelAndView("order_info", Map.of("orderList", orderService.getOrderInfoById(order)));
     }
 
     @PostMapping("/create-order.html")
