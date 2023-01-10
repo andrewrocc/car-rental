@@ -6,6 +6,7 @@ import infrastructure.model.Order;
 import infrastructure.model.User;
 import infrastructure.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,7 @@ public class AddOrderService {
 
     public void add(long id, LocalDate startDate, short numberOfDay, OrderInfoDTO orderDTO) {
         Car car = carService.getCarById(id);
-        User user = userService.getUserByEmail("admin@rentcar.com");        // TODO get userEmail from user session
+        User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Order order = new Order();
         order.setPrice(new BigDecimal(orderDTO.getPrice()));
         order.setDate(startDate);

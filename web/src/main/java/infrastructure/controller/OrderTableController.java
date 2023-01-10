@@ -19,6 +19,6 @@ public class OrderTableController {
     @GetMapping("/order-table.html")
     public ModelAndView getOrderTablePage() {
         System.out.println("getOrderTablePage call:  " + now());
-        return new ModelAndView("order_table", Map.of("orderList", orderService.getOrderTable()));
+        return new ModelAndView("order_table", Map.of("orderList", orderService.getAllOrderTable()));
     }
 }

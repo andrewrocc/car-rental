@@ -52,6 +52,10 @@ public class User implements Serializable {
 		return roles.toArray(new Role[roles.size()]);
 	}
 
+	public Order[] getAllOrders() {
+		return orders.toArray(new Order[orders.size()]);
+	}
+
 	//region eq & hashC
 	@Override
 	public boolean equals(Object o) {
