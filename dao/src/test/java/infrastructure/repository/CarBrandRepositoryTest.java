@@ -32,7 +32,6 @@ public class CarBrandRepositoryTest extends BaseDaoTest {
     }
 
     @Test
-    @Ignore
     @SneakyThrows
     public void findAllBrandByName() {
         //given

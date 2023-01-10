@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -33,8 +34,9 @@ public class Role implements Serializable {
 
 	@ManyToMany(mappedBy = "roles")
 	@ToString.Exclude
-	private Set<User> users;
+	private Set<User> users = new HashSet<>();
 
+	//region eq & hashC
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -56,4 +58,5 @@ public class Role implements Serializable {
 //		result = 31 * result + (permission != null ? permission.hashCode() : 0);
 		return result;
 	}
+	//endregion
 }

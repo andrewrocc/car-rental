@@ -11,21 +11,21 @@
             <div class="row justify-content-center align-items-center">
                 <div class="col-12 col-lg-9 col-xl-4">
                     <div class="card shadow-2-strong card-registration" style="border-radius: 1rem;">
+                        <form action="/rentcar/login" method="post">
                         <div class="card-body p-5 text-center">
 
                             <div class="mb-md-5 mt-md-4 pb-4">
-
                                 <h2 class="fw-bold mb-4 text-uppercase">Login</h2>
                                 <p class="text-black-50 mb-5">Please enter your login and password!</p>
 
                                 <div class="form-outline form-white mb-3">
-                                    <input type="email" id="typeEmailX" class="form-control form-control-lg" />
-                                    <label class="form-label" for="typeEmailX">Email</label>
+                                    <input type="email" id="username" name="username" class="form-control form-control-lg" />
+                                    <label class="form-label" for="username">Email</label>
                                 </div>
 
                                 <div class="form-outline form-white mb-4">
-                                    <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                                    <label class="form-label" for="typePasswordX">Password</label>
+                                    <input type="password" id="password" name="password" class="form-control form-control-lg" />
+                                    <label class="form-label" for="password">Password</label>
                                 </div>
 
                                 <button class="btn btn btn-dark btn-lg px-5" type="submit">Login</button>
@@ -39,6 +39,7 @@
                             </div>
 
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -10,7 +10,7 @@ import java.util.List;
 public interface CarBrandRepository extends JpaRepository<CarBrand, Long> {
 
     @Query(value = "SELECT * FROM CAR_BRAND c WHERE c.NAME LIKE %:name%", nativeQuery = true)
-    List<CarBrand> findAllBrandByName(String name);
+    List<CarBrand> findAllBrandByName(@Param("name") String name);
 
     @Query(value = "SELECT * FROM CAR_BRAND c WHERE c.NAME=:name", nativeQuery = true)
     CarBrand findByName(@Param("name") String name);

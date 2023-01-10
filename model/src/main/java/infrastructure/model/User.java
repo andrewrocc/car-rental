@@ -46,8 +46,13 @@ public class User implements Serializable {
 			joinColumns = @JoinColumn(name = "USER_ID"),
 			inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	@ToString.Exclude
-	private Set<Role> roles;
+	private Set<Role> roles = new HashSet<>();
 
+	public Role[] getAllRoles() {
+		return roles.toArray(new Role[roles.size()]);
+	}
+
+	//region eq & hashC
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -75,4 +80,5 @@ public class User implements Serializable {
 		result = 31 * result + (roles != null ? roles.hashCode() : 0);
 		return result;
 	}
+	//endregion
 }

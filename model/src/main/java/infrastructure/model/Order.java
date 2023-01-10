@@ -37,13 +37,6 @@ public class Order implements Serializable {
 	@ToString.Exclude
 	private Set<Car> cars = new HashSet<>();
 
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinTable(name = "BOOKING_PAYMENT",
-//			joinColumns = @JoinColumn(name = "BOOKING_ID"),
-//			inverseJoinColumns = @JoinColumn(name = "PAYMENT_ID"))
-//	@ToString.Exclude
-//	private Set<Payment> payments;
-
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "USER_BOOKING",
 			joinColumns = @JoinColumn(name = "BOOKING_ID"),

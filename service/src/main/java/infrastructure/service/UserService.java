@@ -1,5 +1,6 @@
 package infrastructure.service;
 
+import infrastructure.model.Role;
 import infrastructure.model.User;
 import infrastructure.repository.UserRepository;
 import lombok.Getter;
@@ -31,5 +32,11 @@ public class UserService {
 
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    public List<User> getUsersByEmail(String email) {
+        List<User> users = userRepository.findAllByEmail(email);
+        System.out.println("user " + email + " has " + users.get(0).getAllRoles()[0].getName() + " role.");
+        return users;
     }
 }
