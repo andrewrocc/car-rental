@@ -5,19 +5,16 @@ import infrastructure.model.Car;
 import infrastructure.model.Order;
 import infrastructure.model.Role;
 import infrastructure.model.User;
-import infrastructure.repository.RoleRepository;
 import infrastructure.repository.UserRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @Transactional
@@ -27,16 +24,23 @@ public class UserService {
     @Getter
     private final UserRepository userRepository;
 
-    @Autowired
-    private RoleService roleService;
+    private final RoleService roleService;
 
     private static String ADMIN_ROLE;
 
-//    @PostConstruct
-//    private void postConstruct() {
-//        Role roleAdmin = roleService.getRoleAdmin();
-//        System.out.println(roleAdmin.getName());
-//    }
+//    private static final AtomicBoolean onlyOnce = new AtomicBoolean();        // guarantees that the method will be executed once
+
+    private void getAdminName() {
+//        if (onlyOnce.getAndSet(true)) return;
+        Role admin = roleService.getRoleAdmin();
+        ADMIN_ROLE = admin.getName();
+        System.out.println("admin name is: " + ADMIN_ROLE);
+    }
+
+    @EventListener
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        getAdminName();
+    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -86,8 +90,9 @@ public class UserService {
     }
 
     public UserDTO getUserDTOById(long id) {
-        Role admin = roleService.getRoleAdmin();        // TODO 89-90 str need to execute after initialize all spring application context, postConstruct doesn't work
-        String ADMIN_ROLE = admin.getName();
+        if (ADMIN_ROLE == null) {
+            getAdminName();
+        }
         User u = getUserById(id);
         Role[] userRoles = u.getAllRoles();
         System.out.println(Arrays.toString(userRoles));
