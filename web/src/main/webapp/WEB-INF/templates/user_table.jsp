@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<head></head>
+<head>
+</head>
 
 <%@include file="_header.jsp"%>
 
@@ -20,7 +21,7 @@
             <c:forEach items="${pageUser}" var="user">
                <tr>
                   <td>
-                     <a class="nav-link" href="/rentcar/user-info/${user.id}.html">
+                     <a class="nav-link" href="/rentcar/user-info.html?id=${user.id}">
                         <c:out value="${user.firstName}" />
                      </a>
                   </td>

@@ -271,9 +271,25 @@
 
             ALTER TABLE USER ADD COLUMN PASSWORD VARCHAR(50) NOT NULL;
 
-            UPDATE USER SET PASSWORD = '1111' WHERE (ID = '1');
+            UPDATE USER SET PASSWORD = '{noop}1111' WHERE (ID = '1');
 
-            INSERT INTO USER VALUES (8, 'admin', '-', 'admin@rentcar.com', '', '123');
+            INSERT INTO USER VALUES (8, 'admin', '-', 'admin@rentcar.com', '', '{noop}123');
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="andrewrocc">
+        <sql>
+            UPDATE USER SET PASSWORD = '{noop}222' WHERE (ID = '2');
+
+            UPDATE USER SET PASSWORD = '{noop}111' WHERE (ID = '3');
+
+            UPDATE USER SET PASSWORD = '{noop}111' WHERE (ID = '4');
+
+            UPDATE USER SET PASSWORD = '{noop}111' WHERE (ID = '5');
+
+            UPDATE USER SET PASSWORD = '{noop}111' WHERE (ID = '6');
+
+            UPDATE USER SET PASSWORD = '{noop}111' WHERE (ID = '7');
         </sql>
     </changeSet>
 

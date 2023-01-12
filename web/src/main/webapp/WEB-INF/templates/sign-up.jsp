@@ -18,7 +18,7 @@
                   </div>
 
                   <div class="col-xl-6">
-                     <form action="/rentcar/sign-up.html" method="post" modelAttribute="user">
+                     <form action="/rentcar/sign-up.html" method="post">
                      <div class="card-body p-md-5 text-black">
                         <h3 class="mb-5 text-center">Registration form</h3>
                         <div class="row">

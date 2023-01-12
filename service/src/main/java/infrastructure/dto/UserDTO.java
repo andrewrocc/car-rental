@@ -22,5 +22,7 @@ public class UserDTO {
 
     private String password;
 
+    private boolean isAdmin;
+
     private Order[] orders;
 }

@@ -1,6 +1,8 @@
 package infrastructure.controller;
 
+import infrastructure.dto.UserDTO;
 import infrastructure.model.User;
+import infrastructure.security.AuthenticationService;
 import infrastructure.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -19,15 +21,15 @@ public class SignUpController {
 
     @GetMapping("/sign-up.html")
     public String getSignUpPage() {
-        System.out.println("sign up controller " + now());
+        System.out.println("getSignUpPage call: " + now());
         return "sign-up";
     }
 
-    @PostMapping(value = "/sign-up.html")               // consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
-    public String addNewUser(User user) {
-        System.out.println("post registration controller");
-        System.out.println(user);
-        service.addNewUser(user);
+    @PostMapping("/sign-up.html")               // consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    public String addNewUser(UserDTO dto) {
+        System.out.println("addNewUser: " + now());
+        System.out.println(dto);
+        service.addNewUser(dto);
         return "redirect:/index.html";
     }
 }

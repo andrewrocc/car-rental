@@ -13,7 +13,7 @@
    <body class="d-flex flex-column min-vh-100">
       <nav class="navbar navbar-expand-lg bg-light">
          <div class="container-fluid">
-            <a class="navbar-brand" href="#">Rent a car</a>
+            <a class="navbar-brand" href="/rentcar/index.html">Rent a car</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -63,10 +63,10 @@
                          Admin's action
                          </a>
                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/rentcar/add-car.html">Add a car</a></li>
+                            <li><a class="dropdown-item" href="/rentcar/add-car.html">Add a new car</a></li>
+                            <li><a class="dropdown-item" href="/rentcar/add-new-user.html">Add a new user</a></li>
                             <li><a class="dropdown-item" href="/rentcar/edit-user.html">Edit user info</a></li>
                             <li><a class="dropdown-item" href="/rentcar/order-table.html">View orders</a></li>
-                            <li><a class="dropdown-item" href="#">Add example</a></li>
                          </ul>
                       </li>
                    </ul>

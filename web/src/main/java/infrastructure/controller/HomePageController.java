@@ -11,7 +11,7 @@ public class HomePageController {
 
 	@GetMapping({"/index.html", "/"})
 	public ModelAndView getHomePage() {
-		System.out.println("home page " + now());
+		System.out.println("getHomePage: " + now());
 		return new ModelAndView("index");
 	}
 }

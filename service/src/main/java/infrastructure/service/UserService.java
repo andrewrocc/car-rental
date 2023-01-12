@@ -3,17 +3,21 @@ package infrastructure.service;
 import infrastructure.dto.UserDTO;
 import infrastructure.model.Car;
 import infrastructure.model.Order;
+import infrastructure.model.Role;
 import infrastructure.model.User;
+import infrastructure.repository.RoleRepository;
 import infrastructure.repository.UserRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import javax.annotation.PostConstruct;
+import java.util.*;
 
 @Service
 @Transactional
@@ -22,6 +26,17 @@ public class UserService {
 
     @Getter
     private final UserRepository userRepository;
+
+    @Autowired
+    private RoleService roleService;
+
+    private static String ADMIN_ROLE;
+
+//    @PostConstruct
+//    private void postConstruct() {
+//        Role roleAdmin = roleService.getRoleAdmin();
+//        System.out.println(roleAdmin.getName());
+//    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -32,11 +47,15 @@ public class UserService {
     }
 
     public User getUserById(long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).get();       // orElse(null)
     }
 
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
+    }
+
+    public void addUser(User u) {
+        userRepository.save(u);
     }
 
     public List<User> getUsersByEmail(String email) {
@@ -64,5 +83,23 @@ public class UserService {
         u.setPassword(null);
         u.setOrders(orders);
         return u;
+    }
+
+    public UserDTO getUserDTOById(long id) {
+        Role admin = roleService.getRoleAdmin();        // TODO 89-90 str need to execute after initialize all spring application context, postConstruct doesn't work
+        String ADMIN_ROLE = admin.getName();
+        User u = getUserById(id);
+        Role[] userRoles = u.getAllRoles();
+        System.out.println(Arrays.toString(userRoles));
+        boolean isAdmin = Arrays.stream(userRoles).anyMatch(x -> x.getName().equalsIgnoreCase(ADMIN_ROLE));
+        UserDTO dto = new UserDTO();
+        dto.setId(u.getId());
+        dto.setFirstName(u.getFirstName());
+        dto.setLastName(u.getLastName());
+        dto.setEmail(u.getEmail());
+        dto.setPaymentCard(u.getPaymentCard());
+        dto.setPassword(u.getPassword());
+        dto.setAdmin(isAdmin);
+        return dto;
     }
 }
