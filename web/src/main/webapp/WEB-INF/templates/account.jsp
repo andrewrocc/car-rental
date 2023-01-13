@@ -12,7 +12,9 @@
       <h1 class="px-5 pt-5">This is your page</h1>
       <h5 class="px-5 pt-2"><c:out value="Hello ${user.firstName} ${user.lastName}"/></h5>
       <div class="px-5 pt-4">
-         <button type="button" class="btn btn-primary">Edit info</button>
+          <a class="navbar-brand" href="/rentcar/user-info.html?id=${user.id}">
+             <button type="button" class="btn btn-primary">Edit info</button>
+          </a>
       </div>
    </div>
 

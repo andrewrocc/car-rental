@@ -62,7 +62,7 @@
            <ul class="pagination justify-content-center">
               <li class="page-item">
                  <c:if test="${currentPage != 0}">
-                    <a class="page-link" href="/rentcar/edit-user.html?page=${currentPage - 1}">Previous</a>
+                    <a class="page-link" href="/rentcar/user-table.html?page=${currentPage - 1}">Previous</a>
                  </c:if>
               </li>
 
@@ -75,7 +75,7 @@
                           </li>
                        </c:when>
                        <c:otherwise>
-                          <a class="page-link" href="/rentcar/edit-user.html?page=${i}">${i}</a>
+                          <a class="page-link" href="/rentcar/user-table.html?page=${i}">${i}</a>
                        </c:otherwise>
                     </c:choose>
                  </c:forEach>
@@ -83,7 +83,7 @@
 
               <li class="page-item">
                  <c:if test="${currentPage lt noOfPages - 1}">
-                    <a class="page-link" href="/rentcar/edit-user.html?page=${currentPage + 1}">Next</a>
+                    <a class="page-link" href="/rentcar/user-table.html?page=${currentPage + 1}">Next</a>
                  </c:if>
               </li>
            </ul>

@@ -14,7 +14,7 @@
 
             <div class="col-sm- mx-auto">
                 <c:set value="${userInfo}" var="user" />
-                <form method="post" action="/rentcar/edit-user.html?id=${user.id}">
+                <form method="post" action="/rentcar/user-table.html?id=${user.id}">
                     <div class="container">
                         <div class="text-center align-items-center">
                             <div class="align-items-center">
@@ -59,6 +59,7 @@
                                     </div>
                                 </div>
 
+                                <security:authorize access="hasRole('ROLE_admin')">
                                 <div class="col-sm-5 mx-auto py-3">
                                     <div class="col-sm-3 mx-auto">
                                         <div class="form-check form-switch">
@@ -69,6 +70,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                </security:authorize>
 
                                 <div class="py-2">
                                     <button type="submit" class="btn btn-primary">Update info</button>

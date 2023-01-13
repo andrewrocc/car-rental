@@ -10,8 +10,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -28,10 +32,12 @@ public class UserService {
 
     private static String ADMIN_ROLE;
 
-//    private static final AtomicBoolean onlyOnce = new AtomicBoolean();        // guarantees that the method will be executed once
+//    private static final AtomicBoolean onlyOnce = new AtomicBoolean();
+
+    private static final AtomicBoolean isAdmin = new AtomicBoolean();
 
     private void getAdminName() {
-//        if (onlyOnce.getAndSet(true)) return;
+//        if (onlyOnce.getAndSet(true)) return;                     // guarantees that the method will be executed once
         Role admin = roleService.getRoleAdmin();
         ADMIN_ROLE = admin.getName();
         System.out.println("admin name is: " + ADMIN_ROLE);
@@ -39,7 +45,9 @@ public class UserService {
 
     @EventListener
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        getAdminName();
+        if (event.getApplicationContext().getParent() == null) {
+            getAdminName();
+        }
     }
 
     public List<User> getAllUsers() {
@@ -51,15 +59,29 @@ public class UserService {
     }
 
     public User getUserById(long id) {
-        return userRepository.findById(id).get();       // orElse(null)
+        try {
+            return userRepository.findById(id).get();       // orElse(null)
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
     }
 
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
 
+    public User getUserReferenceById(long id) {
+        return userRepository.getReferenceById(id);
+    }
+
     public void addUser(User u) {
         userRepository.save(u);
+    }
+
+    public boolean isAdmin() {
+        String authUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        User authUser = getUserByEmail(authUserEmail);
+        return authUser.getRoles().stream().anyMatch(x -> x.getName().equals(ADMIN_ROLE));
     }
 
     public List<User> getUsersByEmail(String email) {
@@ -93,18 +115,42 @@ public class UserService {
         if (ADMIN_ROLE == null) {
             getAdminName();
         }
+        String authUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+        User authUser = getUserByEmail(authUserEmail);
         User u = getUserById(id);
-        Role[] userRoles = u.getAllRoles();
-        System.out.println(Arrays.toString(userRoles));
-        boolean isAdmin = Arrays.stream(userRoles).anyMatch(x -> x.getName().equalsIgnoreCase(ADMIN_ROLE));
-        UserDTO dto = new UserDTO();
-        dto.setId(u.getId());
-        dto.setFirstName(u.getFirstName());
-        dto.setLastName(u.getLastName());
-        dto.setEmail(u.getEmail());
-        dto.setPaymentCard(u.getPaymentCard());
-        dto.setPassword(u.getPassword());
-        dto.setAdmin(isAdmin);
-        return dto;
+        boolean isRequestUserID = authUserEmail.equalsIgnoreCase(u.getEmail());
+        boolean isAdmin = authUser.getRoles().stream()
+                .anyMatch(x -> x.getName().equals(ADMIN_ROLE));
+        if (isAdmin || isRequestUserID) {
+            UserDTO dto = new UserDTO();
+            dto.setId(u.getId());
+            dto.setFirstName(u.getFirstName());
+            dto.setLastName(u.getLastName());
+            dto.setEmail(u.getEmail());
+            dto.setPaymentCard(u.getPaymentCard());
+            dto.setPassword(u.getPassword());
+            boolean currentRole = u.getRoles().stream().anyMatch(x -> x.getName().equals(ADMIN_ROLE));
+            dto.setAdmin(currentRole);
+            return dto;
+        }
+        return null;
+    }
+
+    public void updateUserInfo(long id, UserDTO dto) {
+        User userReference = getUserReferenceById(id);
+        User userForm = new User();
+        userForm.setId(dto.getId());
+        userForm.setFirstName(dto.getFirstName());
+        userForm.setLastName(dto.getLastName());
+        userForm.setEmail(dto.getEmail());
+        userForm.setPaymentCard(dto.getPaymentCard());
+        userForm.setPassword(dto.getPassword());
+        userForm.setOrders(userReference.getOrders());
+        boolean isUserReferenceAdmin = Arrays.stream(userReference.getAllRoles()).anyMatch(x -> x.getName().equals(ADMIN_ROLE));
+        userForm.addRole(dto.isAdmin() == isUserReferenceAdmin ? roleService.getRoleAdmin() : roleService.getRoleUser());
+
+        if (!(userReference.hashCode() == userForm.hashCode())) {
+            addUser(userForm);
+        }
     }
 }

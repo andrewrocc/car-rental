@@ -30,7 +30,7 @@ public class SignUpController {
         System.out.println("addNewUser: " + now());
         System.out.println(dto);
         service.addNewUser(dto);
-        return "redirect:/index.html";
+        return "redirect:/login.html";
     }
 }
 
