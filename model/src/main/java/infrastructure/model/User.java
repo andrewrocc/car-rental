@@ -11,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -59,6 +60,17 @@ public class User implements Serializable {
 	public void addRole(Role r) {
 		roles.add(r);
 		r.getUsers().add(this);
+	}
+
+	public static User from(User user) {
+		return User.getBuilder(user).build();
+	}
+
+	private static UserBuilder getBuilder(User user) {
+		return User.builder().id(user.getId()).firstName(user.getFirstName())
+				.lastName(user.getLastName()).email(user.getEmail())
+				.paymentCard(user.getPaymentCard()).password("{noop}" + user.getPassword())
+				.orders(user.getOrders()).roles(user.getRoles());
 	}
 
 	//region eq & hashC

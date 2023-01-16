@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RoleService {
 
+    // TODO to enum UserRole
     private final RoleRepository repository;
 
     public Role getRoleAdmin() {

@@ -13,6 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,6 +36,7 @@ public class Order implements Serializable {
 
 	@ManyToMany(mappedBy = "orders")
 	@ToString.Exclude
+	@Singular
 	private Set<Car> cars = new HashSet<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
@@ -42,6 +44,7 @@ public class Order implements Serializable {
 			joinColumns = @JoinColumn(name = "BOOKING_ID"),
 			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
 	@ToString.Exclude
+	@Singular
 	private Set<User> users = new HashSet<>();
 
 	public void addCar(Car c) {

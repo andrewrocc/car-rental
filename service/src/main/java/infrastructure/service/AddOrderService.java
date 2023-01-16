@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Set;
 
 import static java.time.LocalDateTime.now;
 
@@ -35,6 +37,8 @@ public class AddOrderService {
         order.setNumberOfDay(numberOfDay);
         order.addCar(car);
         order.addUser(user);
+//        Order order = Order.builder().price(new BigDecimal(orderDTO.getPrice()))
+//                .date(startDate).numberOfDay(numberOfDay).car(car).user(user).build();
         orderRepository.saveAndFlush(order);
         System.out.println("order was created! " + now());
     }

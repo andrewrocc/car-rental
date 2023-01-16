@@ -41,13 +41,8 @@ public class CarService {
 		List<Car> cars = carRepository.findAll();
 		List<CarInfoDTO> carDTO = new ArrayList<>(cars.size());
 		for (Car car : cars) {
-			CarInfoDTO c = new CarInfoDTO();
-			c.setId(car.getId());
-			c.setModel(car.getCarModel().getModelName());
-			c.setBrand(car.getCarBrand().getBrandName());
-			c.setNumber(car.getNumberCar());
-			c.setPrice(car.getPrice().toString());
-			carDTO.add(c);
+			CarInfoDTO infoDTO = CarInfoDTO.from(car);
+			carDTO.add(infoDTO);
 		}
 		return carDTO;
 	}

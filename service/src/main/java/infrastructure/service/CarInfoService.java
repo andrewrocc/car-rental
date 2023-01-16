@@ -18,12 +18,7 @@ public class CarInfoService {
 
     public CarInfoDTO getCarInfoById(Long id) {
         Car car = carService.getReferenceById(id);
-        CarInfoDTO carInfoDTO = new CarInfoDTO();
-        carInfoDTO.setId(car.getId());
-        carInfoDTO.setModel(car.getCarModel().getModelName());
-        carInfoDTO.setBrand(car.getCarBrand().getBrandName());
-        carInfoDTO.setNumber(car.getNumberCar());
-        carInfoDTO.setPrice(car.getPrice().toString());
+        CarInfoDTO carInfoDTO = CarInfoDTO.from(car);
         if (car.getPhoto() != null) {
             CarPhoto carPhoto = photoService.getCarPhotoByCarId(id);
             carInfoDTO.setPhoto(carPhoto.getPhoto());

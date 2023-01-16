@@ -39,6 +39,5 @@ public class AuthenticationService implements UserDetailsService {
             ex.printStackTrace();
             throw new UsernameNotFoundException("user not found: " + username, ex);
         }
-        // TODO hidden button
     }
 }

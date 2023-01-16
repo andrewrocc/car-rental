@@ -1,7 +1,6 @@
 package infrastructure.service;
 
 import infrastructure.dto.UserDTO;
-import infrastructure.model.Car;
 import infrastructure.model.Order;
 import infrastructure.model.Role;
 import infrastructure.model.User;
@@ -11,14 +10,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 @Transactional
@@ -33,8 +32,6 @@ public class UserService {
     private static String ADMIN_ROLE;
 
 //    private static final AtomicBoolean onlyOnce = new AtomicBoolean();
-
-    private static final AtomicBoolean isAdmin = new AtomicBoolean();
 
     private void getAdminName() {
 //        if (onlyOnce.getAndSet(true)) return;                     // guarantees that the method will be executed once
@@ -60,9 +57,9 @@ public class UserService {
 
     public User getUserById(long id) {
         try {
-            return userRepository.findById(id).get();       // orElse(null)
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            return userRepository.findById(id).get();
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -78,10 +75,8 @@ public class UserService {
         userRepository.save(u);
     }
 
-    public boolean isAdmin() {
-        String authUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
-        User authUser = getUserByEmail(authUserEmail);
-        return authUser.getRoles().stream().anyMatch(x -> x.getName().equals(ADMIN_ROLE));
+    public boolean hasAdminRole(Collection<Role> list) {
+        return list.stream().anyMatch(x -> x.getName().equals(ADMIN_ROLE));
     }
 
     public List<User> getUsersByEmail(String email) {
@@ -93,22 +88,8 @@ public class UserService {
     public UserDTO getUserInfo(String email) {
         User user = userRepository.findUserByEmail(email);
         Order[] orders = user.getAllOrders();
-        List<Car> orderCars = new ArrayList<>(orders.length << 1);
-        for (Order order : orders) {
-            Car[] allCars = order.getAllCars();
-            orderCars.addAll(List.of(allCars));
-        }
-        System.out.println(Arrays.toString(orders));
-        System.out.println(orderCars);
-        UserDTO u = new UserDTO();
-        u.setId(user.getId());
-        u.setFirstName(user.getFirstName());
-        u.setLastName(user.getLastName());
-        u.setEmail(user.getEmail());
-        u.setPassword(user.getPaymentCard());
-        u.setPassword(null);
-        u.setOrders(orders);
-        return u;
+        Arrays.stream(orders).forEach(Order::getAllCars);
+        return UserDTO.from(user, orders);
     }
 
     public UserDTO getUserDTOById(long id) {
@@ -117,21 +98,12 @@ public class UserService {
         }
         String authUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
         User authUser = getUserByEmail(authUserEmail);
-        User u = getUserById(id);
-        boolean isRequestUserID = authUserEmail.equalsIgnoreCase(u.getEmail());
-        boolean isAdmin = authUser.getRoles().stream()
-                .anyMatch(x -> x.getName().equals(ADMIN_ROLE));
+        User userById = getUserById(id);
+        boolean isRequestUserID = authUserEmail.equalsIgnoreCase(userById.getEmail());
+        boolean isAdmin = hasAdminRole(authUser.getRoles());
         if (isAdmin || isRequestUserID) {
-            UserDTO dto = new UserDTO();
-            dto.setId(u.getId());
-            dto.setFirstName(u.getFirstName());
-            dto.setLastName(u.getLastName());
-            dto.setEmail(u.getEmail());
-            dto.setPaymentCard(u.getPaymentCard());
-            dto.setPassword(u.getPassword());
-            boolean currentRole = u.getRoles().stream().anyMatch(x -> x.getName().equals(ADMIN_ROLE));
-            dto.setAdmin(currentRole);
-            return dto;
+            boolean currentRole = hasAdminRole(userById.getRoles());
+            return UserDTO.from(userById, currentRole);
         }
         return null;
     }
@@ -146,7 +118,7 @@ public class UserService {
         userForm.setPaymentCard(dto.getPaymentCard());
         userForm.setPassword(dto.getPassword());
         userForm.setOrders(userReference.getOrders());
-        boolean isUserReferenceAdmin = Arrays.stream(userReference.getAllRoles()).anyMatch(x -> x.getName().equals(ADMIN_ROLE));
+        boolean isUserReferenceAdmin = hasAdminRole(userReference.getRoles());
         userForm.addRole(dto.isAdmin() == isUserReferenceAdmin ? roleService.getRoleAdmin() : roleService.getRoleUser());
 
         if (!(userReference.hashCode() == userForm.hashCode())) {
