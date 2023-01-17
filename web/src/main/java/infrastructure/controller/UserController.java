@@ -11,19 +11,22 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 import static java.time.LocalDateTime.now;
 
 @Controller
 @RequiredArgsConstructor
-public class EditUserController {
+public class UserController {
 
     private final UserService userService;
 
@@ -33,7 +36,6 @@ public class EditUserController {
                                              @RequestParam(value = "page", required = false, defaultValue = "0") Byte page) {
         System.out.println("getPageUserListTable controller + " + now());
 
-//        if (!userService.isAdmin()) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         Page<User> pageUser = userService.getUserRepository()
                 .findAll(PageRequest.of(page, size, Sort.by("id").ascending()));
         int noOfPages = (int) Math.ceil(userService.getUserSize() * 1.0 / size);
@@ -57,5 +59,21 @@ public class EditUserController {
         System.out.println("updateUserInfo call: " + now() + "\n" + dto);
         userService.updateUserInfo(id, dto);
         return getUserInfoPageByUserId(id);
+    }
+
+    @GetMapping("/add-user.html")
+    public ModelAndView getAddUserPage() {
+        System.out.println("getAddUserPage call: " + now());
+        return new ModelAndView("add_user", Map.of("userDTO", new UserDTO()));
+    }
+
+    @PostMapping("/add-user.html")
+    public String createNewUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "add_user";
+        }
+        System.out.println("createNewUser call: " + now());
+        userService.add(userDTO);
+        return "redirect:/user-table.html";
     }
 }

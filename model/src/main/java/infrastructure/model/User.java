@@ -40,6 +40,7 @@ public class User implements Serializable {
 
 	@ManyToMany(mappedBy = "users")
 	@ToString.Exclude
+	@Builder.Default
 	private Set<Order> orders = new HashSet<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)

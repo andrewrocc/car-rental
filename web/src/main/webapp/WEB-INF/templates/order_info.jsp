@@ -62,7 +62,7 @@
                                     </span>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <span>Login</span>
+                                    <span>User (Login)</span>
                                     <span>
                                         <c:out value="${order.login}" />
                                     </span>

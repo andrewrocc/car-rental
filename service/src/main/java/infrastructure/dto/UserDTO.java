@@ -4,6 +4,7 @@ import infrastructure.model.Order;
 import infrastructure.model.User;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import java.util.Optional;
 
 @Getter
@@ -14,21 +15,28 @@ import java.util.Optional;
 @NoArgsConstructor
 public class UserDTO {
 
+    private final String NOT_BLANK_MESSAGE = "This field cannot be empty.";
+
     private long id;
 
+    @NotBlank(message = NOT_BLANK_MESSAGE)
     private String firstName;
 
+    @NotBlank(message = NOT_BLANK_MESSAGE)
     private String lastName;
 
+    @NotBlank(message = NOT_BLANK_MESSAGE)
     private String email;
 
+    @NotBlank(message = NOT_BLANK_MESSAGE)
     private String paymentCard;
 
+    @NotBlank(message = NOT_BLANK_MESSAGE)
     private String password;
 
     private boolean isAdmin;
 
-    private Order[] orders;             // TODO to List is the best
+    private Order[] orders;
 
     public static UserDTO from(User user) {
         return getBuilder(user).build();

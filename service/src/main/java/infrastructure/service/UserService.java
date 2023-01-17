@@ -113,11 +113,18 @@ public class UserService {
         User userForm = User.builder().id(dto.getId()).firstName(dto.getFirstName()).lastName(dto.getLastName())
                 .email(dto.getEmail()).paymentCard(dto.getPaymentCard()).password(dto.getPassword())
                 .orders(userReference.getOrders()).build();
-        boolean isUserReferenceAdmin = hasAdminRole(userReference.getRoles());
-        userForm.addRole(dto.isAdmin() == isUserReferenceAdmin ? roleService.getRoleAdmin() : roleService.getRoleUser());
+        userForm.addRole(dto.isAdmin() ? roleService.getRoleAdmin() : roleService.getRoleUser());
 
         if (!(userReference.hashCode() == userForm.hashCode())) {
             addUser(userForm);
         }
+    }
+
+    public void add(UserDTO userDTO) {
+        User userBuilder = User.builder().firstName(userDTO.getFirstName()).lastName(userDTO.getLastName())
+                .email(userDTO.getEmail()).paymentCard(userDTO.getPaymentCard())
+                .password("{noop}" + userDTO.getPassword()).build();
+        userBuilder.addRole(userDTO.isAdmin() ? roleService.getRoleAdmin() : roleService.getRoleUser());
+        addUser(userBuilder);
     }
 }
