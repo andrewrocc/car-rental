@@ -12,17 +12,18 @@
                 <div class="col-md-8 col-lg-6 col-xl-4">
                     <div class="card text-black">
                         <c:set value="${orderList}" var="order" />
-                        <form method="post" action="/rentcar/image/${car.id}/photo.jpg">
                             <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
                             <div class="card-body">
                                 <div class="text-center">
                                     <h5 class="card-title">Order page</h5>
-                                    <p class="text-muted mb-4">Admin only</p>
+                                    <security:authorize access="hasRole('ROLE_admin')">
+                                        <p class="text-muted mb-4">Admin only</p>
+                                    </security:authorize>
                                 </div>
 
                                 <div>
                                     <div class="d-flex justify-content-between">
-                                        <span>ID</span>
+                                        <span>Order ID</span>
                                         <input name="brand" id="brand" style="display: none;" size="1">
                                             <span>
                                                 <c:out value="${order.id}" />
@@ -66,11 +67,7 @@
                                         <c:out value="${order.login}" />
                                     </span>
                                 </div>
-                                <div class="d-flex justify-content-center mt-4">
-                                    <button type="submit" class="btn btn-primary">Delete</button>
-                                </div>
                             </div>
-                        </form>
                     </div>
                 </div>
             </div>

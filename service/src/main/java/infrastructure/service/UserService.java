@@ -110,14 +110,9 @@ public class UserService {
 
     public void updateUserInfo(long id, UserDTO dto) {
         User userReference = getUserReferenceById(id);
-        User userForm = new User();
-        userForm.setId(dto.getId());
-        userForm.setFirstName(dto.getFirstName());
-        userForm.setLastName(dto.getLastName());
-        userForm.setEmail(dto.getEmail());
-        userForm.setPaymentCard(dto.getPaymentCard());
-        userForm.setPassword(dto.getPassword());
-        userForm.setOrders(userReference.getOrders());
+        User userForm = User.builder().id(dto.getId()).firstName(dto.getFirstName()).lastName(dto.getLastName())
+                .email(dto.getEmail()).paymentCard(dto.getPaymentCard()).password(dto.getPassword())
+                .orders(userReference.getOrders()).build();
         boolean isUserReferenceAdmin = hasAdminRole(userReference.getRoles());
         userForm.addRole(dto.isAdmin() == isUserReferenceAdmin ? roleService.getRoleAdmin() : roleService.getRoleUser());
 

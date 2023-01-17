@@ -25,7 +25,7 @@ public class AccountController {
     @GetMapping("/account.html")
     public ModelAndView getAccountPage() {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println("getAccountPage call: " + now() + ". with login name: " + login);        // TODO logger
+        System.out.println("getAccountPage call: " + now() + ". with login name: " + login);
         UserDTO userInfo = userService.getUserInfo(login);
         return new ModelAndView("account", Map.of("userInfo", userInfo,
                 "orderInfo", orderService.setInfo(Arrays.asList(userInfo.getOrders()))));

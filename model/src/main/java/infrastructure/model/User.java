@@ -47,6 +47,7 @@ public class User implements Serializable {
 			joinColumns = @JoinColumn(name = "USER_ID"),
 			inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	@ToString.Exclude
+	@Builder.Default
 	private Set<Role> roles = new HashSet<>();
 
 	public Role[] getAllRoles() {
@@ -62,18 +63,7 @@ public class User implements Serializable {
 		r.getUsers().add(this);
 	}
 
-	public static User from(User user) {
-		return User.getBuilder(user).build();
-	}
-
-	private static UserBuilder getBuilder(User user) {
-		return User.builder().id(user.getId()).firstName(user.getFirstName())
-				.lastName(user.getLastName()).email(user.getEmail())
-				.paymentCard(user.getPaymentCard()).password("{noop}" + user.getPassword())
-				.orders(user.getOrders()).roles(user.getRoles());
-	}
-
-	//region eq & hashC
+	//region eq & hashCode
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -83,6 +73,7 @@ public class User implements Serializable {
 
 		if (id != user.id) return false;
 		if (!Objects.equals(firstName, user.firstName)) return false;
+		if (!Objects.equals(lastName, user.lastName)) return false;
 		if (!Objects.equals(email, user.email)) return false;
 		if (!Objects.equals(paymentCard, user.paymentCard)) return false;
 		if (!Objects.equals(password, user.password)) return false;
@@ -94,6 +85,7 @@ public class User implements Serializable {
 	public int hashCode() {
 		int result = (int) (id ^ (id >>> 32));
 		result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+		result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
 		result = 31 * result + (email != null ? email.hashCode() : 0);
 		result = 31 * result + (paymentCard != null ? paymentCard.hashCode() : 0);
 		result = 31 * result + (password != null ? password.hashCode() : 0);
