@@ -44,18 +44,7 @@
    </div>
 </section>
 
-<section class="container py-1 col-sm-1">
-    <div class="row">
-        <%--<form name="selectedForm">
-            <label for="contentSize" class="form-label">Choose page size:</label>
-            <select class="form-select" id="size" name="contentSize">
-                <option selected value="1">1</option>
-                <option value="3">3</option>
-                <option value="5">5</option>
-            </select>
-        </form>
-        --%>
-    </div>
+<section class="container py-1 col-sm-">
 
     <div class="container py-4">
         <nav aria-label="Page navigation">

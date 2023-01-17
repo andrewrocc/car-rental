@@ -36,11 +36,11 @@ public class UserController {
                                              @RequestParam(value = "page", required = false, defaultValue = "0") Byte page) {
         System.out.println("getPageUserListTable controller + " + now());
 
-        Page<User> pageUser = userService.getUserRepository()
-                .findAll(PageRequest.of(page, size, Sort.by("id").ascending()));
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
+        Page<User> userOnPage = userService.getAllUsers(pageRequest);
         int noOfPages = (int) Math.ceil(userService.getUserSize() * 1.0 / size);
         ModelAndView view = new ModelAndView("user_table");
-        view.addObject("pageUser", pageUser.getContent());
+        view.addObject("pageUser", userOnPage.getContent());
         view.addObject("currentPage", page);
         view.addObject("noOfPages", noOfPages);
         return view;

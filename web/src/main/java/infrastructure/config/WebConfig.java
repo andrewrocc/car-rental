@@ -5,12 +5,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = "infrastructure")
-public class WebConfig {
+public class WebConfig implements WebMvcConfigurer {
 
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
@@ -22,5 +24,10 @@ public class WebConfig {
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
 		return new InternalResourceViewResolver("/WEB-INF/templates/", ".jsp");
+	}
+
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/img/**").addResourceLocations("/WEB-INF/img/");
 	}
 }

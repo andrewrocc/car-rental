@@ -66,13 +66,13 @@
                             <li><a class="dropdown-item" href="/rentcar/add-car.html">Add a new car</a></li>
                             <li><a class="dropdown-item" href="/rentcar/add-user.html">Add a new user</a></li>
                             <li><a class="dropdown-item" href="/rentcar/user-table.html">Edit user info</a></li>
-                            <li><a class="dropdown-item" href="/rentcar/order-table.html">View orders</a></li>
+                            <li><a class="dropdown-item" href="/rentcar/order-table.html?size=5&page=0">View orders</a></li>
                          </ul>
                       </li>
                    </ul>
                </security:authorize>
 
-               <form class="d-flex" role="search" action="/rentcar/search.do" method="post">
+               <form class="d-flex" role="search" action="#" method="post">
                   <input class="form-control me-2" type="search" name="pname" placeholder="Search" aria-label="Search">
                   <button class="btn btn-outline-success" type="submit">Search</button>
                </form>
