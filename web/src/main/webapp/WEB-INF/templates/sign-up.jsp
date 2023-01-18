@@ -3,6 +3,7 @@
 <head>
    <style><%@include file="/WEB-INF/style/signup.css"%></style>
 </head>
+
 <%@include file="_header.jsp"%>
 
 <section class="vh-100 gradient-custom">
@@ -11,10 +12,7 @@
          <div class="col">
             <div class="card card-registration my-4"  style="border-radius: 1rem;">
                <div class="row g-0">
-                  <div class="col-xl-6 masthead" style="background-image: url(../img/bugatti-divo.jpg);">
-                    <%--
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
-                                  alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" /> --%>
+                  <div class="col-xl-6 background-img">
                   </div>
 
                   <div class="col-xl-6">

@@ -5,7 +5,7 @@
 
 <%@include file="_header.jsp"%>
 
-<section style="background-color: #eee;">
+<section class="vh-100" style="background-color: #eee;">
 
    <div class="px-2">
    <c:set value="${userInfo}" var="user"/>

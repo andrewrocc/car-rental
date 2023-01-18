@@ -1,12 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
-   <%--     <style><%@include file="/WEB-INF/style/signup.css"%></style>--%>
+    <style><%@include file="/WEB-INF/style/login.css"%></style>
 </head>
 
 <%@include file="_header.jsp"%>
 
-  <section style="background-color: #eee;">
+  <section style="background-color: #eee; vh-100">
     <div class="container py-5">
       <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6 col-xl-6">

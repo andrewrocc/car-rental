@@ -5,3 +5,18 @@
 .image img {
 	opacity: 0.6;
 }
+
+.gradient-custom {
+    background: linear-gradient(135deg, hsla(180, 33%, 88%, 1) 0%, hsla(310, 76%, 82%, 1) 50%, hsla(256, 83%, 72%, 1) 100%);
+
+    background: -moz-linear-gradient(135deg, hsla(180, 33%, 88%, 1) 0%, hsla(310, 76%, 82%, 1) 50%, hsla(256, 83%, 72%, 1) 100%);
+
+    background: -webkit-linear-gradient(135deg, hsla(180, 33%, 88%, 1) 0%, hsla(310, 76%, 82%, 1) 50%, hsla(256, 83%, 72%, 1) 100%);
+
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#D7EBEB", endColorstr="#F4AFE9", GradientType=1);
+}
+
+body, html, section {
+    width: 100%;
+    height: 100%;
+}
