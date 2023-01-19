@@ -1,6 +1,8 @@
 package infrastructure.model;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -38,7 +40,7 @@ public class Car implements Serializable {
 	private CarModel carModel;
 
 	@ToString.Exclude
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "BOOKING_CAR",
 			joinColumns = @JoinColumn(name = "CAR_ID"),
 			inverseJoinColumns = @JoinColumn(name = "BOOKING_ID"))
@@ -48,6 +50,12 @@ public class Car implements Serializable {
 	@OneToOne(mappedBy = "car", cascade = CascadeType.ALL)
 	private CarPhoto photo;
 
+	public void removeOrder(Order order) {
+		this.orders.remove(order);
+		order.getCars().remove(this);
+	}
+
+	//region eq & hash
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -75,4 +83,5 @@ public class Car implements Serializable {
 //		result = 31 * result + (photo != null ? photo.hashCode() : 0);
 		return result;
 	}
+	//endregion
 }

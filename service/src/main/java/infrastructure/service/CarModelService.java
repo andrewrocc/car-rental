@@ -52,8 +52,4 @@ public class CarModelService {
     public void deleteModel(long id) {
         carModelRepository.deleteById(id);
     }
-
-    public int getCountModelsByBrand(long id) {
-        return carModelRepository.findByBrandId(id).size();
-    }
 }

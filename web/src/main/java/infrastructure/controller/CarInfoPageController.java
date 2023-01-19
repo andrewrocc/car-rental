@@ -24,9 +24,9 @@ public class CarInfoPageController {
     private final CarService carService;
 
     @GetMapping("/car-info.html")
-    public ModelAndView getCarInfoPage(@RequestParam(name = "id") Long id) {
+    public ModelAndView getCarInfoPage(@RequestParam(name = "id") Double id) {          // Long id
         System.out.println("CarInfoPageController call " + now());
-        return new ModelAndView("car_info", Map.of("carInfo", carInfoService.getCarInfoById(id)));
+        return new ModelAndView("car_info", Map.of("carInfo", carInfoService.getCarInfoById(id.longValue())));
     }
 
     @ResponseBody

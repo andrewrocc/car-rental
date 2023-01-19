@@ -23,7 +23,7 @@ public class CarModel implements Serializable {
 	@Column(name = "NAME")
 	private String modelName;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "BRAND_ID")
 	private CarBrand carBrand;
 

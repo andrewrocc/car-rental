@@ -1,7 +1,6 @@
 package infrastructure.controller;
 
 import infrastructure.dto.CarInfoDTO;
-import infrastructure.model.Car;
 import infrastructure.service.AddCarService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -15,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-
 import java.util.Map;
 
 import static java.time.LocalDateTime.now;

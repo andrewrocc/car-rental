@@ -18,12 +18,10 @@ public class DeleteCarController {
 
     private final DeleteCarService deleteService;
 
-    private final CarService carService;
-
     @GetMapping("/delete-car.html")
-    public ModelAndView deleteCar(@RequestParam(name = "id") long id) {
+    public String deleteCar(@RequestParam(name = "id") long id) {
         System.out.println("deleteCar call " + now());
         deleteService.delete(id);
-        return new CarTableController(carService).getCarTablePage();
+        return "redirect:/car-table.html";
     }
 }

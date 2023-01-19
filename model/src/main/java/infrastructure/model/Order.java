@@ -36,15 +36,15 @@ public class Order implements Serializable {
 
 	@ManyToMany(mappedBy = "orders")
 	@ToString.Exclude
-	@Singular
+	@Builder.Default
 	private Set<Car> cars = new HashSet<>();
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name = "USER_BOOKING",
 			joinColumns = @JoinColumn(name = "BOOKING_ID"),
 			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
 	@ToString.Exclude
-	@Singular
+	@Builder.Default
 	private Set<User> users = new HashSet<>();
 
 	public void addCar(Car c) {

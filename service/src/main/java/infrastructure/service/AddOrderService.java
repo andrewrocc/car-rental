@@ -31,14 +31,10 @@ public class AddOrderService {
     public void add(long id, LocalDate startDate, short numberOfDay, OrderInfoDTO orderDTO) {
         Car car = carService.getCarById(id);
         User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
-        Order order = new Order();
-        order.setPrice(new BigDecimal(orderDTO.getPrice()));
-        order.setDate(startDate);
-        order.setNumberOfDay(numberOfDay);
+        Order order = Order.builder().price(new BigDecimal(orderDTO.getPrice()))
+                .date(startDate).numberOfDay(numberOfDay).build();
         order.addCar(car);
         order.addUser(user);
-//        Order order = Order.builder().price(new BigDecimal(orderDTO.getPrice()))
-//                .date(startDate).numberOfDay(numberOfDay).car(car).user(user).build();
         orderRepository.saveAndFlush(order);
         System.out.println("order was created! " + now());
     }

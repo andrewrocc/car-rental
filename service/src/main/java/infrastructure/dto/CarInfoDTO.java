@@ -6,6 +6,8 @@ import lombok.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,11 +15,11 @@ import javax.validation.constraints.Size;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarInfoDTO {
+public class CarInfoDTO implements Serializable {
 
-    private final String NOT_BLANK_MESSAGE = "This field cannot be empty.";
+    private transient final String NOT_BLANK_MESSAGE = "This field cannot be empty.";
 
-    private final String NOT_DIGITS_MESSAGE = "Only digits are accepted.";
+    private transient final String NOT_DIGITS_MESSAGE = "Only digits are accepted.";
 
     private long id;
 

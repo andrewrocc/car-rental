@@ -37,7 +37,7 @@ public class UserService {
 
     private void getAdminName() {
 //        if (onlyOnce.getAndSet(true)) return;                     // guarantees that the method will be executed once
-        Role admin = roleService.getRoleAdmin();
+        Role admin = roleService.getReferenceRoleAdmin();
         ADMIN_ROLE = admin.getName();
         System.out.println("admin name is: " + ADMIN_ROLE);
     }
@@ -62,11 +62,9 @@ public class UserService {
     }
 
     public User getUserById(long id) {
-        try {
+        if (userRepository.findById(id).isPresent())
             return userRepository.findById(id).get();
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
     public User getUserByEmail(String email) {
@@ -94,7 +92,9 @@ public class UserService {
     public UserDTO getUserInfo(String email) {
         User user = userRepository.findUserByEmail(email);
         Order[] orders = user.getAllOrders();
-        Arrays.stream(orders).forEach(Order::getAllCars);
+        boolean isAdmin = hasAdminRole(user.getRoles());
+        orders = isAdmin ? Arrays.stream(orders).peek(Order::getAllCars).toArray(Order[]::new) :
+                Arrays.stream(orders).filter(x -> x.getCars().size() > 0).toArray(Order[]::new);
         return UserDTO.from(user, orders);
     }
 
@@ -119,7 +119,7 @@ public class UserService {
         User userForm = User.builder().id(dto.getId()).firstName(dto.getFirstName()).lastName(dto.getLastName())
                 .email(dto.getEmail()).paymentCard(dto.getPaymentCard()).password(dto.getPassword())
                 .orders(userReference.getOrders()).build();
-        userForm.addRole(dto.isAdmin() ? roleService.getRoleAdmin() : roleService.getRoleUser());
+        userForm.addRole(dto.isAdmin() ? roleService.getReferenceRoleAdmin() : roleService.getReferenceRoleUser());
 
         if (!(userReference.hashCode() == userForm.hashCode())) {
             addUser(userForm);
@@ -130,7 +130,7 @@ public class UserService {
         User userBuilder = User.builder().firstName(userDTO.getFirstName()).lastName(userDTO.getLastName())
                 .email(userDTO.getEmail()).paymentCard(userDTO.getPaymentCard())
                 .password("{noop}" + userDTO.getPassword()).build();
-        userBuilder.addRole(userDTO.isAdmin() ? roleService.getRoleAdmin() : roleService.getRoleUser());
+        userBuilder.addRole(userDTO.isAdmin() ? roleService.getReferenceRoleAdmin() : roleService.getReferenceRoleUser());
         addUser(userBuilder);
     }
 }
