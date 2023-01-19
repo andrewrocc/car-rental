@@ -26,8 +26,6 @@ import static java.util.Objects.requireNonNull;
 @RequiredArgsConstructor
 public class CarTableController {
 
-    private final CarService carService;
-
     private final String URL_REST_SERVICE = "http://localhost:8080/rest-car";
 
     @GetMapping("/car-table.html")

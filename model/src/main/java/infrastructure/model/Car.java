@@ -55,6 +55,10 @@ public class Car implements Serializable {
 		order.getCars().remove(this);
 	}
 
+	public Order[] getAllCars() {
+		return orders.toArray(new Order[orders.size()]);
+	}
+
 	//region eq & hash
 	@Override
 	public boolean equals(Object o) {

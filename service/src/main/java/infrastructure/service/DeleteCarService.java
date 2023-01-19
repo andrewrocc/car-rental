@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Iterator;
 import java.util.Set;
 
 @Service
@@ -19,9 +20,12 @@ public class DeleteCarService {
 
     public void delete(long id) {
         Car car = carService.getCarById(id);
-        Set<Order> orders = car.getOrders();
+        Order[] orders = car.getAllCars();
         long carModelId = car.getCarModel().getId();
-        orders.forEach(car::removeOrder);
+        for (int i = 0; i < orders.length; i++) {       // can't replace lambda cuz java.util.ConcurrentModificationException
+            car.removeOrder(orders[i]);
+        }
+//        orders.forEach(car::removeOrder);
         carService.deleteCar(id);
         boolean isEquals = carService.getCarByModelId(carModelId) == null;
         if (isEquals) {
