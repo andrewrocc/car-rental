@@ -11,17 +11,7 @@
 
     <profiles>
         <profile>
-            <id>all</id>
-            <modules>
-                <module>dao</module>
-                <module>model</module>
-                <module>service</module>
-                <module>web</module>
-                <module>rest</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>backend</id>
+            <id>web-mvc</id>
             <modules>
                 <module>dao</module>
                 <module>model</module>
@@ -171,11 +161,11 @@
 
     <build>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <version>3.10.1</version>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+            </plugin>
         </plugins>
     </build>
 

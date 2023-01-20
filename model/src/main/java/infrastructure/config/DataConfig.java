@@ -16,12 +16,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-@Configuration
-@EnableTransactionManagement
-@ComponentScan(basePackages = "infrastructure")
-@PropertySource(value = {
-		"classpath:/car_rental.jdbc.properties",
-		"classpath:/hibernate.properties"})
+//@Configuration
+//@EnableTransactionManagement
+//@ComponentScan(basePackages = "infrastructure")
+//@PropertySource(value = {
+//		"classpath:/car_rental.jdbc.properties",
+//		"classpath:/hibernate.properties"})
 public class DataConfig {
 
 	@Bean

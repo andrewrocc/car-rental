@@ -18,8 +18,6 @@ public class SpringContextServletInitializer implements ServletContainerInitiali
 	public void onStartup(Set<Class<?>> set, ServletContext ctx) throws ServletException {
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
 		context.register(WebConfig.class, RepositoryConfig.class, ServiceConfig.class);
-//		context.register(RepositoryConfig.class);
-//		context.register(ServiceConfig.class);
 
 		DispatcherServlet dispatcherServlet = new DispatcherServlet(context);
 

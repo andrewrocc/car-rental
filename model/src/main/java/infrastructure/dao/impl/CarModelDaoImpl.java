@@ -1,12 +1,10 @@
 package infrastructure.dao.impl;
 
 import infrastructure.dao.CarModelDao;
-import infrastructure.dao.base.BaseDao;
 import infrastructure.dao.base.BaseDaoImpl;
 import infrastructure.model.CarModel;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
