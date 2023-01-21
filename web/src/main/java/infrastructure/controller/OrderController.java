@@ -1,6 +1,6 @@
 package infrastructure.controller;
 
-import infrastructure.dto.OrderInfoDTO;
+import infrastructure.dto.OrderDTO;
 import infrastructure.service.AddOrderService;
 import infrastructure.service.CarInfoService;
 import infrastructure.service.OrderService;
@@ -44,7 +44,7 @@ public class OrderController {
     @PostMapping("/create-order.html")
     public String addNewOrder(@RequestParam("id") long id,
                               @RequestParam("startDay") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDay,
-                              @RequestParam("numberOfDays") short numberOfDays, OrderInfoDTO orderInfo) {
+                              @RequestParam("numberOfDays") short numberOfDays, OrderDTO orderInfo) {
         System.out.println("addNewOrder call " + now() + " " + orderInfo);
         addOrderService.add(id, startDay, numberOfDays, orderInfo);
         return "redirect:/account.html";

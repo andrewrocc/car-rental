@@ -1,5 +1,7 @@
 package infrastructure.dto;
 
+import com.google.gson.annotations.Expose;
+import infrastructure.config.Constant;
 import infrastructure.model.Car;
 import lombok.*;
 
@@ -17,24 +19,20 @@ import java.util.List;
 @NoArgsConstructor
 public class CarInfoDTO implements Serializable {
 
-    private transient final String NOT_BLANK_MESSAGE = "This field cannot be empty.";
-
-    private transient final String NOT_DIGITS_MESSAGE = "Only digits are accepted.";
-
     private long id;
 
-    @NotBlank(message = NOT_BLANK_MESSAGE)
+    @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
     private String model;
 
-    @NotBlank(message = NOT_BLANK_MESSAGE)
+    @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
     private String brand;
 
-    @NotBlank(message = NOT_BLANK_MESSAGE)
-    @Size(message = NOT_DIGITS_MESSAGE, min = 4, max = 10)
+    @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
+    @Size(message = Constant.NOT_DIGITS_MESSAGE, min = 4, max = 10)
     private String number;
 
-    @NotBlank(message = NOT_BLANK_MESSAGE)
-    @Digits(message = NOT_DIGITS_MESSAGE, integer = 6, fraction = 2)
+    @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
+    @Digits(message = Constant.NOT_DIGITS_MESSAGE, integer = 6, fraction = 2)
     private String price;
 
     private byte[] photo;

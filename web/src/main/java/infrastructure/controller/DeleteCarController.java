@@ -1,5 +1,6 @@
 package infrastructure.controller;
 
+import infrastructure.config.Constant;
 import infrastructure.service.RestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ public class DeleteCarController {
     @GetMapping("/delete-car.html")
     public String deleteCar(@RequestParam(name = "id") long id) {
         System.out.println("deleteCar call " + now());
-        restService.getResponse("/delete-car/" + id);
+        restService.deleteCar(Constant.RESOURCE_CAR_PATH, id);
         return "redirect:/car-table.html";
     }
 }

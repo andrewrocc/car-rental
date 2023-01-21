@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.ToNumberPolicy;
 import infrastructure.config.Constant;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -28,9 +27,8 @@ public class RestService<T> {
         restTemplate = new RestTemplate();
     }
 
-    public void getResponse(String path) {
-        ResponseEntity<String> entity = restTemplate.getForEntity(Constant.URL_REST_SERVICE + path, String.class);
-        System.out.println("delete status code: " + entity.getStatusCode());
+    public void deleteCar(String path, Long id) {
+        restTemplate.delete(Constant.URL_REST_SERVICE + path  + "/" + id, String.class);
     }
 
     public T getData(String path, Type sourceType) {
@@ -51,7 +49,7 @@ public class RestService<T> {
 
     private T deserializeData() {
         Gson gson = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting()
-                .setNumberToNumberStrategy(ToNumberPolicy.LONG_OR_DOUBLE).serializeNulls().create();
+                .setNumberToNumberStrategy(ToNumberPolicy.LONG_OR_DOUBLE).serializeNulls().setLenient().create();
         return gson.fromJson(rawData, sourceType);
     }
 }

@@ -1,6 +1,6 @@
 package infrastructure.service;
 
-import infrastructure.dto.OrderInfoDTO;
+import infrastructure.dto.OrderDTO;
 import infrastructure.model.Car;
 import infrastructure.model.Order;
 import infrastructure.model.User;
@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Set;
 
 import static java.time.LocalDateTime.now;
 
@@ -28,7 +26,7 @@ public class AddOrderService {
 
     private final UserService userService;
 
-    public void add(long id, LocalDate startDate, short numberOfDay, OrderInfoDTO orderDTO) {
+    public void add(long id, LocalDate startDate, short numberOfDay, OrderDTO orderDTO) {
         Car car = carService.getCarById(id);
         User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Order order = Order.builder().price(new BigDecimal(orderDTO.getPrice()))
