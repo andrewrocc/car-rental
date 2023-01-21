@@ -4,9 +4,11 @@ import infrastructure.model.CarBrand;
 import infrastructure.model.CarModel;
 import infrastructure.repository.CarModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,29 +20,6 @@ public class CarModelService {
     @Autowired
     private CarModelRepository carModelRepository;
 
-    private List<String> modelList;
-
-    public List<String> getListCarModelByBrand(CarBrand brand) {
-        if (modelList == null || modelList.isEmpty()) {
-            List<CarModel> models = carModelRepository.findAll();
-            return getOnlyModelsNameFromCarModelClass(models, brand);
-        } else {
-            return modelList;
-        }
-    }
-
-    @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    private List<String> getOnlyModelsNameFromCarModelClass(List<CarModel> list, CarBrand brand) {
-        modelList = new ArrayList<>(list.size());
-        for (CarModel carModel : list) {
-            if (carModel.getCarBrand().getId() == brand.getId()) {
-                modelList.add(carModel.getModelName());
-            }
-        }
-
-        return modelList;
-    }
-
     public CarModel findByName(String name) {
         return carModelRepository.findByName(name);
     }
@@ -51,5 +30,11 @@ public class CarModelService {
 
     public void deleteModel(long id) {
         carModelRepository.deleteById(id);
+    }
+
+    public CarModel findById(Long id) {
+        if (carModelRepository.findById(id).isPresent())
+            return carModelRepository.findById(id).get();
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 }

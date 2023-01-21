@@ -39,7 +39,7 @@ public class Order implements Serializable {
 	@Builder.Default
 	private Set<Car> cars = new HashSet<>();
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "USER_BOOKING",
 			joinColumns = @JoinColumn(name = "BOOKING_ID"),
 			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
@@ -86,7 +86,7 @@ public class Order implements Serializable {
 		result = 31 * result + (price != null ? price.hashCode() : 0);
 		result = 31 * result + (date != null ? date.hashCode() : 0);
 //		result = 31 * result + (cars != null ? cars.hashCode() : 0);
-		result = 31 * result + (users != null ? users.hashCode() : 0);
+//		result = 31 * result + (users != null ? users.hashCode() : 0);
 		return result;
 	}
 	//endregion

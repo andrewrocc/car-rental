@@ -1,6 +1,5 @@
 package infrastructure.dto;
 
-import com.google.gson.annotations.Expose;
 import infrastructure.config.Constant;
 import infrastructure.model.Car;
 import lombok.*;
@@ -9,7 +8,6 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.List;
 
 @Getter
 @Setter
@@ -42,13 +40,9 @@ public class CarInfoDTO implements Serializable {
     }
 
     private static CarInfoDTOBuilder getBuilder(Car car) {
-        if (car.getPhoto() == null) {
-            return CarInfoDTO.builder().id(car.getId()).model(car.getCarModel().getModelName())
-                    .brand(car.getCarBrand().getBrandName()).number(car.getNumberCar())
-                    .price(String.valueOf(car.getPrice()));
-        }
         return CarInfoDTO.builder().id(car.getId()).model(car.getCarModel().getModelName())
                 .brand(car.getCarBrand().getBrandName()).number(car.getNumberCar())
-                .price(String.valueOf(car.getPrice())).photo(car.getPhoto().getPhoto());
+                .price(String.valueOf(car.getPrice()))
+                .photo(car.getPhoto() == null ? null : car.getPhoto().getPhoto());
     }
 }

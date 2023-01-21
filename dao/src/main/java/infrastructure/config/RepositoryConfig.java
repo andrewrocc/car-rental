@@ -1,13 +1,13 @@
 package infrastructure.config;
 
+import infrastructure.model.*;
+import infrastructure.model.Role;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -43,6 +43,7 @@ public class RepositoryConfig {
     }
 
     @Bean
+    @Primary
     public EntityManagerFactory entityManagerFactory(DataSource dataSource) {
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         vendorAdapter.setGenerateDdl(true);
@@ -60,6 +61,25 @@ public class RepositoryConfig {
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
+    }
+
+    @Bean
+    public LocalSessionFactoryBean sessionFactory(DataSource dataSource,
+                                                  Properties hibernateProperties) {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource);
+        sessionFactory.setAnnotatedClasses(User.class,
+                Permission.class,
+                CarModel.class,
+                CarPhoto.class,
+                CarBrand.class,
+                Payment.class,
+                CarType.class,
+                Order.class,
+                Role.class,
+                Car.class);
+        sessionFactory.setHibernateProperties(hibernateProperties);
+        return sessionFactory;
     }
 
     private Properties hibernateProperties() {

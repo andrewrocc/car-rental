@@ -26,29 +26,29 @@ public class AddCarService {
 
     private final CarBrandRepository brandRepository;
 
-    public void addNewCarToApp(CarInfoDTO c, byte[] photo) {
-        CarModel carModel = modelRepository.findByName(c.getModel());
-        CarBrand carBrand = brandRepository.findByName(c.getBrand());
+    public void addNewCarToApp(CarInfoDTO carInfoDTO, byte[] photo) {
+        CarModel carModel = modelRepository.findByName(carInfoDTO.getModel());
+        CarBrand carBrand = brandRepository.findByName(carInfoDTO.getBrand());
         Car car = new Car();
 
         if (carBrand == null) {
             carBrand = new CarBrand();
-            carBrand.setBrandName(c.getBrand());
+            carBrand.setBrandName(carInfoDTO.getBrand());
             carBrand = brandRepository.saveAndFlush(carBrand);
         }
 
         if (carModel == null) {
             carModel = new CarModel();
             carModel.setCarBrand(carBrand);
-            carModel.setModelName(c.getModel());
+            carModel.setModelName(carInfoDTO.getModel());
             carModel = modelRepository.saveAndFlush(carModel);
         }
 
-        car.setNumberCar(c.getNumber());
-        car.setPrice(new BigDecimal(c.getPrice()));
+        car.setNumberCar(carInfoDTO.getNumber());
+        car.setPrice(new BigDecimal(carInfoDTO.getPrice()));
         car.setCarBrand(carBrand);
         car.setCarModel(carModel);
-        car = carService.addNewCar(car);
+        car = carService.add(car);
 
         if (car.getPhoto() == null) {
             CarPhoto carPhoto = new CarPhoto();

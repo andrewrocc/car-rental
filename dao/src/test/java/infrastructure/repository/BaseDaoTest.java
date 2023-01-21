@@ -1,17 +1,17 @@
 package infrastructure.repository;
 
-import infrastructure.config.DataConfig;
+import infrastructure.config.MysqlJdbcDataSource;
+import infrastructure.config.RepositoryConfig;
 import lombok.SneakyThrows;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.ext.mysql.MySqlConnection;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.dbunit.ext.mysql.MySqlConnection;
-import org.dbunit.database.IDatabaseConnection;
-import infrastructure.config.MysqlJdbcDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 @TestPropertySource(value = "classpath:/car_rental_test.jdbc.properties")
-@ContextConfiguration(classes = DataConfig.class)
+@ContextConfiguration(classes = RepositoryConfig.class)
 public class BaseDaoTest {
 
     // JDBC data source

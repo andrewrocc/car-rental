@@ -38,7 +38,7 @@ public class User implements Serializable {
 	@Column(name = "PASSWORD")
 	private String password;
 
-	@ManyToMany(mappedBy = "users")
+	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
 	@ToString.Exclude
 	@Builder.Default
 	private Set<Order> orders = new HashSet<>();

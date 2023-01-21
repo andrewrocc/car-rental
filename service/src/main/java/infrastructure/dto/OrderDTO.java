@@ -30,17 +30,12 @@ public class OrderDTO {
     }
 
     private static OrderDTOBuilder getBuilder(Order order) {
-        if (order.getCars().size() == 0) {                  // TODO to clean code
-            return OrderDTO.builder().id(order.getId()).price(String.valueOf(order.getPrice()))
-                    .date(order.getDate().toString()).numberOfDay(String.valueOf(order.getNumberOfDay()))
-                    .brand("car was deleted")
-                    .model("car was deleted")
-                    .login(order.getAllUsers()[0].getEmail());
-        }
+        String brand = order.getCars().size() == 0 ? "car was deleted" : order.getAllCars()[0].getCarBrand().getBrandName();
+        String model = order.getCars().size() == 0 ? "car was deleted" : order.getAllCars()[0].getCarModel().getModelName();
+
         return OrderDTO.builder().id(order.getId()).price(String.valueOf(order.getPrice()))
                 .date(order.getDate().toString()).numberOfDay(String.valueOf(order.getNumberOfDay()))
-                .brand(order.getAllCars()[0].getCarBrand().getBrandName())
-                .model(order.getAllCars()[0].getCarModel().getModelName())
+                .brand(brand).model(model)
                 .login(order.getAllUsers()[0].getEmail());
     }
 }

@@ -17,7 +17,7 @@ public class CarService {
 
 	private final CarRepository carRepository;
 
-	public Car addNewCar(Car c) {
+	public Car add(Car c) {
 		return carRepository.saveAndFlush(c);
 	}
 
@@ -25,7 +25,7 @@ public class CarService {
 		return carRepository.findById(id).get();
 	}
 
-	public void deleteCar(long id) {
+	public void delete(long id) {
 		carRepository.deleteById(id);
 	}
 
@@ -35,6 +35,10 @@ public class CarService {
 
 	public Car getReferenceById(long id) {
 	 	return carRepository.getReferenceById(id);
+	}
+
+	public Car getCarByNumber(String number) {
+		return carRepository.findCarByNumber(number);
 	}
 
 	public List<CarInfoDTO> getCarTable() {

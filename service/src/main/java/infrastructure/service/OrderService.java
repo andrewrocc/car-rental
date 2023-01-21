@@ -28,16 +28,10 @@ public class OrderService {
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public OrderDTO getOrderInfoById(String orderString) {
         Map<String, String> orderMap = parseInputString(orderString);
-        OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setId(Long.parseLong(orderMap.get("id")));
-        orderDTO.setPrice(orderMap.get("price"));
-        orderDTO.setDate(orderMap.get("date"));
-        orderDTO.setNumberOfDay(orderMap.get("numberOfDay"));
-        orderDTO.setBrand(orderMap.get("brand"));
-        orderDTO.setModel(orderMap.get("model"));
-        orderDTO.setLogin(orderMap.get("login"));
-
-        return orderDTO;
+        return OrderDTO.builder().id(Long.parseLong(orderMap.get("id")))
+                .price(orderMap.get("price")).date(orderMap.get("date"))
+                .numberOfDay(orderMap.get("numberOfDay")).brand(orderMap.get("brand"))
+                .model(orderMap.get("model")).login(orderMap.get("login")).build();
     }
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
@@ -47,7 +41,7 @@ public class OrderService {
         orderString = orderString.substring(++firstBrace, lastBrace);
         String[] words = orderString.split(", ");
         Map<String, String> orderMap = new HashMap<>(words.length);
-        for (String word : words) {                                     // TODO to lambda
+        for (String word : words) {
             String[] temp = word.split("=");
             orderMap.put(temp[0], temp[1]);
         }

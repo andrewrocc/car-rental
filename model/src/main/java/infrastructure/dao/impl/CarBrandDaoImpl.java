@@ -21,7 +21,6 @@ public class CarBrandDaoImpl extends BaseDaoImpl<CarBrand> implements CarBrandDa
 	}
 
 	@Override
-	// TODO incorrect sql injection
 	public List<CarBrand> findAllBrandByName(String name) {
 		String queryFormat = String.format("SELECT * FROM CAR_BRAND WHERE CAR_BRAND.NAME LIKE '%%%s%%';", name);;
 		try (Session session = sessionFactory.openSession()) {

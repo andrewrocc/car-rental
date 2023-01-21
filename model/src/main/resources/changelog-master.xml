@@ -293,4 +293,14 @@
         </sql>
     </changeSet>
 
+    <changeSet id="5" author="andrewrocc">
+        <sql>
+            INSERT INTO CAR_BRAND VALUES (8, 'Bugatti');
+
+            INSERT INTO CAR_MODEL VALUES (8, 8, 'Divo');
+
+            INSERT INTO CAR VALUES (8, '0001q', 7500.0, 8, 8);
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

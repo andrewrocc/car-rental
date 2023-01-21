@@ -57,7 +57,7 @@ public class UserController {
     @PostMapping("/user-table.html")
     public ModelAndView updateUserInfo(@RequestParam("id") long id, UserDTO dto) {
         System.out.println("updateUserInfo call: " + now() + "\n" + dto);
-        userService.updateUserInfo(id, dto);
+        userService.update(id, dto);
         return getUserInfoPageByUserId(id);
     }
 

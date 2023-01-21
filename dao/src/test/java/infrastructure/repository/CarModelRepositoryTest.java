@@ -1,6 +1,7 @@
 package infrastructure.repository;
 
 import infrastructure.model.CarBrand;
+import infrastructure.model.CarModel;
 import lombok.SneakyThrows;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
@@ -15,16 +16,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-public class CarBrandRepositoryTest extends BaseDaoTest {
+public class CarModelRepositoryTest extends BaseDaoTest{
 
     @Autowired
-    private CarBrandRepository targetObject;
+    private CarModelRepository targetObject;
 
     @Before
     public void setUp() throws Exception {
@@ -37,56 +37,43 @@ public class CarBrandRepositoryTest extends BaseDaoTest {
 
     @Test
     @SneakyThrows
-    public void findAllBrandByName() {
+    public void findAllCarModelByName() {
         //given
-        Connection connection = testMysqlJdbcDataSource.getConnection();
-        String query = "SELECT COUNT(*) FROM CAR_BRAND WHERE CAR_BRAND.NAME LIKE '%Audi%';";
-        ResultSet resultSet = connection.createStatement().executeQuery(query);
-        resultSet.next();
-        int initialSize = resultSet.getInt(1);
-        assertEquals(1, initialSize);
 
         // when
-        List<CarBrand> brandByName = targetObject.findAllBrandByName("Audi");
+        List<CarModel> carModels = targetObject.findAllCarModelByName("RS 5");
 
         //then
-        assertEquals(1, brandByName.size());
-        connection.close();
+        assertEquals(1, carModels.size());
     }
 
     @Test
     @SneakyThrows
-    public void findById() {
-        //given
-        Connection connection = testMysqlJdbcDataSource.getConnection();
-        String query = "SELECT * FROM CAR_BRAND WHERE CAR_BRAND.ID=1;";
-        ResultSet resultSet = connection.createStatement().executeQuery(query);
-        resultSet.next();
-        int initialSize = resultSet.getInt(1);
-        String queryBrandName = resultSet.getString(2);
-        assertEquals(1, initialSize);
-
+    public void findByBrandId() {
         // when
-        Optional<CarBrand> carBrand = targetObject.findById(1L);
+        CarModel carModels = targetObject.findByBrandId(1L);
 
         //then
-        carBrand.ifPresent(brand -> assertEquals(queryBrandName, brand.getBrandName()));
-        connection.close();
+        assertEquals("M3 competition", carModels.getModelName());
     }
 
     @Test
     @SneakyThrows
     public void create() {
         //given
+        CarBrand carBrand = CarBrand.builder().id(101L).brandName("test").build();
+        CarModel carModel = CarModel.builder().id(101L).modelName("test").carBrand(carBrand).build();
 
         //when
-        targetObject.save(CarBrand.builder().id(101L).brandName("test").build());
+        targetObject.save(carModel);
 
         //then
         assertNotNull(targetObject.findByName("test"));
         Connection connection = testMysqlJdbcDataSource.getConnection();
-        String query = String.format("delete from CAR_BRAND where NAME='%s';", "test");
-        connection.createStatement().executeUpdate(query);
+        String queryModel = String.format("delete from CAR_MODEL where NAME='%s';", "test");
+        String queryBrand = String.format("delete from CAR_BRAND where NAME='%s';", "test");
+        connection.createStatement().executeUpdate(queryModel);
+        connection.createStatement().executeUpdate(queryBrand);
         connection.close();
     }
 
@@ -95,17 +82,18 @@ public class CarBrandRepositoryTest extends BaseDaoTest {
     public void delete() {
         //given
         IDataSet dataset = new FlatXmlDataSetBuilder()
-                .build(CarBrandRepositoryTest.class.getResourceAsStream("CarBrandRepoTest.xml"));
+                .build(CarModelRepositoryTest.class.getResourceAsStream("CarModelRepoTest.xml"));
         DatabaseOperation.INSERT.execute(iDatabaseConnection, dataset);
 
         CarBrand carBrand = CarBrand.builder().id(101L).brandName("test").build();
+        CarModel carModel = CarModel.builder().id(101L).modelName("test").carBrand(carBrand).build();
 
         //when
-        targetObject.delete(carBrand);
+        targetObject.delete(carModel);
 
         //then
         ResultSet resultSet = testMysqlJdbcDataSource.getConnection().createStatement()
-                .executeQuery("SELECT count(*) FROM CAR_BRAND;");
+                .executeQuery("SELECT count(*) FROM CAR_MODEL;");
         resultSet.next();
         int actualSize = resultSet.getInt(1);
         assertEquals(8, actualSize);

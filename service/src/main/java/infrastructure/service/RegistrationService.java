@@ -18,12 +18,9 @@ public class RegistrationService {
     @Transactional
     public void addNewUser(UserDTO userDTO) {
         Role defaultUserRole = roleService.getReferenceRoleUser();
-        User user = new User();                             // TODO use builder, if create builder in User then get circular dependencies
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
-        user.setPaymentCard(userDTO.getPaymentCard());
-        user.setPassword("{noop}" + userDTO.getPassword());
+        User user = User.builder().firstName(userDTO.getFirstName()).lastName(userDTO.getLastName())
+                .email(userDTO.getEmail()).paymentCard(userDTO.getPaymentCard())
+                .password("{noop}" + userDTO.getPassword()).build();
         user.addRole(defaultUserRole);
 
         userService.addUser(user);

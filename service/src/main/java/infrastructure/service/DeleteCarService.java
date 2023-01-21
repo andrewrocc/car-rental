@@ -19,10 +19,10 @@ public class DeleteCarService {
         Car car = carService.getCarById(id);
         Order[] orders = car.getAllCars();
         long carModelId = car.getCarModel().getId();
-        for (int i = 0; i < orders.length; i++) {       // can't replace lambda cuz java.util.ConcurrentModificationException
+        for (int i = 0; i < orders.length; i++) {
             car.removeOrder(orders[i]);
         }
-        carService.deleteCar(id);
+        carService.delete(id);
         boolean isEquals = carService.getCarByModelId(carModelId) == null;
         if (isEquals) {
             modelService.deleteModel(carModelId);

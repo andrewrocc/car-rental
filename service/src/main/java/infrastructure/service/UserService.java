@@ -114,10 +114,11 @@ public class UserService {
         return null;
     }
 
-    public void updateUserInfo(long id, UserDTO dto) {
+    public void update(long id, UserDTO dto) {
         User userReference = getUserReferenceById(id);
+        String parsePassword = dto.getPassword().contains("{noop}") ? dto.getPassword() :"{noop}" + dto.getPassword();
         User userForm = User.builder().id(dto.getId()).firstName(dto.getFirstName()).lastName(dto.getLastName())
-                .email(dto.getEmail()).paymentCard(dto.getPaymentCard()).password(dto.getPassword())
+                .email(dto.getEmail()).paymentCard(dto.getPaymentCard()).password(parsePassword)
                 .orders(userReference.getOrders()).build();
         userForm.addRole(dto.isAdmin() ? roleService.getReferenceRoleAdmin() : roleService.getReferenceRoleUser());
 

@@ -3,10 +3,10 @@ package infrastructure.service;
 import infrastructure.model.CarBrand;
 import infrastructure.repository.CarBrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @Transactional
@@ -14,16 +14,6 @@ public class CarBrandService {
 
 	@Autowired
 	private CarBrandRepository carBrandRepository;
-
-	private List<CarBrand> carBrands;
-
-	public List<CarBrand> getListCarBrand() {
-		if (carBrands == null || carBrands.isEmpty()) {
-			return carBrands = carBrandRepository.findAll();
-		} else {
-			return carBrands;
-		}
-	}
 
 	public CarBrand findByName(String name) {
 		return carBrandRepository.findByName(name);
@@ -33,7 +23,9 @@ public class CarBrandService {
 		carBrandRepository.save(carBrand);
 	}
 
-	public void deleteBrand(long id) {
-		carBrandRepository.deleteById(id);
+	public CarBrand findById(Long id) {
+		if (carBrandRepository.findById(id).isPresent())
+			return carBrandRepository.findById(id).get();
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 	}
 }

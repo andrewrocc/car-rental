@@ -1,11 +1,12 @@
 package infrastructure.dto;
 
+import infrastructure.config.Constant;
 import infrastructure.model.Order;
 import infrastructure.model.User;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
-import java.util.Optional;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -15,32 +16,27 @@ import java.util.Optional;
 @NoArgsConstructor
 public class UserDTO {
 
-    private final String NOT_BLANK_MESSAGE = "This field cannot be empty.";
-
     private long id;
 
-    @NotBlank(message = NOT_BLANK_MESSAGE)
+    @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
     private String firstName;
 
-    @NotBlank(message = NOT_BLANK_MESSAGE)
+    @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
     private String lastName;
 
-    @NotBlank(message = NOT_BLANK_MESSAGE)
+    @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
     private String email;
 
-    @NotBlank(message = NOT_BLANK_MESSAGE)
+    @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
+    @Size(message = Constant.NOT_DIGITS_MESSAGE, min = 16, max = 16)
     private String paymentCard;
 
-    @NotBlank(message = NOT_BLANK_MESSAGE)
+    @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
     private String password;
 
     private boolean isAdmin;
 
     private Order[] orders;
-
-    public static UserDTO from(User user) {
-        return getBuilder(user).build();
-    }
 
     public static UserDTO from(User user, boolean isAdmin) {
         return getBuilder(user).isAdmin(isAdmin).build();
@@ -48,10 +44,6 @@ public class UserDTO {
 
     public static UserDTO from(User user, Order[] orders) {
         return getBuilder(user).orders(orders).build();
-    }
-
-    public static UserDTO from(User user, boolean isAdmin, Order[] orders) {
-        return getBuilder(user).isAdmin(isAdmin).orders(orders).build();
     }
 
     private static UserDTOBuilder getBuilder(User user) {

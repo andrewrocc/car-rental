@@ -19,7 +19,7 @@ public class DeleteCarController {
     @GetMapping("/delete-car.html")
     public String deleteCar(@RequestParam(name = "id") long id) {
         System.out.println("deleteCar call " + now());
-        restService.deleteCar(Constant.RESOURCE_CAR_PATH, id);
+        restService.delete(Constant.RESOURCE_CAR_PATH, id);
         return "redirect:/car-table.html";
     }
 }

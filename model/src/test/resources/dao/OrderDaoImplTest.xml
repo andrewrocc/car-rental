@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<dataset>
-    <CAR ID="101" NUMBER="234e" PRICE="100.0" BRAND_ID="2" MODEL_ID="2"/>
-    <BOOKING ID="101" PRICE="50.0" DATE="2022-12-19" NUMBER_OF_DAY="3"/>
-</dataset>

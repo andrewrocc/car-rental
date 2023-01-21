@@ -6,7 +6,7 @@
 
 <%@include file="_header.jsp"%>
 
-<section style="background-color: #eee;">
+<section style="background-color: #eee;" class="vh-100">
         <div class="container py-4">
             <div class="d-flex justify-content-center">
                 <div class="col-md-8 col-lg-6 col-xl-4">

@@ -21,7 +21,7 @@
                 <h4>Bugatti Divo</h4>
                 <p>One of the fastest cars in the world.</p>
                 <p>Only 7500.0$ (per day)</p>
-                <a class="nav-link" href="/rentcar/car-info.html?id=9">
+                <a class="nav-link" href="/rentcar/car-info.html?id=8">
                     <button type="button" class="btn btn-primary">Order now</button>
                 </a>
               </div>

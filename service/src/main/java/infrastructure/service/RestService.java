@@ -27,7 +27,7 @@ public class RestService<T> {
         restTemplate = new RestTemplate();
     }
 
-    public void deleteCar(String path, Long id) {
+    public void delete(String path, Long id) {
         restTemplate.delete(Constant.URL_REST_SERVICE + path  + "/" + id, String.class);
     }
 
