@@ -4,11 +4,15 @@ import infrastructure.dto.CarInfoDTO;
 import infrastructure.model.Car;
 import infrastructure.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -16,6 +20,8 @@ import java.util.List;
 public class CarService {
 
 	private final CarRepository carRepository;
+
+	private final ModelMapper modelMapper;
 
 	public Car add(Car c) {
 		return carRepository.saveAndFlush(c);
@@ -41,14 +47,24 @@ public class CarService {
 		return carRepository.findCarByNumber(number);
 	}
 
+	public List<CarInfoDTO> getCarByBrandOrModelName(String keyword) {
+		List<Car> brandName = carRepository.findCarsByBrandName(keyword);
+		if (brandName.size() == 0) {
+			return getCarDTOFromListCar(carRepository.findCarsByModelName(keyword));
+		}
+		return getCarDTOFromListCar(brandName);
+	}
+
+	@Transactional(propagation = Propagation.NOT_SUPPORTED)
+	private List<CarInfoDTO> getCarDTOFromListCar(List<Car> cars) {
+		return cars.stream().map(car -> modelMapper.map(car, CarInfoDTO.class))
+				.collect(Collectors.toCollection(() -> new ArrayList<>(cars.size())));
+	}
+
 	public List<CarInfoDTO> getCarTable() {
 		List<Car> cars = carRepository.findAll();
-		List<CarInfoDTO> carDTO = new ArrayList<>(cars.size());
-		for (Car car : cars) {
-			CarInfoDTO infoDTO = CarInfoDTO.from(car);
-			carDTO.add(infoDTO);
-		}
-		return carDTO;
+		return cars.stream().map(CarInfoDTO::from)
+				.collect(Collectors.toCollection(() -> new ArrayList<>(cars.size())));
 	}
 
 	public void update(Car c) {

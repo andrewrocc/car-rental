@@ -25,7 +25,7 @@ public class Car implements Serializable {
 	private long id;
 
 	@Column(name = "NUMBER")
-	private String numberCar;
+	private String number;
 
 	@Column(name = "PRICE")
 	private BigDecimal price;
@@ -67,7 +67,7 @@ public class Car implements Serializable {
 		Car car = (Car) o;
 
 		if (id != car.id) return false;
-		if (!Objects.equals(numberCar, car.numberCar)) return false;
+		if (!Objects.equals(number, car.number)) return false;
 		if (!Objects.equals(price, car.price)) return false;
 		if (!Objects.equals(carBrand, car.carBrand)) return false;
 		if (!Objects.equals(carModel, car.carModel)) return false;
@@ -78,7 +78,7 @@ public class Car implements Serializable {
 	@Override
 	public int hashCode() {
 		int result = (int) (id ^ (id >>> 32));
-		result = 31 * result + (numberCar != null ? numberCar.hashCode() : 0);
+		result = 31 * result + (number != null ? number.hashCode() : 0);
 		result = 31 * result + (price != null ? price.hashCode() : 0);
 //		result = 31 * result + (carBrand != null ? carBrand.hashCode() : 0);
 //		result = 31 * result + (carModel != null ? carModel.hashCode() : 0);

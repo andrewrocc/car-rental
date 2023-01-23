@@ -53,8 +53,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Page<User> getAllUsers(PageRequest pageRequest) {
-        return userRepository.findAll(pageRequest);
+    public List<User> getAllUsers(PageRequest pageRequest) {
+        return userRepository.findAll(pageRequest).stream().toList();
+    }
+
+    public long getCountUsers() {
+        return userRepository.count();
     }
 
     public int getUserSize() {

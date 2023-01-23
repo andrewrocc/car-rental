@@ -46,6 +46,7 @@
 
 <section class="container py-1 col-sm-">
 
+<%--
     <div class="container py-4">
         <nav aria-label="Page navigation">
            <ul class="pagination justify-content-center">
@@ -79,6 +80,49 @@
 
         </nav>
     </div>
+    --%>
+
+    <%-- Disable Previous on the first page --%>
+    <ul class="pagination justify-content-center">
+        <c:choose>
+              <c:when test="${page == 1}">
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+              </c:when>
+              <c:otherwise>
+                <li class="page-item">
+                    <a class="page-link" href="${pageContext.request.contextPath}/user-table.html?page=${page - 1}">Previous</a>
+                </li>
+              </c:otherwise>
+        </c:choose>
+
+        <c:choose>
+            <c:when test="${page == pages}">
+                <li class="page-item disabled">
+                    <a class="page-link" href="${pageContext.request.contextPath}/user-table.html?page=${page + 1}"><c:out value="${page + 1}"/></a>
+                </li>
+            </c:when>
+            <c:otherwise>
+                <li class="page-item">
+                    <a class="page-link" href="${pageContext.request.contextPath}/user-table.html?page=${page + 1}"><c:out value="${page + 1}"/></a>
+                </li>
+            </c:otherwise>
+        </c:choose>
+
+        <c:choose>
+          <c:when test="${page == pages}">
+            <li class="page-item disabled">
+              <a class="page-link" href="${pageContext.request.contextPath}/user-table.html?page=${page}" tabindex="-1">Next</a>
+            </li>
+          </c:when>
+          <c:otherwise>
+            <li class="page-item">
+              <a class="page-link" href="${pageContext.request.contextPath}/user-table.html?page=${page + 1}">Next</a>
+            </li>
+          </c:otherwise>
+        </c:choose>
+    </ul>
 
 </section>
 

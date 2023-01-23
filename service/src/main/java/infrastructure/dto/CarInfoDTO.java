@@ -20,10 +20,10 @@ public class CarInfoDTO implements Serializable {
     private long id;
 
     @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
-    private String model;
+    private String carModel;
 
     @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
-    private String brand;
+    private String carBrand;
 
     @NotBlank(message = Constant.NOT_BLANK_MESSAGE)
     @Size(message = Constant.NOT_DIGITS_MESSAGE, min = 4, max = 10)
@@ -40,8 +40,8 @@ public class CarInfoDTO implements Serializable {
     }
 
     private static CarInfoDTOBuilder getBuilder(Car car) {
-        return CarInfoDTO.builder().id(car.getId()).model(car.getCarModel().getModelName())
-                .brand(car.getCarBrand().getBrandName()).number(car.getNumberCar())
+        return CarInfoDTO.builder().id(car.getId()).carModel(car.getCarModel().getModelName())
+                .carBrand(car.getCarBrand().getBrandName()).number(car.getNumber())
                 .price(String.valueOf(car.getPrice()))
                 .photo(car.getPhoto() == null ? null : car.getPhoto().getPhoto());
     }

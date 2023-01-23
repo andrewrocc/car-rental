@@ -16,7 +16,7 @@
                <c:set value="${carInfo}" var="car" />
                   <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
                   <img src="/rentcar/image/${car.id}/photo.jpg" class="card-img-top"
-                     alt="${car.brand} ${car.model}" />
+                     alt="${car.carBrand} ${car.carModel}" />
                   <form method="post" action="/rentcar/create-order.html?id=${car.id}">
                   <div class="card-body">
                      <div class="text-center">
@@ -26,17 +26,17 @@
                      <div>
                         <div class="d-flex justify-content-between">
                            <span>Brand</span>
-                           <input name="brand" id="brand" value="${car.brand}" style="display: none;">
+                           <input name="brand" id="brand" value="${car.carBrand}" style="display: none;">
                                <span>
-                                  <c:out value="${car.brand}"/>
+                                  <c:out value="${car.carBrand}"/>
                                </span>
                            </input>
                         </div>
                         <div class="d-flex justify-content-between">
                            <span>Model</span>
-                           <input name="model" id="model" value="${car.model}" style="display: none;">
+                           <input name="model" id="model" value="${car.carModel}" style="display: none;">
                                <span>
-                                  <c:out value="${car.model}" />
+                                  <c:out value="${car.carModel}" />
                                </span>
                            </input>
                         </div>

@@ -18,6 +18,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,11 +45,11 @@ public class UserServiceTest {
         PageRequest pageRequest = PageRequest.of(1, 3, Sort.by("id").ascending());
 
         //when
-        Page<User> usersPage = targetObject.getAllUsers(pageRequest);
+        List<User> usersPage = targetObject.getAllUsers(pageRequest);
 
         //then
         assertNotNull(usersPage);
-        assertEquals(3, usersPage.getSize());
+        assertEquals(3, usersPage.size());
     }
 
     @Test

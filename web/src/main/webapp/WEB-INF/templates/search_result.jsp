@@ -19,7 +19,7 @@
          </thead>
 
          <tbody>
-            <c:forEach items="${carList}" var="car">
+            <c:forEach items="${cars}" var="car">
                <tr>
                   <td>
                      <a class="nav-link" href="/rentcar/car-info.html?id=${car.id}">

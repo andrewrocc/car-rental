@@ -59,7 +59,7 @@ public class CarServiceTest {
         //given
         CarBrand carBrand = carBrandService.findById(1L);
         CarModel carModel = carModelService.findById(1L);
-        Car car = Car.builder().numberCar("1").price(new BigDecimal(1))
+        Car car = Car.builder().number("1").price(new BigDecimal(1))
                 .carBrand(carBrand).carModel(carModel).build();
 
         //when
@@ -67,7 +67,7 @@ public class CarServiceTest {
 
         //then
         assertNotNull(newCar);
-        assertEquals(newCar.getNumberCar(), "1");
+        assertEquals(newCar.getNumber(), "1");
         Car carByNumber = targetObject.getCarByNumber("1");
         targetObject.delete(carByNumber.getId());
     }

@@ -15,7 +15,7 @@
             <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
 
             <img src="/rentcar/image/${car.id}/photo.jpg" class="card-img-top"
-              alt="${car.brand} ${car.model}" />
+              alt="${car.carBrand} ${car.carModel}" />
             <div class="card-body">
               <div class="text-center">
                 <h5 class="card-title">Believing is seeing</h5>
@@ -23,10 +23,10 @@
               </div>
               <div>
                 <div class="d-flex justify-content-between">
-                    <span>Brand</span><span><c:out value="${car.brand}"/></span>
+                    <span>Brand</span><span><c:out value="${car.carBrand}"/></span>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <span>Model</span><span><c:out value="${car.model}"/></span>
+                    <span>Model</span><span><c:out value="${car.carModel}"/></span>
                 </div>
                 <div class="d-flex justify-content-between">
                     <span>Number</span><span><c:out value="${car.number}"/></span>

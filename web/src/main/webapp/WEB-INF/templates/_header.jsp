@@ -72,8 +72,8 @@
                    </ul>
                </security:authorize>
 
-               <form class="d-flex" role="search" action="#" method="post">
-                  <input class="form-control me-2" type="search" name="pname" placeholder="Search" aria-label="Search">
+               <form class="d-flex" role="search" action="/rentcar/search.html" method="post">
+                  <input class="form-control me-2" type="search" id="keyword" name="keyword" placeholder="Car brand or model" aria-label="Search">
                   <button class="btn btn-outline-success" type="submit">Search</button>
                </form>
 

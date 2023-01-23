@@ -1,2 +1,2 @@
 # car-rental
-exam work for java ee
+exam work on java ee

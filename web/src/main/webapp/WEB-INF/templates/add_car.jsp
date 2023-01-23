@@ -17,20 +17,20 @@
                       <div class="align-items-center">
                         <div class="col-sm-5 mx-auto py-3">
                             <div class="col-sm-8 mx-auto">
-                                <f:label cssClass="form-label" path="brand">Brand:</f:label>
-                                <f:input type="text" name="brand" cssClass="form-control" id="brand"
-                                   size="20" path="brand"/>
+                                <f:label cssClass="form-label" path="carBrand">Brand:</f:label>
+                                <f:input type="text" name="carBrand" cssClass="form-control" id="carBrand"
+                                   size="20" path="carBrand"/>
                              </div>
-                             <f:errors path="brand" id="brand" class="text-danger"/>
+                             <f:errors path="carBrand" id="carBrand" class="text-danger"/>
                         </div>
 
                       <div class="col-sm-5 mx-auto py-3">
-                        <f:label for="model" class="form-label" path="model">Model:</f:label>
+                        <f:label for="model" class="form-label" path="carModel">Model:</f:label>
                         <div class="col-sm-8 mx-auto">
-                            <f:input type="text" name="model" class="form-control" id="model"
-                               size="20" path="model"/>
+                            <f:input type="text" name="carModel" class="form-control" id="carModel"
+                               size="20" path="carModel"/>
                          </div>
-                         <f:errors path="model" id="model" class="text-danger"/>
+                         <f:errors path="carModel" id="carModel" class="text-danger"/>
                       </div>
 
                       <div class="col-sm-5 mx-auto py-3">

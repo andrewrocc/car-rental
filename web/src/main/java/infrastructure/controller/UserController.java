@@ -33,16 +33,13 @@ public class UserController {
     @Secured("ROLE_admin")
     @GetMapping("/user-table.html")
     public ModelAndView getPageUserListTable(@RequestParam(value = "size", required = false, defaultValue = "5") Byte size,
-                                             @RequestParam(value = "page", required = false, defaultValue = "0") Byte page) {
+                                             @RequestParam(value = "page", required = false, defaultValue = "1") Byte page) {
         System.out.println("getPageUserListTable controller + " + now());
 
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").ascending());
-        Page<User> userOnPage = userService.getAllUsers(pageRequest);
-        int noOfPages = (int) Math.ceil(userService.getUserSize() * 1.0 / size);
         ModelAndView view = new ModelAndView("user_table");
-        view.addObject("pageUser", userOnPage.getContent());
-        view.addObject("currentPage", page);
-        view.addObject("noOfPages", noOfPages);
+        view.addObject("pageUser", userService.getAllUsers(PageRequest.of(page - 1, size)));
+        view.addObject("page", page);
+        view.addObject("pages", (userService.getCountUsers() - 1) / 5 + 1);
         return view;
     }
 

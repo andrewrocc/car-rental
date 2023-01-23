@@ -27,8 +27,8 @@ public class EditCarService {
 
     public void updateCarInfo(long id, CarInfoDTO carInfoDTO) {
         Car car = carService.getReferenceById(id);
-        CarBrand carBrand = brandService.findByName(carInfoDTO.getBrand());
-        CarModel carModel = modelService.findByName(carInfoDTO.getModel());
+        CarBrand carBrand = brandService.findByName(carInfoDTO.getCarBrand());
+        CarModel carModel = modelService.findByName(carInfoDTO.getCarModel());
         carBrand = setCarBrandInCar(car, carBrand, carInfoDTO);
         setCarModelInCar(car, carModel, carBrand, carInfoDTO);
         setCarNumber(car, carInfoDTO);
@@ -52,11 +52,11 @@ public class EditCarService {
     }
 
     private CarBrand setCarBrandInCar(Car car, CarBrand carBrand, CarInfoDTO carInfoDTO) {
-        boolean isEquals = car.getCarBrand().getBrandName().equalsIgnoreCase(carInfoDTO.getBrand());
+        boolean isEquals = car.getCarBrand().getBrandName().equalsIgnoreCase(carInfoDTO.getCarBrand());
         if (!isEquals) {
             if (carBrand == null) {
                 carBrand = new CarBrand();
-                carBrand.setBrandName(carInfoDTO.getBrand());
+                carBrand.setBrandName(carInfoDTO.getCarBrand());
                 brandService.update(carBrand);
             }
             car.setCarBrand(carBrand);
@@ -65,11 +65,11 @@ public class EditCarService {
     }
 
     private void setCarModelInCar(Car car, CarModel carModel, CarBrand carBrand, CarInfoDTO carInfoDTO) {
-        boolean isEquals = car.getCarModel().getModelName().equalsIgnoreCase(carInfoDTO.getModel());
+        boolean isEquals = car.getCarModel().getModelName().equalsIgnoreCase(carInfoDTO.getCarModel());
         if (!isEquals) {
             if (carModel == null) {
                 carModel = new CarModel();
-                carModel.setModelName(carInfoDTO.getModel());
+                carModel.setModelName(carInfoDTO.getCarModel());
                 carModel.setCarBrand(carBrand);
                 modelService.update(carModel);
             }
@@ -87,9 +87,9 @@ public class EditCarService {
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     private void setCarNumber(Car car, CarInfoDTO carInfoDTO) {
-        boolean isEquals = car.getNumberCar().equalsIgnoreCase(carInfoDTO.getNumber());
+        boolean isEquals = car.getNumber().equalsIgnoreCase(carInfoDTO.getNumber());
         if (!isEquals) {
-            car.setNumberCar(carInfoDTO.getNumber());
+            car.setNumber(carInfoDTO.getNumber());
         }
     }
 }
