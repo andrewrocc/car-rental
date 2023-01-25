@@ -1,53 +1,49 @@
 package infrastructure.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackages = "infrastructure")
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests()
-                .antMatchers("/").permitAll()
-                .antMatchers("/index.html").permitAll()
-                .antMatchers("/login.html").permitAll()
-                .antMatchers("/add-car.html").hasRole("admin")
-                .antMatchers("/delete-car.html").hasRole("admin")
-                .antMatchers("/edit-car.html").hasRole("admin")
-                .antMatchers("/order-table.html").hasRole("admin")
-                .antMatchers("/create-order.html").hasAnyRole("admin", "user")
-                .antMatchers("/order.html").hasAnyRole("admin", "user")
-                .antMatchers("/user-info.html").hasAnyRole("admin", "user")
-                .and()
+    @Bean
+    protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable().authorizeRequests(
+                authConfig -> {
+                    authConfig.antMatchers("/").permitAll()
+                            .antMatchers("/index.html").permitAll()
+                            .antMatchers("/login.html").permitAll()
+                            .antMatchers("/sign-up.html").permitAll()
+                            .antMatchers("/car-table.html").permitAll()
+                            .antMatchers("/car-info.html").permitAll()
+                            .antMatchers("/img/**").permitAll()
+                            .antMatchers("/js/**").permitAll()
+                            .antMatchers("/style/**").permitAll()
+                            .anyRequest().authenticated();
+        })
                 .formLogin()
                 .loginPage("/login.html")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/index.html", true)
+                .defaultSuccessUrl("/", false)
                 .failureUrl("/sign-up.html")
                 .and()
                 .logout()
                 .deleteCookies("JSESSIONID");
+
+        return http.build();
     }
 
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth,
                                         AuthenticationService service) throws Exception {
         auth.userDetailsService(service);
-    }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/img/**")
-                .antMatchers("/js/**")
-                .antMatchers("/style/**");
     }
 }

@@ -36,13 +36,16 @@ public class CarInfoDTO implements Serializable {
     private byte[] photo;
 
     public static CarInfoDTO from(Car car) {
+        return getBuilder(car).photo(car.getPhoto() == null ? null : car.getPhoto().getPhoto()).build();
+    }
+
+    public static CarInfoDTO from_withoutPhoto(Car car) {
         return getBuilder(car).build();
     }
 
     private static CarInfoDTOBuilder getBuilder(Car car) {
         return CarInfoDTO.builder().id(car.getId()).carModel(car.getCarModel().getModelName())
                 .carBrand(car.getCarBrand().getBrandName()).number(car.getNumber())
-                .price(String.valueOf(car.getPrice()))
-                .photo(car.getPhoto() == null ? null : car.getPhoto().getPhoto());
+                .price(String.valueOf(car.getPrice()));
     }
 }

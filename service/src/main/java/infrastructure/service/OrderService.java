@@ -4,6 +4,7 @@ import infrastructure.dto.OrderDTO;
 import infrastructure.model.Order;
 import infrastructure.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +21,8 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public List<OrderDTO> getAllOrderTable() {
-        List<Order> orders = orderRepository.findAll();
+    public List<OrderDTO> getAllOrderTable(PageRequest pageRequest) {
+        List<Order> orders = orderRepository.findAll(pageRequest).toList();
         return setInfo(orders);
     }
 

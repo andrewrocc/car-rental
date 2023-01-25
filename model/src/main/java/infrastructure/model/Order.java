@@ -39,7 +39,7 @@ public class Order implements Serializable {
 	@Builder.Default
 	private Set<Car> cars = new HashSet<>();
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(/*fetch = FetchType.LAZY, */cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "USER_BOOKING",
 			joinColumns = @JoinColumn(name = "BOOKING_ID"),
 			inverseJoinColumns = @JoinColumn(name = "USER_ID"))

@@ -19,16 +19,16 @@
                                 <div class="col-sm-5 mx-auto py-3">
                                     <div class="col-sm-8 mx-auto">
                                         <label for="brand" class="form-label">Brand:</label>
-                                        <input type="text" name="brand" class="form-control" id="brand" size="20"
-                                            value="<c:out value="${car.brand}" />">
+                                        <input type="text" name="carBrand" class="form-control" id="carBrand" size="20"
+                                            value="<c:out value="${car.carBrand}" />">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-5 mx-auto py-3">
                                     <div class="col-sm-8 mx-auto">
                                         <label for="model" class="form-label">Model:</label>
-                                        <input type="text" name="model" class="form-control" id="model" size="20"
-                                            value="<c:out value="${car.model}" />">
+                                        <input type="text" name="carModel" class="form-control" id="carModel" size="20"
+                                            value="<c:out value="${car.carModel}" />">
                                     </div>
                                 </div>
 

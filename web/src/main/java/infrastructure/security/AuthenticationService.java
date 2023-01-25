@@ -23,17 +23,15 @@ public class AuthenticationService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
             System.out.println("loadUserByUsername call: " + now());
-            List<User> users = userService.getUsersByEmail(username);
-            System.out.println("found : " + users.size() + " users");
-            if (users.size() != 1) {
+            User user = userService.getUserByEmail(username);
+            if (user == null) {
                 throw new UsernameNotFoundException("user not found: " + username);
             }
 
-            User user = users.get(0);
-            return new org.springframework.security.core.userdetails.User(user.getEmail(),
+            return new org.springframework.security.core.userdetails.User(
+                    user.getEmail(),
                     user.getPassword(),
-                    true, true, true,
-                    true,
+                    true, true, true, true,
                     List.of(new SimpleGrantedAuthority("ROLE_" + user.getAllRoles()[0].getName())));
         } catch (Exception ex) {
             ex.printStackTrace();

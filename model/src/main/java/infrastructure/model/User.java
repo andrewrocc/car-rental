@@ -38,12 +38,12 @@ public class User implements Serializable {
 	@Column(name = "PASSWORD")
 	private String password;
 
-	@ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "users"/*, fetch = FetchType.LAZY*/)
 	@ToString.Exclude
 	@Builder.Default
 	private Set<Order> orders = new HashSet<>();
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }/*, fetch = FetchType.LAZY*/)
 	@JoinTable(name = "USER_ROLE",
 			joinColumns = @JoinColumn(name = "USER_ID"),
 			inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))

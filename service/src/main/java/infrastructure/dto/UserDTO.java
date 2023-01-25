@@ -7,6 +7,7 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Arrays;
 
 @Getter
 @Setter
@@ -38,8 +39,19 @@ public class UserDTO {
 
     private Order[] orders;
 
+    private OrderDTO[] orderDTOs;
+
+    public static UserDTO from(User user) {
+        return getBuilder(user).build();
+    }
+
     public static UserDTO from(User user, boolean isAdmin) {
         return getBuilder(user).isAdmin(isAdmin).build();
+    }
+
+    public static UserDTO from_orderDTO(User user, boolean isAdmin, Order[] orders) {
+        OrderDTO[] orderDTOs = Arrays.stream(orders).map(OrderDTO::from).toArray(OrderDTO[]::new);
+        return getBuilder(user).isAdmin(isAdmin).orderDTOs(orderDTOs).build();
     }
 
     public static UserDTO from(User user, Order[] orders) {

@@ -58,6 +58,7 @@ public class UserController {
         return getUserInfoPageByUserId(id);
     }
 
+    @Secured("ROLE_admin")
     @GetMapping("/add-user.html")
     public ModelAndView getAddUserPage() {
         System.out.println("getAddUserPage call: " + now());

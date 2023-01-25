@@ -1,15 +1,16 @@
 package infrastructure.service;
 
 import infrastructure.dto.UserDTO;
+import infrastructure.dto.UserDTO_REST;
 import infrastructure.model.Order;
 import infrastructure.model.Role;
 import infrastructure.model.User;
 import infrastructure.repository.UserRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,9 +18,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.ProviderException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,6 +34,8 @@ public class UserService {
     private final UserRepository userRepository;
 
     private final RoleService roleService;
+
+    private final ModelMapper modelMapper;
 
     private static String ADMIN_ROLE;
 
@@ -61,10 +67,6 @@ public class UserService {
         return userRepository.count();
     }
 
-    public int getUserSize() {
-        return getAllUsers().size();
-    }
-
     public User getUserById(long id) {
         if (userRepository.findById(id).isPresent())
             return userRepository.findById(id).get();
@@ -72,30 +74,30 @@ public class UserService {
     }
 
     public User getUserByEmail(String email) {
-        return userRepository.findUserByEmail(email);
+        User user = userRepository.findUserByEmail(email);
+        user.getAllRoles();
+        return user;
     }
 
     public User getUserReferenceById(long id) {
         return userRepository.getReferenceById(id);
     }
 
-    public void addUser(User u) {
-        userRepository.save(u);
+    public User addUser(User u) {
+        return userRepository.save(u);
     }
 
     public boolean hasAdminRole(Collection<Role> list) {
         return list.stream().anyMatch(x -> x.getName().equals(ADMIN_ROLE));
     }
 
-    public List<User> getUsersByEmail(String email) {
-        List<User> users = userRepository.findAllByEmail(email);
-        System.out.println("user " + email + " has " + users.get(0).getAllRoles()[0].getName() + " role.");
-        return users;
-    }
-
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public UserDTO getUserInfo(String email) {
         User user = userRepository.findUserByEmail(email);
+        if (user == null)
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         Order[] orders = user.getAllOrders();
+        Arrays.stream(orders).peek(Order::getAllUsers).toList();
         boolean isAdmin = hasAdminRole(user.getRoles());
         orders = isAdmin ? Arrays.stream(orders).peek(Order::getAllCars).toArray(Order[]::new) :
                 Arrays.stream(orders).filter(x -> x.getCars().size() > 0).toArray(Order[]::new);
@@ -118,7 +120,7 @@ public class UserService {
         return null;
     }
 
-    public void update(long id, UserDTO dto) {
+    public User update(long id, UserDTO dto) {
         User userReference = getUserReferenceById(id);
         String parsePassword = dto.getPassword().contains("{noop}") ? dto.getPassword() :"{noop}" + dto.getPassword();
         User userForm = User.builder().id(dto.getId()).firstName(dto.getFirstName()).lastName(dto.getLastName())
@@ -127,15 +129,51 @@ public class UserService {
         userForm.addRole(dto.isAdmin() ? roleService.getReferenceRoleAdmin() : roleService.getReferenceRoleUser());
 
         if (!(userReference.hashCode() == userForm.hashCode())) {
-            addUser(userForm);
+            return addUser(userForm);
         }
+        throw new ProviderException("Try another one time!");
     }
 
-    public void add(UserDTO userDTO) {
+    public User add(UserDTO userDTO) {
         User userBuilder = User.builder().firstName(userDTO.getFirstName()).lastName(userDTO.getLastName())
                 .email(userDTO.getEmail()).paymentCard(userDTO.getPaymentCard())
                 .password("{noop}" + userDTO.getPassword()).build();
         userBuilder.addRole(userDTO.isAdmin() ? roleService.getReferenceRoleAdmin() : roleService.getReferenceRoleUser());
-        addUser(userBuilder);
+        return addUser(userBuilder);
     }
+
+    public void delete(long id) {
+        userRepository.deleteById(id);
+    }
+
+    //region methods for REST services
+    public UserDTO_REST addViaREST(UserDTO_REST requestDTO) {
+        UserDTO userDTO = modelMapper.map(requestDTO, UserDTO.class);
+        User newUser = add(userDTO);
+        return modelMapper.map(newUser, UserDTO_REST.class);
+    }
+
+    public UserDTO_REST updateViaREST(long id, UserDTO_REST requestDTO) {
+        UserDTO userDTO = modelMapper.map(requestDTO, UserDTO.class);
+        userDTO.setId(id);
+        User newUser = update(id, userDTO);
+        return modelMapper.map(newUser, UserDTO_REST.class);
+    }
+
+    public UserDTO getUserDTOFromUser(long id) {
+        if (userRepository.findById(id).isPresent()) {
+            User user = userRepository.findById(id).get();
+            boolean adminRole = hasAdminRole(user.getRoles());
+            return UserDTO.from_orderDTO(user, adminRole, user.getAllOrders());
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
+
+    public List<UserDTO> getAllUsersDTO(PageRequest pageRequest) {
+        List<User> users = userRepository.findAll(pageRequest).stream().toList();
+        return users.stream()
+                .map(user -> UserDTO.from_orderDTO(user, hasAdminRole(user.getRoles()), user.getAllOrders()))
+                .collect(Collectors.toCollection(() -> new ArrayList<>(users.size())));
+    }
+    //endregion
 }

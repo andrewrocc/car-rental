@@ -4,6 +4,7 @@ import infrastructure.dto.CarInfoDTO;
 import infrastructure.service.AddCarService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ public class AddCarController {
 
 	private final AddCarService carService;
 
+	@Secured("ROLE_admin")
 	@GetMapping("/add-car.html")
 	public ModelAndView getAddNewCarPage() {
 		System.out.println("AddCarController call. " + now());
@@ -38,7 +40,7 @@ public class AddCarController {
 			return "add_car";
 		}
 		System.out.println(carDTO);
-		carService.addNewCarToApp(carDTO, file.getBytes());
+		carService.add(carDTO, file.getBytes());
 		return "redirect:/car-table.html";
 	}
 }

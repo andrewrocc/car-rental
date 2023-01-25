@@ -25,7 +25,7 @@ public class EditCarService {
 
     private final CarPhotoService photoService;
 
-    public void updateCarInfo(long id, CarInfoDTO carInfoDTO) {
+    public Car updateCarInfo(long id, CarInfoDTO carInfoDTO) {
         Car car = carService.getReferenceById(id);
         CarBrand carBrand = brandService.findByName(carInfoDTO.getCarBrand());
         CarModel carModel = modelService.findByName(carInfoDTO.getCarModel());
@@ -33,7 +33,7 @@ public class EditCarService {
         setCarModelInCar(car, carModel, carBrand, carInfoDTO);
         setCarNumber(car, carInfoDTO);
         setCarPrice(car, carInfoDTO);
-        carService.update(car);
+        return carService.update(car);
     }
 
     public void updateCarPhoto(long id, byte[] photo) {

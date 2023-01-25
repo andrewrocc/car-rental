@@ -28,6 +28,7 @@ public class CarModel implements Serializable {
 	@JoinColumn(name = "BRAND_ID")
 	private CarBrand carBrand;
 
+	//region equals & hashCode
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -47,4 +48,5 @@ public class CarModel implements Serializable {
 		result = 31 * result + (carBrand != null ? carBrand.hashCode() : 0);
 		return result;
 	}
+	//endregion
 }

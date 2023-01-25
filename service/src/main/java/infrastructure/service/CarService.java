@@ -2,16 +2,22 @@ package infrastructure.service;
 
 import infrastructure.dto.CarInfoDTO;
 import infrastructure.model.Car;
+import infrastructure.model.User;
 import infrastructure.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +34,10 @@ public class CarService {
 	}
 
 	public Car getCarById(long id) {
-		return carRepository.findById(id).get();
+		Optional<Car> carResponse = carRepository.findById(id);
+		if (carResponse.isPresent())
+			return carResponse.get();
+		throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 	}
 
 	public void delete(long id) {
@@ -40,11 +49,17 @@ public class CarService {
 	}
 
 	public Car getReferenceById(long id) {
-	 	return carRepository.getReferenceById(id);
+		return carRepository.getReferenceById(id);
 	}
 
 	public Car getCarByNumber(String number) {
 		return carRepository.findCarByNumber(number);
+	}
+
+	public List<CarInfoDTO> getAllCars(PageRequest pageRequest) {
+		List<Car> cars = carRepository.findAll(pageRequest).stream().toList();
+		return cars.stream().map(CarInfoDTO::from_withoutPhoto)
+				.collect(Collectors.toCollection(() -> new ArrayList<>(cars.size())));
 	}
 
 	public List<CarInfoDTO> getCarByBrandOrModelName(String keyword) {
@@ -67,7 +82,7 @@ public class CarService {
 				.collect(Collectors.toCollection(() -> new ArrayList<>(cars.size())));
 	}
 
-	public void update(Car c) {
-		carRepository.save(c);
+	public Car update(Car c) {
+		return carRepository.save(c);
 	}
 }
