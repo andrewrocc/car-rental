@@ -25,7 +25,7 @@
                                         <f:input type="text" name="firstName" class="form-control" id="firstName" size="20"
                                             path="firstName"/>
                                     </div>
-                                    <f:errors path="firstName" id="brand" class="text-danger"/>
+                                    <f:errors path="firstName" class="text-danger"/>
                                 </div>
 
                                 <div class="col-sm-5 mx-auto py-3">
@@ -34,7 +34,7 @@
                                         <f:input type="text" name="lastName" class="form-control" id="lastName" size="20"
                                             path="lastName"/>
                                     </div>
-                                    <f:errors path="lastName" id="brand" class="text-danger"/>
+                                    <f:errors path="lastName" class="text-danger"/>
                                 </div>
 
                                 <div class="col-sm-5 mx-auto py-3">
@@ -43,7 +43,7 @@
                                         <f:input type="text" name="email" class="form-control" id="email" size="20"
                                             path="email"/>
                                     </div>
-                                    <f:errors path="email" id="brand" class="text-danger"/>
+                                    <f:errors path="email" class="text-danger"/>
                                 </div>
 
                                 <div class="col-sm-5 mx-auto py-3">
@@ -61,7 +61,7 @@
                                         <f:input type="password" name="password" class="form-control" id="password" size="20"
                                             path="password"/>
                                     </div>
-                                    <f:errors path="password" id="brand" class="text-danger"/>
+                                    <f:errors path="password" class="text-danger"/>
                                 </div>
 
                                 <div class="col-sm-5 mx-auto py-3">

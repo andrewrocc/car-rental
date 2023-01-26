@@ -15,11 +15,11 @@ public class RoleService {
 
     private final RoleRepository repository;
 
-    public Role getReferenceRoleAdmin() {
-        return repository.getReferenceById(1L);
+    public Role getAdminRole() {
+        return repository.findByName("admin");
     }
 
-    public Role getReferenceRoleUser() {
-        return repository.getReferenceById(2L);
+    public Role getUserRole() {
+        return repository.findByName("user");
     }
 }

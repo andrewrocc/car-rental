@@ -66,7 +66,7 @@
                             <li><a class="dropdown-item" href="/rentcar/add-car.html">Add a new car</a></li>
                             <li><a class="dropdown-item" href="/rentcar/add-user.html">Add a new user</a></li>
                             <li><a class="dropdown-item" href="/rentcar/user-table.html">Edit user info</a></li>
-                            <li><a class="dropdown-item" href="/rentcar/order-table.html?size=11&page=0">View orders</a></li>
+                            <li><a class="dropdown-item" href="/rentcar/order-table.html?size=101&page=0">View orders</a></li>
                          </ul>
                       </li>
                    </ul>

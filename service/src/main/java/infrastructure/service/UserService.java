@@ -39,11 +39,9 @@ public class UserService {
 
     private static String ADMIN_ROLE;
 
-//    private static final AtomicBoolean onlyOnce = new AtomicBoolean();
-
     private void getAdminName() {
-//        if (onlyOnce.getAndSet(true)) return;                     // guarantees that the method will be executed once
-        Role admin = roleService.getReferenceRoleAdmin();
+//        Role admin = roleService.getReferenceRoleAdmin();
+        Role admin = roleService.getAdminRole();
         ADMIN_ROLE = admin.getName();
         System.out.println("admin name is: " + ADMIN_ROLE);
     }
@@ -126,7 +124,7 @@ public class UserService {
         User userForm = User.builder().id(dto.getId()).firstName(dto.getFirstName()).lastName(dto.getLastName())
                 .email(dto.getEmail()).paymentCard(dto.getPaymentCard()).password(parsePassword)
                 .orders(userReference.getOrders()).build();
-        userForm.addRole(dto.isAdmin() ? roleService.getReferenceRoleAdmin() : roleService.getReferenceRoleUser());
+        userForm.addRole(dto.isAdmin() ? roleService.getAdminRole() : roleService.getUserRole());
 
         if (!(userReference.hashCode() == userForm.hashCode())) {
             return addUser(userForm);
@@ -135,11 +133,11 @@ public class UserService {
     }
 
     public User add(UserDTO userDTO) {
-        User userBuilder = User.builder().firstName(userDTO.getFirstName()).lastName(userDTO.getLastName())
+        User user = User.builder().firstName(userDTO.getFirstName()).lastName(userDTO.getLastName())
                 .email(userDTO.getEmail()).paymentCard(userDTO.getPaymentCard())
                 .password("{noop}" + userDTO.getPassword()).build();
-        userBuilder.addRole(userDTO.isAdmin() ? roleService.getReferenceRoleAdmin() : roleService.getReferenceRoleUser());
-        return addUser(userBuilder);
+        user.addRole(userDTO.isAdmin() ? roleService.getAdminRole() : roleService.getUserRole());
+        return addUser(user);
     }
 
     public void delete(long id) {

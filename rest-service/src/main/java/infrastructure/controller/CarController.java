@@ -36,7 +36,7 @@ public class CarController {
 
     @GetMapping("")
     public ResponseEntity<String> getAllCars(@RequestParam(name = "page", defaultValue = "0") int page,
-                                             @RequestParam(name = "size", defaultValue = "11") int size) {
+                                             @RequestParam(name = "size", defaultValue = "101") int size) {
         List<CarInfoDTO> carTable = carService.getAllCars(PageRequest.of(page, size));
         return new ResponseEntity<>(GsonService.getJson(carTable), HttpStatus.OK);
     }

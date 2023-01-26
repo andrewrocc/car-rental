@@ -22,7 +22,7 @@ public class OrderTableController {
     @Secured("ROLE_admin")
     @GetMapping("/order-table.html")
     public ModelAndView getOrderTablePage(@RequestParam(value = "page", defaultValue = "0") int page,
-                                          @RequestParam(value = "size", defaultValue = "11") int size) {
+                                          @RequestParam(value = "size", defaultValue = "101") int size) {
         System.out.println("getOrderTablePage call:  " + now());
         return new ModelAndView("order_table",
                 Map.of("orderList", orderService.getAllOrderTable(PageRequest.of(page, size))));

@@ -1,3 +1,4 @@
+<%@ taglib uri = "http://www.springframework.org/tags/form" prefix = "f"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
@@ -16,34 +17,38 @@
                   </div>
 
                   <div class="col-xl-6">
-                     <form action="/rentcar/sign-up.html" method="post">
+                     <f:form action="/rentcar/sign-up.html" method="post" modelAttribute="signUpDTO">
                      <div class="card-body p-md-5 text-black">
                         <h3 class="mb-5 text-center">Registration form</h3>
                         <div class="row">
                            <div class="col-md-6 mb-4">
                               <div class="form-outline">
-                                 <input type="text" id="firstName" class="form-control form-control-lg"
-                                    name="firstName" />
-                                 <label class="form-label" for="firstName">First name</label>
+                                 <f:input type="text" id="firstName" class="form-control form-control-lg"
+                                    name="firstName" path="firstName"/>
+                                 <f:label class="form-label" for="firstName" path="firstName">First name</f:label>
                               </div>
+                              <f:errors path="firstName" class="text-danger"/>
                            </div>
                            <div class="col-md-6 mb-4">
                               <div class="form-outline">
-                                 <input type="text" id="lastName" class="form-control form-control-lg"
-                                    name="lastName" />
-                                 <label class="form-label" for="lastName">Last name</label>
+                                 <f:input type="text" id="lastName" class="form-control form-control-lg"
+                                    name="lastName" path="lastName"/>
+                                 <f:label class="form-label" for="lastName" path="lastName">Last name</f:label>
                               </div>
+                              <f:errors path="lastName" class="text-danger"/>
                            </div>
                         </div>
                         <div class="form-outline mb-4">
-                           <input type="text" id="email" class="form-control form-control-lg"
-                              name="email" />
-                           <label class="form-label" for="email">Email</label>
+                           <f:input type="text" id="email" class="form-control form-control-lg"
+                              name="email" path="email"/>
+                           <f:label class="form-label" for="email" path="email">Email</f:label>
+                           <f:errors path="email" class="text-danger"/>
                         </div>
                         <div class="form-outline mb-4">
-                           <input type="password" id="password" class="form-control form-control-lg"
-                              name="password" />
-                           <label class="form-label" for="password">Password</label>
+                           <f:input type="password" id="password" class="form-control form-control-lg"
+                              name="password" path="password"/>
+                           <f:label class="form-label" for="password" path="password">Password</f:label>
+                           <f:errors path="password" class="text-danger"/>
                         </div>
                         <div class="d-flex justify-content-end pt-3">
                            <button class="btn btn-dark btn-lg ms-2" type="submit">Submit</button>
@@ -54,7 +59,7 @@
                             </p>
                         </div>
                      </div>
-                     </form>
+                     </f:form>
                   </div>
 
                </div>
