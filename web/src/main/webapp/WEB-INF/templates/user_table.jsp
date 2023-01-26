@@ -13,6 +13,7 @@
                <th>First name</th>
                <th>Last name</th>
                <th>Email</th>
+               <th>Is admin</th>
                <th>Payment card</th>
                <th>Password</th>
             </tr>
@@ -30,6 +31,9 @@
                   </td>
                   <td>
                      <c:out value="${user.email}" />
+                  </td>
+                  <td>
+                     <c:out value="${user.admin}" />
                   </td>
                   <td>
                      <c:out value="${user.paymentCard}" />

@@ -41,10 +41,6 @@ public class UserDTO {
 
     private OrderDTO[] orderDTOs;
 
-    public static UserDTO from(User user) {
-        return getBuilder(user).build();
-    }
-
     public static UserDTO from(User user, boolean isAdmin) {
         return getBuilder(user).isAdmin(isAdmin).build();
     }

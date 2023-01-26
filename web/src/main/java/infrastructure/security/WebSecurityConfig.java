@@ -26,6 +26,8 @@ public class WebSecurityConfig {
                             .antMatchers("/car-table.html").permitAll()
                             .antMatchers("/car-info.html").permitAll()
                             .antMatchers("/search.html").permitAll()
+                            .antMatchers("/photo.jpg").permitAll()
+                            .antMatchers("/image/**").permitAll()
                             .antMatchers("/img/**").permitAll()
                             .antMatchers("/js/**").permitAll()
                             .antMatchers("/style/**").permitAll()

@@ -19,8 +19,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("")
-    public ResponseEntity<List<UserDTO>> getUsers(@RequestParam(value = "page", defaultValue = "1") int page,
-                                               @RequestParam(value = "size", defaultValue = "10") int size) {
+    public ResponseEntity<List<UserDTO>> getAllUsers(@RequestParam(value = "page", defaultValue = "1") int page,
+                                                     @RequestParam(value = "size", defaultValue = "101") int size) {
         List<UserDTO> users = userService.getAllUsersDTO(PageRequest.of(page - 1, size));
 
         if (users.isEmpty()) {

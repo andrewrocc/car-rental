@@ -108,7 +108,7 @@ public class CarBrandRepositoryTest extends BaseDaoTest {
                 .executeQuery("SELECT count(*) FROM CAR_BRAND;");
         resultSet.next();
         int actualSize = resultSet.getInt(1);
-        assertEquals(8, actualSize);
+        assertEquals(13, actualSize);
         DatabaseOperation.DELETE.execute(iDatabaseConnection, dataset);
         resultSet.close();
     }

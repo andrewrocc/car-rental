@@ -1,6 +1,5 @@
 package infrastructure.controller;
 
-
 import infrastructure.dto.UserDTO;
 import infrastructure.model.User;
 import infrastructure.service.UserService;
@@ -37,7 +36,7 @@ public class UserController {
         System.out.println("getPageUserListTable controller + " + now());
 
         ModelAndView view = new ModelAndView("user_table");
-        view.addObject("pageUser", userService.getAllUsers(PageRequest.of(page - 1, size)));
+        view.addObject("pageUser", userService.getUsersDTO(PageRequest.of(page - 1, size)));
         view.addObject("page", page);
         view.addObject("pages", (userService.getCountUsers() - 1) / 5 + 1);
         return view;

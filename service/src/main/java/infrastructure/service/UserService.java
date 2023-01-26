@@ -9,6 +9,7 @@ import infrastructure.repository.UserRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
@@ -61,13 +62,24 @@ public class UserService {
         return userRepository.findAll(pageRequest).stream().toList();
     }
 
+    public List<UserDTO> getUsersDTO(PageRequest pageRequest) {
+        List<User> users = getAllUsers(pageRequest);
+        return users.stream().map(user -> UserDTO.builder().id(user.getId()).firstName(user.getFirstName())
+                .lastName(user.getLastName()).email(user.getEmail()).paymentCard(user.getPaymentCard())
+                .password(user.getPassword()).isAdmin(hasAdminRole(user.getRoles())).build())
+                .collect(Collectors.toCollection(() -> new ArrayList<>(users.size())));
+    }
+
     public long getCountUsers() {
         return userRepository.count();
     }
 
     public User getUserById(long id) {
-        if (userRepository.findById(id).isPresent())
-            return userRepository.findById(id).get();
+        if (userRepository.findById(id).isPresent()) {
+            User user = userRepository.findById(id).get();
+            user.getOrders();
+            return user;
+        }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
@@ -129,7 +141,7 @@ public class UserService {
         if (!(userReference.hashCode() == userForm.hashCode())) {
             return addUser(userForm);
         }
-        throw new ProviderException("Try another one time!");
+        return userReference;
     }
 
     public User add(UserDTO userDTO) {

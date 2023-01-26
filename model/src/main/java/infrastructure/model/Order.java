@@ -39,7 +39,7 @@ public class Order implements Serializable {
 	@Builder.Default
 	private Set<Car> cars = new HashSet<>();
 
-	@ManyToMany(/*fetch = FetchType.LAZY, */cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "USER_BOOKING",
 			joinColumns = @JoinColumn(name = "BOOKING_ID"),
 			inverseJoinColumns = @JoinColumn(name = "USER_ID"))
@@ -65,7 +65,7 @@ public class Order implements Serializable {
 		return users.toArray(new User[users.size()]);
 	}
 
-	//region eq & hashCode
+	//region equals & hashCode
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

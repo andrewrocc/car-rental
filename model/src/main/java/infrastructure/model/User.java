@@ -38,12 +38,12 @@ public class User implements Serializable {
 	@Column(name = "PASSWORD")
 	private String password;
 
-	@ManyToMany(mappedBy = "users"/*, fetch = FetchType.LAZY*/)
+	@ManyToMany(mappedBy = "users")
 	@ToString.Exclude
 	@Builder.Default
 	private Set<Order> orders = new HashSet<>();
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }/*, fetch = FetchType.LAZY*/)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "USER_ROLE",
 			joinColumns = @JoinColumn(name = "USER_ID"),
 			inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
@@ -64,7 +64,7 @@ public class User implements Serializable {
 		r.getUsers().add(this);
 	}
 
-	//region eq & hashCode
+	//region equals & hashCode
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

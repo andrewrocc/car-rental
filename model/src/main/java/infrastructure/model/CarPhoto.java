@@ -30,6 +30,7 @@ public class CarPhoto {
     @Column(name = "CAR_PHOTO", columnDefinition = "MEDIUMBLOB NOT NULL")
     private byte[] photo;
 
+    //region equals & hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -49,4 +50,5 @@ public class CarPhoto {
         result = 31 * result + Arrays.hashCode(photo);
         return result;
     }
+    //endregion
 }

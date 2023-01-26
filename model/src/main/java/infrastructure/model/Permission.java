@@ -27,6 +27,7 @@ public class Permission implements Serializable {
 	@JoinColumn(name = "ROLE_ID")
 	private Role role;
 
+	//region equals & hashCode
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -46,4 +47,5 @@ public class Permission implements Serializable {
 		result = 31 * result + (role != null ? role.hashCode() : 0);
 		return result;
 	}
+	//endregion
 }

@@ -58,8 +58,7 @@ public class UserServiceTest {
         User userRef = targetObject.getUserById(8L);
         UserDTO userDTO = UserDTO.builder().id(userRef.getId()).firstName("admin").lastName("")
                 .email("admin@rentcar.com").paymentCard("1111111111111111")
-                .password("123").isAdmin(true)
-                .orders(userRef.getAllOrders()).build();
+                .password("123").isAdmin(true).build();
 
         //when
         targetObject.update(8L, userDTO);

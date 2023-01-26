@@ -51,10 +51,10 @@ public class CarModelRepositoryTest extends BaseDaoTest{
     @SneakyThrows
     public void findByBrandId() {
         // when
-        CarModel carModels = targetObject.findByBrandId(1L);
+        List<CarModel> carModels = targetObject.findByBrandId(1L);
 
         //then
-        assertEquals("M3 competition", carModels.getModelName());
+        assertEquals("M3 competition", carModels.get(0).getModelName());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class CarModelRepositoryTest extends BaseDaoTest{
                 .executeQuery("SELECT count(*) FROM CAR_MODEL;");
         resultSet.next();
         int actualSize = resultSet.getInt(1);
-        assertEquals(8, actualSize);
+        assertEquals(23, actualSize);
         DatabaseOperation.DELETE.execute(iDatabaseConnection, dataset);
         resultSet.close();
     }

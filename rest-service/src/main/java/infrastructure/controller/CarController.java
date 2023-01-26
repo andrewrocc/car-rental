@@ -67,14 +67,14 @@ public class CarController {
 
     @GetMapping("/models")
     public ResponseEntity<List<CarModelDTO>> getAllCarModels(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                             @RequestParam(name = "size", defaultValue = "11") int size) {
+                                                             @RequestParam(name = "size", defaultValue = "101") int size) {
         List<CarModelDTO> models = carModelService.getAllCarModels(PageRequest.of(page, size));
         return new ResponseEntity<>(models, HttpStatus.OK);
     }
 
     @GetMapping("/brands")
     public ResponseEntity<List<CarBrandDTO>> getAllCarBrands(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                             @RequestParam(name = "size", defaultValue = "11") int size) {
+                                                             @RequestParam(name = "size", defaultValue = "101") int size) {
         List<CarBrandDTO> models = carBrandService.getAllCarBrands(PageRequest.of(page, size));
         return new ResponseEntity<>(models, HttpStatus.OK);
     }

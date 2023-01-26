@@ -25,8 +25,6 @@ import static java.time.LocalDateTime.now;
 @RequiredArgsConstructor
 public class CarInfoPageController {
 
-    private final CarInfoService carInfoService;
-
     private final CarService carService;
 
     private final RestService<CarInfoDTO> restService;
