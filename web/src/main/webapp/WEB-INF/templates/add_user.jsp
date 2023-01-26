@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
+    <script><%@include file="/WEB-INF/js/password.js"%></script>
 </head>
 
 <%@include file="_header.jsp"%>
@@ -60,6 +61,13 @@
                                         <f:label for="password" class="form-label" path="password">Password:</f:label>
                                         <f:input type="password" name="password" class="form-control" id="password" size="20"
                                             path="password"/>
+
+                                        <div class="form-check py-2">
+                                            <input class="form-check-input" type="checkbox" onclick="showPass()"
+                                                id="flexCheckDefault">
+                                            </input>
+                                            <label class="form-check-label d-flex flex-row" for="flexCheckDefault">Show password</label>
+                                        </div>
                                     </div>
                                     <f:errors path="password" class="text-danger"/>
                                 </div>
@@ -69,8 +77,7 @@
                                         <div class="form-check form-switch">
                                             <label class="form-check-label" for="admin">Is admin?</label>
                                             <input class="form-check-input" type="checkbox" id="admin" name="admin"
-                                                <c:if test="${user.admin}">checked</c:if>
-                                            >
+                                                <c:if test="${user.admin}">checked</c:if>>
                                         </div>
                                     </div>
                                 </div>

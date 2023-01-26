@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
    <style><%@include file="/WEB-INF/style/signup.css"%></style>
+   <script><%@include file="/WEB-INF/js/password.js"%></script>
 </head>
 
 <%@include file="_header.jsp"%>
@@ -48,8 +49,16 @@
                            <f:input type="password" id="password" class="form-control form-control-lg"
                               name="password" path="password"/>
                            <f:label class="form-label" for="password" path="password">Password</f:label>
+
+                           <div class="form-check py-2">
+                              <input class="form-check-input" type="checkbox" onclick="showPass()"
+                                    id="flexCheckDefault">
+                              </input>
+                              <label class="form-check-label d-flex flex-row" for="flexCheckDefault">Show password</label>
+                           </div>
                            <f:errors path="password" class="text-danger"/>
                         </div>
+
                         <div class="d-flex justify-content-end pt-3">
                            <button class="btn btn-dark btn-lg ms-2" type="submit">Submit</button>
                         </div>

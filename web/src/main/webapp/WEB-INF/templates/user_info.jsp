@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <head>
+    <script><%@include file="/WEB-INF/js/password.js"%></script>
 </head>
 
 <%@include file="_header.jsp"%>
@@ -56,6 +57,13 @@
                                         <label for="password" class="form-label">Password:</label>
                                         <input type="password" name="password" class="form-control" id="password" size="20"
                                             value="<c:out value="${user.password}" />">
+
+                                        <div class="form-check py-2">
+                                            <input class="form-check-input" type="checkbox" onclick="showPass()"
+                                                id="flexCheckDefault">
+                                            </input>
+                                            <label class="form-check-label d-flex flex-row" for="flexCheckDefault">Show password</label>
+                                        </div>
                                     </div>
                                 </div>
 
