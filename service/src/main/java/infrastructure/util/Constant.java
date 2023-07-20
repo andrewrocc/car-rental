@@ -1,4 +1,4 @@
-package infrastructure.config;
+package infrastructure.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package infrastructure.controller;
 
-import infrastructure.config.Constant;
+import infrastructure.util.Constant;
 import infrastructure.service.RestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

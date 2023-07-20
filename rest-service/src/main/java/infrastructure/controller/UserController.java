@@ -2,6 +2,7 @@ package infrastructure.controller;
 
 import infrastructure.dto.UserDTO;
 import infrastructure.dto.UserDTO_REST;
+import infrastructure.service.UserRestService;
 import infrastructure.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -16,12 +17,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
+    private final UserRestService userRestService;
+
     private final UserService userService;
 
     @GetMapping("")
     public ResponseEntity<List<UserDTO>> getAllUsers(@RequestParam(value = "page", defaultValue = "1") int page,
                                                      @RequestParam(value = "size", defaultValue = "101") int size) {
-        List<UserDTO> users = userService.getAllUsersDTO(PageRequest.of(page - 1, size));
+        List<UserDTO> users = userRestService.getAllUsersDTO(PageRequest.of(page - 1, size));
 
         if (users.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -31,20 +34,20 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Long id) {
-        UserDTO user = userService.getUserDTOFromUser(id);
+        UserDTO user = userRestService.getUserDTOFromUser(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<UserDTO_REST> addUser(@RequestBody UserDTO_REST userDTO) {
-        UserDTO_REST userDTOREST = userService.addViaREST(userDTO);
+        UserDTO_REST userDTOREST = userRestService.addViaREST(userDTO);
         return new ResponseEntity<>(userDTOREST, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO_REST> updateUser(@PathVariable("id") Long id,
                                                    @RequestBody UserDTO_REST userDTO) {
-        UserDTO_REST userDTOREST = userService.updateViaREST(id, userDTO);
+        UserDTO_REST userDTOREST = userRestService.updateViaREST(id, userDTO);
         return new ResponseEntity<>(userDTOREST, HttpStatus.OK);
     }
 

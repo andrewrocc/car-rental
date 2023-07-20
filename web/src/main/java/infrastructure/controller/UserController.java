@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.Map;
+import java.util.Objects;
 
 import static java.time.LocalDateTime.now;
 
@@ -45,8 +46,6 @@ public class UserController {
     @GetMapping("/user-info.html")
     public ModelAndView getUserInfoPageByUserId(@RequestParam("id") long id) {
         System.out.println("getUserInfoPageByUserId call: " + now());
-        UserDTO dto = userService.getUserDTOById(id);
-        if (dto == null) throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         return new ModelAndView("user_info", Map.of("userInfo", userService.getUserDTOById(id)));
     }
 
