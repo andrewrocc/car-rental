@@ -73,7 +73,6 @@ public class RepositoryConfig {
                 CarModel.class,
                 CarPhoto.class,
                 CarBrand.class,
-                Payment.class,
                 CarType.class,
                 Order.class,
                 Role.class,

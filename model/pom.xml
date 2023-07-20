@@ -91,40 +91,40 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.liquibase</groupId>
-                <artifactId>liquibase-maven-plugin</artifactId>
-                <version>4.17.1</version>
-                <executions>
-                    <!-- production db -->
-                    <execution>
-                        <id>update_db</id>
-                        <configuration>
-                            <propertyFile>src/main/resources/car_rental.jdbc.properties</propertyFile>
-                            <changeLogFile>src/main/resources/changelog-master.xml</changeLogFile>
-                            <clearCheckSums>true</clearCheckSums>
-                        </configuration>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                        <phase>process-resources</phase>
-                    </execution>
+<!--            <plugin>-->
+<!--                <groupId>org.liquibase</groupId>-->
+<!--                <artifactId>liquibase-maven-plugin</artifactId>-->
+<!--                <version>4.17.1</version>-->
+<!--                <executions>-->
+<!--                    &lt;!&ndash; production db &ndash;&gt;-->
+<!--                    <execution>-->
+<!--                        <id>update_db</id>-->
+<!--                        <configuration>-->
+<!--                            <propertyFile>src/main/resources/car_rental.jdbc.properties</propertyFile>-->
+<!--                            <changeLogFile>src/main/resources/changelog-master.xml</changeLogFile>-->
+<!--                            <clearCheckSums>true</clearCheckSums>-->
+<!--                        </configuration>-->
+<!--                        <goals>-->
+<!--                            <goal>update</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>process-resources</phase>-->
+<!--                    </execution>-->
 
-                    <!-- test db -->
-                    <execution>
-                        <id>update_test_db</id>
-                        <configuration>
-                            <propertyFile>src/test/resources/car_rental_test.jdbc.properties</propertyFile>
-                            <changeLogFile>src/main/resources/changelog-master.xml</changeLogFile>
-                            <clearCheckSums>true</clearCheckSums>
-                        </configuration>
-                        <goals>
-                            <goal>update</goal>
-                        </goals>
-                        <phase>process-resources</phase>
-                    </execution>
-                </executions>
-            </plugin>
+<!--                    &lt;!&ndash; test db &ndash;&gt;-->
+<!--                    <execution>-->
+<!--                        <id>update_test_db</id>-->
+<!--                        <configuration>-->
+<!--                            <propertyFile>src/test/resources/car_rental_test.jdbc.properties</propertyFile>-->
+<!--                            <changeLogFile>src/main/resources/changelog-master.xml</changeLogFile>-->
+<!--                            <clearCheckSums>true</clearCheckSums>-->
+<!--                        </configuration>-->
+<!--                        <goals>-->
+<!--                            <goal>update</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>process-resources</phase>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

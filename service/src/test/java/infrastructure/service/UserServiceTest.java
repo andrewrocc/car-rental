@@ -30,6 +30,8 @@ public class UserServiceTest {
     @Autowired
     private UserService targetObject;
 
+    private final String EMPTY_STRING = "";
+
     @Before
     public void setUp() throws Exception {
     }
@@ -56,7 +58,7 @@ public class UserServiceTest {
     public void update() {
         //given
         User userRef = targetObject.getUserById(8L);
-        UserDTO userDTO = UserDTO.builder().id(userRef.getId()).firstName("admin").lastName("")
+        UserDTO userDTO = UserDTO.builder().id(userRef.getId()).firstName("admin").lastName(EMPTY_STRING)
                 .email("admin@rentcar.com").paymentCard("1111111111111111")
                 .password("123").isAdmin(true).build();
 
@@ -66,7 +68,7 @@ public class UserServiceTest {
         //then
         User user = targetObject.getUserById(8L);
         assertNotNull(user);
-        assertEquals(user.getLastName(), "");
+        assertEquals(user.getLastName(), EMPTY_STRING);
     }
 
     @Test(expected = ResponseStatusException.class)

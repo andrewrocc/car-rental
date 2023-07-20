@@ -1,7 +1,7 @@
 package infrastructure.controller;
 
 import com.google.gson.reflect.TypeToken;
-import infrastructure.config.Constant;
+import infrastructure.util.Constant;
 import infrastructure.dto.CarInfoDTO;
 import infrastructure.service.RestService;
 import lombok.RequiredArgsConstructor;

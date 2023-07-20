@@ -1,6 +1,7 @@
 package infrastructure.model;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "USER")
+@Accessors(chain = true)
 public class User implements Serializable {
 
 	@Id
@@ -59,9 +61,10 @@ public class User implements Serializable {
 		return orders.toArray(new Order[orders.size()]);
 	}
 
-	public void addRole(Role r) {
+	public User addRole(Role r) {
 		roles.add(r);
 		r.getUsers().add(this);
+		return this;
 	}
 
 	//region equals & hashCode

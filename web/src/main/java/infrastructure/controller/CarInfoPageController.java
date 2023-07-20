@@ -1,10 +1,9 @@
 package infrastructure.controller;
 
 import com.google.gson.reflect.TypeToken;
-import infrastructure.config.Constant;
+import infrastructure.util.Constant;
 import infrastructure.dto.CarInfoDTO;
 import infrastructure.model.Car;
-import infrastructure.service.CarInfoService;
 import infrastructure.service.CarService;
 import infrastructure.service.RestService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.lang.reflect.Type;
-import java.util.List;
 import java.util.Map;
 
 import static java.time.LocalDateTime.now;

@@ -1,6 +1,6 @@
 package infrastructure.dto;
 
-import infrastructure.config.Constant;
+import infrastructure.util.Constant;
 import infrastructure.model.Car;
 import lombok.*;
 

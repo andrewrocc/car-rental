@@ -1,0 +1,33 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /rest-car
+    encoding:
+      force: true
+      enabled: true
+      charset: UTF-8
+
+spring:
+  application:
+    name: rest-api
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+logging:
+  level:
+    infrastructure: DEBUG
+    org:
+      springframework:
+        web: ERROR
+        filter:
+          CommonsRequestLoggingFilter: DEBUG
+      hibernate:
+        SQL: DEBUG
+        type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: log/rest-api.log
+    max-history: 3
+    max-size: 5MB

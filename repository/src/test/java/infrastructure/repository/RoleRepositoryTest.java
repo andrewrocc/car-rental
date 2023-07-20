@@ -58,7 +58,7 @@ public class RoleRepositoryTest extends BaseDaoTest {
         targetObject.save(role);
 
         //then
-        assertEquals(role.getName(), targetObject.findByName("guest").getName());
+        assertEquals(role.getName(), targetObject.findByNameStartsWith("guest").get().getName());
         Connection connection = testMysqlJdbcDataSource.getConnection();
         String queryModel = String.format("delete from ROLE where NAME='%s';", role.getName());
         connection.createStatement().executeUpdate(queryModel);

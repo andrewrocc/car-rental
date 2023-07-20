@@ -1,9 +1,10 @@
 package infrastructure.dto;
 
-import infrastructure.config.Constant;
+import infrastructure.util.Constant;
 import infrastructure.model.Order;
 import infrastructure.model.User;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -15,6 +16,7 @@ import java.util.Arrays;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 public class UserDTO {
 
     private long id;
@@ -41,17 +43,9 @@ public class UserDTO {
 
     private OrderDTO[] orderDTOs;
 
-    public static UserDTO from(User user, boolean isAdmin) {
-        return getBuilder(user).isAdmin(isAdmin).build();
-    }
-
     public static UserDTO from_orderDTO(User user, boolean isAdmin, Order[] orders) {
         OrderDTO[] orderDTOs = Arrays.stream(orders).map(OrderDTO::from).toArray(OrderDTO[]::new);
         return getBuilder(user).isAdmin(isAdmin).orderDTOs(orderDTOs).build();
-    }
-
-    public static UserDTO from(User user, Order[] orders) {
-        return getBuilder(user).orders(orders).build();
     }
 
     private static UserDTOBuilder getBuilder(User user) {
