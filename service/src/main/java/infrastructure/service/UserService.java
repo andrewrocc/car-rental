@@ -1,6 +1,6 @@
 package infrastructure.service;
 
-import infrastructure.dto.UserDTO;
+import infrastructure.dto.UserDto;
 import infrastructure.model.User;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -13,11 +13,13 @@ public interface UserService {
     @EventListener
     void onApplicationEvent(ContextRefreshedEvent event);
 
-    List<User> getAllUsers(PageRequest pageRequest);
-
-    List<UserDTO> getUsersDTO(PageRequest pageRequest);
+    void delete(long id);
 
     long getCountUsers();
+
+    List<User> getAllUsers(PageRequest pageRequest);
+
+    List<UserDto> getUsersDTO(PageRequest pageRequest);
 
     User getUserById(long id);
 
@@ -25,13 +27,11 @@ public interface UserService {
 
     User addUser(User u);
 
-    UserDTO getUserInfo(String email);
+    UserDto getUserInfo(String email);
 
-    UserDTO getUserDTOById(long id);
+    UserDto getUserDTOById(long id);
 
-    User update(long id, UserDTO dto);
+    User update(long id, UserDto dto);
 
-    User add(UserDTO userDTO);
-
-    void delete(long id);
+    User add(UserDto userDTO);
 }

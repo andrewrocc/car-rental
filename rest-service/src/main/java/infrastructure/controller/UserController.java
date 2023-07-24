@@ -1,7 +1,7 @@
 package infrastructure.controller;
 
-import infrastructure.dto.UserDTO;
-import infrastructure.dto.UserDTO_REST;
+import infrastructure.dto.UserDto;
+import infrastructure.dto.UserDtoRest;
 import infrastructure.service.UserRestService;
 import infrastructure.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +22,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("")
-    public ResponseEntity<List<UserDTO>> getAllUsers(@RequestParam(value = "page", defaultValue = "1") int page,
+    public ResponseEntity<List<UserDto>> getAllUsers(@RequestParam(value = "page", defaultValue = "1") int page,
                                                      @RequestParam(value = "size", defaultValue = "101") int size) {
-        List<UserDTO> users = userRestService.getAllUsersDTO(PageRequest.of(page - 1, size));
+        List<UserDto> users = userRestService.getAllUsers(PageRequest.of(page - 1, size));
 
         if (users.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -33,21 +33,21 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable("id") Long id) {
-        UserDTO user = userRestService.getUserDTOFromUser(id);
+    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
+        UserDto user = userRestService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO_REST> addUser(@RequestBody UserDTO_REST userDTO) {
-        UserDTO_REST userDTOREST = userRestService.addViaREST(userDTO);
+    public ResponseEntity<UserDtoRest> addUser(@RequestBody UserDtoRest userDTO) {
+        UserDtoRest userDTOREST = userRestService.addRest(userDTO);
         return new ResponseEntity<>(userDTOREST, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO_REST> updateUser(@PathVariable("id") Long id,
-                                                   @RequestBody UserDTO_REST userDTO) {
-        UserDTO_REST userDTOREST = userRestService.updateViaREST(id, userDTO);
+    public ResponseEntity<UserDtoRest> updateUser(@PathVariable("id") Long id,
+                                                  @RequestBody UserDtoRest userDTO) {
+        UserDtoRest userDTOREST = userRestService.updateRest(id, userDTO);
         return new ResponseEntity<>(userDTOREST, HttpStatus.OK);
     }
 

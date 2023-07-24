@@ -2,13 +2,11 @@ package infrastructure.dto;
 
 import infrastructure.util.Constant;
 import infrastructure.model.Order;
-import infrastructure.model.User;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Arrays;
 
 @Getter
 @Setter
@@ -17,7 +15,7 @@ import java.util.Arrays;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class UserDTO {
+public class UserDto {
 
     private long id;
 
@@ -42,15 +40,4 @@ public class UserDTO {
     private Order[] orders;
 
     private OrderDTO[] orderDTOs;
-
-    public static UserDTO from_orderDTO(User user, boolean isAdmin, Order[] orders) {
-        OrderDTO[] orderDTOs = Arrays.stream(orders).map(OrderDTO::from).toArray(OrderDTO[]::new);
-        return getBuilder(user).isAdmin(isAdmin).orderDTOs(orderDTOs).build();
-    }
-
-    private static UserDTOBuilder getBuilder(User user) {
-        return UserDTO.builder().id(user.getId()).firstName(user.getFirstName())
-                .lastName(user.getLastName()).email(user.getEmail())
-                .paymentCard(user.getPaymentCard()).password(user.getPassword());
-    }
 }

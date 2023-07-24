@@ -1,7 +1,7 @@
 package infrastructure.controller;
 
-import infrastructure.dto.CarInfoDTO;
-import infrastructure.service.AddCarService;
+import infrastructure.dto.CarDto;
+import infrastructure.service.CarService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.access.annotation.Secured;
@@ -23,18 +23,18 @@ import static java.time.LocalDateTime.now;
 @RequiredArgsConstructor
 public class AddCarController {
 
-	private final AddCarService carService;
+	private final CarService carService;
 
 	@Secured("ROLE_admin")
 	@GetMapping("/add-car.html")
 	public ModelAndView getAddNewCarPage() {
 		System.out.println("AddCarController call. " + now());
-		return new ModelAndView("add_car", Map.of("carDTO", new CarInfoDTO()));
+		return new ModelAndView("add_car", Map.of("carDTO", new CarDto()));
 	}
 
 	@SneakyThrows
 	@PostMapping("/add-car.html")
-	public String addNewCar(@Valid @ModelAttribute("carDTO") CarInfoDTO carDTO, BindingResult bindingResult,
+	public String addNewCar(@Valid @ModelAttribute("carDTO") CarDto carDTO, BindingResult bindingResult,
 							@RequestParam("carPhoto") MultipartFile file) {
 		if (bindingResult.hasErrors()) {
 			return "add_car";

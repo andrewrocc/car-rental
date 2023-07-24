@@ -1,16 +1,13 @@
 package infrastructure.controller;
 
-import com.google.gson.reflect.TypeToken;
-import infrastructure.util.Constant;
-import infrastructure.dto.CarInfoDTO;
-import infrastructure.service.RestService;
+import infrastructure.service.CarService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.lang.reflect.Type;
-import java.util.List;
 import java.util.Map;
 
 import static java.time.LocalDateTime.now;
@@ -19,14 +16,13 @@ import static java.time.LocalDateTime.now;
 @RequiredArgsConstructor
 public class CarTableController {
 
-    private final RestService<List<CarInfoDTO>> restService;
+    private final CarService carService;
 
     @GetMapping("/car-table.html")
-    public ModelAndView getCarTablePage() {
+    public ModelAndView getCarTable(@RequestParam(name = "page", defaultValue = "0") int page,
+                                    @RequestParam(name = "size", defaultValue = "101") int size) {
         System.out.println("car table controller: " + now());
-        Type type = new TypeToken<List<CarInfoDTO>>() {}.getType();
-        List<CarInfoDTO> dataFromRest = restService.getData(Constant.RESOURCE_CAR_PATH, type);
-        return new ModelAndView( "car_table", Map.of("carList", dataFromRest));
+        return new ModelAndView( "car_table", Map.of("carList", carService.getAll(PageRequest.of(page, size))));
     }
 }
 

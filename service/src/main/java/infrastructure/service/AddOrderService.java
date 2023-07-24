@@ -22,12 +22,12 @@ public class AddOrderService {
 
     private final OrderRepository orderRepository;
 
-    private final CarService carService;
+    private final CarService carServiceImpl;
 
     private final UserService userService;
 
     public void add(long id, LocalDate startDate, short numberOfDay, OrderDTO orderDTO) {
-        Car car = carService.getCarById(id);
+        Car car = carServiceImpl.getById(id);
         User user = userService.getUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         Order order = Order.builder().price(new BigDecimal(orderDTO.getPrice()))
                 .date(startDate).numberOfDay(numberOfDay).build();

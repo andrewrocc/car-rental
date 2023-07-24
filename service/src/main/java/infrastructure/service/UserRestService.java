@@ -1,18 +1,18 @@
 package infrastructure.service;
 
-import infrastructure.dto.UserDTO;
-import infrastructure.dto.UserDTO_REST;
+import infrastructure.dto.UserDto;
+import infrastructure.dto.UserDtoRest;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
 public interface UserRestService {
 
-    UserDTO_REST addViaREST(UserDTO_REST requestDTO);
+    UserDtoRest addRest(UserDtoRest requestDTO);
 
-    UserDTO_REST updateViaREST(long id, UserDTO_REST requestDTO);
+    UserDtoRest updateRest(long id, UserDtoRest requestDTO);
 
-    UserDTO getUserDTOFromUser(long id);
+    UserDto getUserById(long id);
 
-    List<UserDTO> getAllUsersDTO(PageRequest pageRequest);
+    List<UserDto> getAllUsers(PageRequest pageRequest);
 }
