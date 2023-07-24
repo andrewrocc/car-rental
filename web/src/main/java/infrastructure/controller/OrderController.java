@@ -2,7 +2,7 @@ package infrastructure.controller;
 
 import infrastructure.dto.OrderDTO;
 import infrastructure.service.AddOrderService;
-import infrastructure.service.CarInfoService;
+import infrastructure.service.CarService;
 import infrastructure.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,16 +22,16 @@ import static java.time.LocalDateTime.now;
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final CarInfoService carInfoService;
-
     private final AddOrderService addOrderService;
 
     private final OrderService orderService;
 
+    private final CarService carService;
+
     @GetMapping("/order.html")
     public ModelAndView getOrderPage(@RequestParam("id") long id) {
         System.out.println("getOrderPage call " + now());
-        return new ModelAndView("order", Map.of("carInfo", carInfoService.getCarInfoById(id)));
+        return new ModelAndView("order", Map.of("carInfo", carService.getByIdAndPhoto(id)));
     }
 
     @Secured({"ROLE_admin", "ROLE_user"})

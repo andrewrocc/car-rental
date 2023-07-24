@@ -1,6 +1,7 @@
 package infrastructure.service.implementation;
 
-import infrastructure.dto.UserDTO;
+import infrastructure.dto.UserDto;
+import infrastructure.exception.WebServiceException;
 import infrastructure.mapper.UserMapper;
 import infrastructure.model.Order;
 import infrastructure.model.Role;
@@ -17,10 +18,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +27,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static infrastructure.util.Utils.EMPTY_STRING;
 
 @Slf4j
 @Service
@@ -65,7 +66,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public List<UserDTO> getUsersDTO(PageRequest pageRequest) {
+    public List<UserDto> getUsersDTO(PageRequest pageRequest) {
         List<User> users = getAllUsers(pageRequest);
         return users.stream().map(userMapper::mapToDto)
                 .collect(Collectors.toCollection(() -> new ArrayList<>(users.size())));
@@ -84,13 +85,13 @@ public class DefaultUserService implements UserService {
             user.getAllOrders();
             return user;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        throw new WebServiceException(EMPTY_STRING, HttpStatus.NOT_FOUND);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        User user = userRepository.findByEmailStartsWith(email)
-                .orElseThrow(() -> new UsernameNotFoundException("user " + email + " not found"));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new WebServiceException("user " + email + " not found", HttpStatus.NOT_FOUND));
         user.getAllRoles();
         return user;
     }
@@ -101,7 +102,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public UserDTO getUserInfo(String email) {
+    public UserDto getUserInfo(String email) {
         User user = getUserByEmail(email);
         Arrays.stream(user.getAllOrders())
                 .peek(Order::getAllUsers)
@@ -111,7 +112,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public UserDTO getUserDTOById(long id) {
+    public UserDto getUserDTOById(long id) {
         if (ADMIN_ROLE == null) {
             getAdminName();
         }
@@ -123,12 +124,12 @@ public class DefaultUserService implements UserService {
         if (isAdmin || isRequestUserID) {
             return userMapper.mapToDto(user);
         } else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new WebServiceException("access denied", HttpStatus.FORBIDDEN);
         }
     }
 
     @Override
-    public User update(long id, UserDTO dto) {
+    public User update(long id, UserDto dto) {
         User userReference = userRepository.getReferenceById(id);
         User userForm = userMapper.mapToUser(dto.setOrders(userReference.getOrders().toArray(Order[]::new)));
         if (!Objects.equals(userReference.hashCode(), userForm.hashCode())) {
@@ -138,7 +139,7 @@ public class DefaultUserService implements UserService {
     }
 
     @Override
-    public User add(UserDTO userDTO) {
+    public User add(UserDto userDTO) {
         User user = userMapper.mapToUser(userDTO);
         return addUser(user);
     }

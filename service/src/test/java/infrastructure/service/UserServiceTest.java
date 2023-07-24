@@ -1,16 +1,13 @@
 package infrastructure.service;
 
 import infrastructure.config.RepositoryConfig;
-import infrastructure.dto.UserDTO;
-import infrastructure.model.Order;
+import infrastructure.dto.UserDto;
 import infrastructure.model.User;
-import infrastructure.repository.UserRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
@@ -58,7 +55,7 @@ public class UserServiceTest {
     public void update() {
         //given
         User userRef = targetObject.getUserById(8L);
-        UserDTO userDTO = UserDTO.builder().id(userRef.getId()).firstName("admin").lastName(EMPTY_STRING)
+        UserDto userDTO = UserDto.builder().id(userRef.getId()).firstName("admin").lastName(EMPTY_STRING)
                 .email("admin@rentcar.com").paymentCard("1111111111111111")
                 .password("123").isAdmin(true).build();
 

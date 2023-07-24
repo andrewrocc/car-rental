@@ -1,8 +1,13 @@
 package infrastructure.dto;
 
 import infrastructure.util.Constant;
-import infrastructure.model.Car;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
@@ -15,7 +20,8 @@ import java.io.Serializable;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarInfoDTO implements Serializable {
+@Accessors(chain = true)
+public class CarDto implements Serializable {
 
     private long id;
 
@@ -34,18 +40,4 @@ public class CarInfoDTO implements Serializable {
     private String price;
 
     private byte[] photo;
-
-    public static CarInfoDTO from(Car car) {
-        return getBuilder(car).photo(car.getPhoto() == null ? null : car.getPhoto().getPhoto()).build();
-    }
-
-    public static CarInfoDTO from_withoutPhoto(Car car) {
-        return getBuilder(car).build();
-    }
-
-    private static CarInfoDTOBuilder getBuilder(Car car) {
-        return CarInfoDTO.builder().id(car.getId()).carModel(car.getCarModel().getModelName())
-                .carBrand(car.getCarBrand().getBrandName()).number(car.getNumber())
-                .price(String.valueOf(car.getPrice()));
-    }
 }

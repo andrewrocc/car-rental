@@ -1,7 +1,6 @@
 package infrastructure.controller;
 
-import infrastructure.dto.SignUpDTO;
-import infrastructure.dto.UserDTO;
+import infrastructure.dto.UserSignUpDto;
 import infrastructure.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -25,18 +24,18 @@ public class SignUpController {
     @GetMapping("/sign-up.html")
     public ModelAndView getSignUpPage() {
         System.out.println("getSignUpPage call: " + now());
-        return new ModelAndView("sign-up", Map.of("signUpDTO", new SignUpDTO()));
+        return new ModelAndView("sign-up", Map.of("signUpDTO", new UserSignUpDto()));
     }
 
     @PostMapping("/sign-up.html")               // consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
-    public String addNewUser(@Valid @ModelAttribute("signUpDTO") SignUpDTO dto,
+    public String addNewUser(@Valid @ModelAttribute("signUpDTO") UserSignUpDto dto,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "sign-up";
         }
         System.out.println("addNewUser: " + now());
         System.out.println(dto);
-        service.addNewUser(dto);
+        service.registrationNew(dto);
         return "redirect:/login.html";
     }
 }

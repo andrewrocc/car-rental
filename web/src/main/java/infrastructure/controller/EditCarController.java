@@ -1,7 +1,7 @@
 package infrastructure.controller;
 
-import infrastructure.dto.CarInfoDTO;
-import infrastructure.service.CarInfoService;
+import infrastructure.dto.CarDto;
+import infrastructure.service.CarService;
 import infrastructure.service.EditCarService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -20,20 +20,20 @@ import static java.time.LocalDateTime.now;
 @RequiredArgsConstructor
 public class EditCarController {
 
-    private final CarInfoService carInfoService;
-
     private final EditCarService editCarService;
+
+    private final CarService carService;
 
     @GetMapping("/edit-car.html")
     public ModelAndView getEditPage(@RequestParam(name = "id") long id) {
         System.out.println("EditCarController call " + now() + ". request param id: " + id);
-        return new ModelAndView("edit_car", Map.of("carInfo", carInfoService.getCarInfoById(id)));
+        return new ModelAndView("edit_car", Map.of("carInfo", carService.getByIdAndPhoto(id)));
     }
 
     @PostMapping("/edit-car.html")
-    public String updateCarInfo(@RequestParam("id") long id, CarInfoDTO c) {
+    public String updateCarInfo(@RequestParam("id") long id, CarDto c) {
         System.out.println("updateCarInfo call " + now() + ". request param id: " + id);
-        editCarService.updateCarInfo(id, c);
+        editCarService.updateInfo(id, c);
         return "redirect:/car-info.html?id=" + id;
     }
 
@@ -41,7 +41,7 @@ public class EditCarController {
     @PostMapping("/edit-car-photo.html")
     public String updateCarPhoto(@RequestParam("id") long id, @RequestParam("photo") MultipartFile file) {
         System.out.println("updateCarPhoto call " + now() + ". request param id: " + id);
-        editCarService.updateCarPhoto(id, file.getBytes());
+        editCarService.updatePhoto(id, file.getBytes());
         return "redirect:/car-info.html?id=" + id;
     }
 }

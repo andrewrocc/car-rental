@@ -1,13 +1,14 @@
 package infrastructure.service.implementation;
 
+import infrastructure.exception.WebServiceException;
 import infrastructure.model.Role;
 import infrastructure.repository.RoleRepository;
 import infrastructure.service.RoleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Objects;
 
 @Service
@@ -33,6 +34,6 @@ public class DefaultRoleService implements RoleService {
 
     private Role getRole(String roleName) {
         return repository.findByNameStartsWith(Objects.equals(roleName, ADMIN_ROLE) ? ADMIN_ROLE : USER_ROLE)
-                .orElseThrow(() -> new EntityNotFoundException("Not found role"));
+                .orElseThrow(() -> new WebServiceException("Not found role", HttpStatus.NOT_FOUND));
     }
 }

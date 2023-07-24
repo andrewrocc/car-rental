@@ -1,13 +1,9 @@
 package infrastructure.controller;
 
-import infrastructure.dto.UserDTO;
-import infrastructure.model.User;
+import infrastructure.dto.UserDto;
 import infrastructure.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,12 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.Map;
-import java.util.Objects;
 
 import static java.time.LocalDateTime.now;
 
@@ -50,7 +44,7 @@ public class UserController {
     }
 
     @PostMapping("/user-table.html")
-    public ModelAndView updateUserInfo(@RequestParam("id") long id, UserDTO dto) {
+    public ModelAndView updateUserInfo(@RequestParam("id") long id, UserDto dto) {
         System.out.println("updateUserInfo call: " + now() + "\n" + dto);
         userService.update(id, dto);
         return getUserInfoPageByUserId(id);
@@ -60,11 +54,11 @@ public class UserController {
     @GetMapping("/add-user.html")
     public ModelAndView getAddUserPage() {
         System.out.println("getAddUserPage call: " + now());
-        return new ModelAndView("add_user", Map.of("userDTO", new UserDTO()));
+        return new ModelAndView("add_user", Map.of("userDTO", new UserDto()));
     }
 
     @PostMapping("/add-user.html")
-    public String createNewUser(@Valid @ModelAttribute("userDTO") UserDTO userDTO, BindingResult bindingResult) {
+    public String createNewUser(@Valid @ModelAttribute("userDTO") UserDto userDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "add_user";
         }
