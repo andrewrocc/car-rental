@@ -1,6 +1,6 @@
 package infrastructure.mapper;
 
-import infrastructure.dto.OrderDTO;
+import infrastructure.dto.OrderDto;
 import infrastructure.dto.UserDto;
 import infrastructure.dto.UserDtoRest;
 import infrastructure.dto.UserSignUpDto;
@@ -23,14 +23,17 @@ public abstract class UserMapper {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private OrderMapper orderMapper;
+
     public UserDto mapToDto(User user) {
         return builder(user).setOrders(user.getOrders().toArray(Order[]::new));
     }
 
     public UserDto mapToDtoByOrderDto(User user) {
-        return builder(user).setOrderDTOs(Arrays.stream(user.getAllOrders())
-                                                  .map(OrderDTO::from)
-                                                  .toArray(OrderDTO[]::new));
+        return builder(user).setOrderDtos(Arrays.stream(user.getAllOrders())
+                                                  .map(orderMapper::mapToDto)
+                                                  .toArray(OrderDto[]::new));
     }
 
     private UserDto builder(User user) {

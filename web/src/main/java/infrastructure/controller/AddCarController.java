@@ -4,6 +4,7 @@ import infrastructure.dto.CarDto;
 import infrastructure.service.CarService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,7 @@ import java.util.Map;
 
 import static java.time.LocalDateTime.now;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class AddCarController {
@@ -28,7 +30,7 @@ public class AddCarController {
 	@Secured("ROLE_admin")
 	@GetMapping("/add-car.html")
 	public ModelAndView getAddNewCarPage() {
-		System.out.println("AddCarController call. " + now());
+		log.info("AddCarController call. " + now());
 		return new ModelAndView("add_car", Map.of("carDTO", new CarDto()));
 	}
 
@@ -39,7 +41,7 @@ public class AddCarController {
 		if (bindingResult.hasErrors()) {
 			return "add_car";
 		}
-		System.out.println(carDTO);
+		log.info(carDTO.toString());
 		carService.add(carDTO, file.getBytes());
 		return "redirect:/car-table.html";
 	}

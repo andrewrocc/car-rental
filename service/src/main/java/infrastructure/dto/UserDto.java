@@ -39,5 +39,5 @@ public class UserDto {
 
     private Order[] orders;
 
-    private OrderDTO[] orderDTOs;
+    private OrderDto[] orderDtos;
 }

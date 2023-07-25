@@ -5,6 +5,7 @@ import infrastructure.service.CarService;
 import infrastructure.service.EditCarService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import java.util.Map;
 
 import static java.time.LocalDateTime.now;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class EditCarController {
@@ -26,13 +28,13 @@ public class EditCarController {
 
     @GetMapping("/edit-car.html")
     public ModelAndView getEditPage(@RequestParam(name = "id") long id) {
-        System.out.println("EditCarController call " + now() + ". request param id: " + id);
+        log.info("EditCarController call " + now() + ". request param id: " + id);
         return new ModelAndView("edit_car", Map.of("carInfo", carService.getByIdAndPhoto(id)));
     }
 
     @PostMapping("/edit-car.html")
     public String updateCarInfo(@RequestParam("id") long id, CarDto c) {
-        System.out.println("updateCarInfo call " + now() + ". request param id: " + id);
+        log.info("updateCarInfo call " + now() + ". request param id: " + id);
         editCarService.updateInfo(id, c);
         return "redirect:/car-info.html?id=" + id;
     }
@@ -40,7 +42,7 @@ public class EditCarController {
     @SneakyThrows
     @PostMapping("/edit-car-photo.html")
     public String updateCarPhoto(@RequestParam("id") long id, @RequestParam("photo") MultipartFile file) {
-        System.out.println("updateCarPhoto call " + now() + ". request param id: " + id);
+        log.info("updateCarPhoto call " + now() + ". request param id: " + id);
         editCarService.updatePhoto(id, file.getBytes());
         return "redirect:/car-info.html?id=" + id;
     }

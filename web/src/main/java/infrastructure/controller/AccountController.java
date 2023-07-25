@@ -4,6 +4,7 @@ import infrastructure.dto.UserDto;
 import infrastructure.service.OrderService;
 import infrastructure.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 import static java.time.LocalDateTime.now;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class AccountController {
@@ -25,9 +27,9 @@ public class AccountController {
     @GetMapping("/account.html")
     public ModelAndView getAccountPage() {
         String login = SecurityContextHolder.getContext().getAuthentication().getName();
-        System.out.println("getAccountPage call: " + now() + ". with login name: " + login);
+        log.info("getAccountPage call: " + now() + ". with login name: " + login);
         UserDto userInfo = userService.getUserInfo(login);
         return new ModelAndView("account", Map.of("userInfo", userInfo,
-                "orderInfo", orderService.setInfo(Arrays.asList(userInfo.getOrders()))));
+                                                  "orderInfo", orderService.setInfo(Arrays.asList(userInfo.getOrders()))));
     }
 }
