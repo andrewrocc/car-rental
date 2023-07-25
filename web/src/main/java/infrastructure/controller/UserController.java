@@ -3,6 +3,7 @@ package infrastructure.controller;
 import infrastructure.dto.UserDto;
 import infrastructure.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 import static java.time.LocalDateTime.now;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class UserController {
@@ -28,7 +30,7 @@ public class UserController {
     @GetMapping("/user-table.html")
     public ModelAndView getPageUserListTable(@RequestParam(value = "size", required = false, defaultValue = "5") Byte size,
                                              @RequestParam(value = "page", required = false, defaultValue = "1") Byte page) {
-        System.out.println("getPageUserListTable controller + " + now());
+        log.info("getPageUserListTable controller + " + now());
 
         ModelAndView view = new ModelAndView("user_table");
         view.addObject("pageUser", userService.getUsersDTO(PageRequest.of(page - 1, size)));
@@ -39,13 +41,13 @@ public class UserController {
 
     @GetMapping("/user-info.html")
     public ModelAndView getUserInfoPageByUserId(@RequestParam("id") long id) {
-        System.out.println("getUserInfoPageByUserId call: " + now());
+        log.info("getUserInfoPageByUserId call: " + now());
         return new ModelAndView("user_info", Map.of("userInfo", userService.getUserDTOById(id)));
     }
 
     @PostMapping("/user-table.html")
     public ModelAndView updateUserInfo(@RequestParam("id") long id, UserDto dto) {
-        System.out.println("updateUserInfo call: " + now() + "\n" + dto);
+        log.info("updateUserInfo call: " + now() + "\n" + dto);
         userService.update(id, dto);
         return getUserInfoPageByUserId(id);
     }
@@ -53,7 +55,7 @@ public class UserController {
     @Secured("ROLE_admin")
     @GetMapping("/add-user.html")
     public ModelAndView getAddUserPage() {
-        System.out.println("getAddUserPage call: " + now());
+        log.info("getAddUserPage call: " + now());
         return new ModelAndView("add_user", Map.of("userDTO", new UserDto()));
     }
 
@@ -62,7 +64,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "add_user";
         }
-        System.out.println("createNewUser call: " + now());
+        log.info("createNewUser call: " + now());
         userService.add(userDTO);
         return "redirect:/user-table.html";
     }

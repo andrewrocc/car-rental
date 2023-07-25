@@ -3,6 +3,7 @@ package infrastructure.controller;
 import infrastructure.dto.UserSignUpDto;
 import infrastructure.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 import static java.time.LocalDateTime.now;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class SignUpController {
@@ -23,7 +25,7 @@ public class SignUpController {
 
     @GetMapping("/sign-up.html")
     public ModelAndView getSignUpPage() {
-        System.out.println("getSignUpPage call: " + now());
+        log.info("getSignUpPage call: " + now());
         return new ModelAndView("sign-up", Map.of("signUpDTO", new UserSignUpDto()));
     }
 
@@ -33,8 +35,8 @@ public class SignUpController {
         if (bindingResult.hasErrors()) {
             return "sign-up";
         }
-        System.out.println("addNewUser: " + now());
-        System.out.println(dto);
+        log.info("addNewUser: " + now());
+        log.info(dto.toString());
         service.registrationNew(dto);
         return "redirect:/login.html";
     }

@@ -12,6 +12,7 @@ public class WebExceptionHandler {
 
     @ExceptionHandler(WebServiceException.class)
     public String handleException(Model model, WebServiceException ex) {
+        log.error(ex.getHttpStatus() + ex.getMessage());
         model.addAttribute("exceptionCaption", ex.getClass().getSimpleName());
         model.addAttribute("status", ex.getHttpStatus());
         model.addAttribute("exceptionBody", ex.getMessage());
@@ -20,6 +21,7 @@ public class WebExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     public String handleError(Model model, Exception ex) {
+        log.error(ex.getMessage());
         model.addAttribute("exceptionCaption", ex.getClass().getSimpleName());
         model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
         model.addAttribute("exceptionBody", ex.getMessage());

@@ -2,6 +2,7 @@ package infrastructure.controller;
 
 import infrastructure.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import java.util.Map;
 
 import static java.time.LocalDateTime.now;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class OrderTableController {
@@ -23,7 +25,7 @@ public class OrderTableController {
     @GetMapping("/order-table.html")
     public ModelAndView getOrderTablePage(@RequestParam(value = "page", defaultValue = "0") int page,
                                           @RequestParam(value = "size", defaultValue = "101") int size) {
-        System.out.println("getOrderTablePage call:  " + now());
+        log.info("getOrderTablePage call:  " + now());
         return new ModelAndView("order_table",
                 Map.of("orderList", orderService.getAllOrderTable(PageRequest.of(page, size))));
     }

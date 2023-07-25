@@ -12,11 +12,11 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SearchCarController {
 
-    private final CarService carServiceImpl;
+    private final CarService carService;
 
     @PostMapping("/search.html")
     public ModelAndView getResultSearch(String keyword) {
         return new ModelAndView("search_result",
-                Map.of("cars", carServiceImpl.getByBrandOrModelName(keyword)));
+                Map.of("cars", carService.getByBrandOrModelName(keyword)));
     }
 }
